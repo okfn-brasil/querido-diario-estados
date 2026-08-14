@@ -1,5 +1,6 @@
 # NNNN. Título curto do problema e solução
-História de usuário: issue <!-- opcional -->
+Data: xx/xx/xxxx
+Status: Proposto | Aceito | Rejeitado | Deprecado | Substituído por
 
 ## Contexto e Declaração do Problema
 Qual limitação da arquitetura atual motivou essa decisão?
