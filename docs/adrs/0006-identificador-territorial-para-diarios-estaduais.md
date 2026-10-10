@@ -9,7 +9,7 @@ O diário oficial do governo estadual, no entanto, não pertence a um município
 
 Durante a investigação, foi levantada a hipótese de reaproveitar o padrão `UF` + `00000` (2 dígitos de UF preenchidos com 5 zeros) como identificador do governo estadual, por parecer, à primeira vista, uma sequência livre: nenhum município real usa `0000` como os 4 dígitos centrais do código, já que a numeração municipal dentro de cada UF nunca começa em zero.
 
-Uma checagem direta em `querido-diario/data_collection/gazette/resources/territories.csv` mostrou que esse padrão **já está em uso** para outra finalidade: ele identifica o Diário Oficial dos Municípios, publicado pela associação civil de municípios de cada estado (uma entidade real e distinta do governo estadual). Exemplos já cadastrados:
+Uma checagem direta em `querido-diario/querido_diario_raspadores/gazette/resources/territories.csv` mostrou que esse padrão **já está em uso** para outra finalidade: ele identifica o Diário Oficial dos Municípios, publicado pela associação civil de municípios de cada estado (uma entidade real e distinta do governo estadual). Exemplos já cadastrados:
 
 ```
 2700000,Associação dos Municípios Alagoanos,AL,Alagoas
@@ -19,7 +19,7 @@ Uma checagem direta em `querido-diario/data_collection/gazette/resources/territo
 O caso de Alagoas já está inclusive conectado a um spider ativo e a um segmentador dedicado:
 
 ```python
-# querido-diario/data_collection/gazette/spiders/al/al_associacao_municipios.py
+# querido-diario/querido_diario_raspadores/gazette/spiders/al/al_associacao_municipios.py
 class AlAssociacaoMunicipiosSpider(BaseSigpubSpider):
     name = "al_associacao_municipios"
     TERRITORY_ID = "2700000"
