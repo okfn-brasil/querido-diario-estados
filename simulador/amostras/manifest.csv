@@ -1,0 +1,6 @@
+arquivo,data,edicao_id,numero,extra,tamanho_bytes,paginas,caracteres_texto,sha256,url
+es_estado_2003-03-17_347.pdf,2003-03-17,347,,false,4476766,73,394169,4e13aaefeecdcaa4dd95081dfa9c5f047fc2ab5b658c363462e3e7b11b0e798c,https://ioes.dio.es.gov.br/portal/edicoes/download/347
+es_estado_2014-01-02_1849.pdf,2014-01-02,1849,,false,19184441,100,727391,4e47c01f98d982c74cf627d9549f508270ed85baf7bd9073624195b572719e6b,https://ioes.dio.es.gov.br/portal/edicoes/download/1849
+es_estado_2022-01-03_6530.pdf,2022-01-03,6530,25646,false,8476926,181,542514,99b88f8b91652462061a9fef7927490e022fd5709416dde3ac3cfa2bb8a45a82,https://ioes.dio.es.gov.br/portal/edicoes/download/6530
+es_estado_2026-10-08_11538_extra.pdf,2026-10-08,11538,26826,true,1000077,2,1972,4a80d7e6649235fafbb6172be7aebdd64ddc73f7dd132c91ac29a6eff7054d50,https://ioes.dio.es.gov.br/portal/edicoes/download/11538
+es_estado_2026-10-09_11542.pdf,2026-10-09,11542,26827,false,3219378,83,324262,ae0f92f41636b0e23788dd874d2b5bd048846d17929ec428658ec5fa29c8086f,https://ioes.dio.es.gov.br/portal/edicoes/download/11542
