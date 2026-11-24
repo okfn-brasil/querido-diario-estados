@@ -36,7 +36,7 @@ Sem o B, um ganho de C sobre A poderia ser atribuído só a "usar mais máquinas
 | Mesma imagem de código | `querido-diario-data-processing:tcc-fila` nos três modos, como na validação funcional; no modo A, o CronJob `data-processing` é apontado para ela. O *digest* da imagem é registrado em cada execução |
 | Mesmos limites do Tika | 512 Mi de *request* e 1500 Mi de *limit* de memória, tanto no Tika compartilhado (A) quanto no sidecar (B e C), pelos overlays `dev` e `dev-queue` |
 | Mesmos limites da infraestrutura | Postgres, OpenSearch, Garage e Redis com os mesmos recursos nos três modos (vêm do overlay `dev`, que o `dev-queue` herda) |
-| Mesma amostra de PDFs | `simulador/amostras/`, identificada pelo `manifest.csv` (com o `sha256` de cada arquivo) no commit registrado |
+| Mesma amostra de PDFs | `simulador/amostras/` ([amostra.md](amostra.md)), identificada pelo `manifest.csv` (com o `sha256` de cada arquivo) no commit registrado |
 | Mesma carga | perfil, N e *seed* do simulador fixos por campanha (ver [Parâmetros fixados](#parâmetros-fixados)) |
 | Mesmo estado inicial | preparação da seção [Antes de cada execução](#antes-de-cada-execução) |
 | Excertos temáticos fora da medição | os excertos temáticos não fazem parte dos cenários. No A, as medidas terminam em t_vazio, antes de o Job passar aos temas. No B e no C, o CronJob `themes-from-queue` fica suspenso durante as execuções, para não disputar CPU e OpenSearch com a extração |
