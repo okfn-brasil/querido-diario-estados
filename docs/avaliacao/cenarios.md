@@ -2,7 +2,7 @@
 
 Este documento define os cenários de qualidade usados nos experimentos da Parte E (item D3 do plano, issue #29). Cada cenário segue o formato do ATAM: um **estímulo** aplicado ao sistema num **ambiente** conhecido, a **resposta** esperada da arquitetura e a **medida** que diz se a resposta aconteceu. Os mesmos estímulos são aplicados à arquitetura atual (baseline) e à arquitetura proposta (fila de extração, ADR-0009, ADR-0010 e ADR-0011), para que os resultados sejam comparáveis.
 
-Aqui ficam só a definição dos cenários e como aplicá-los. O protocolo de execução (repetições, ordem, diário de bordo) está no item E-1 do plano; a carga vem do simulador (D2, #28); a coleta das séries, do `export_metrics.py` (D4, #30); e o teto de réplicas, da calibração (D5, #31).
+Aqui ficam só a definição dos cenários e como aplicá-los. O protocolo de execução (repetições, ordem, diário de bordo) está em [protocolo.md](protocolo.md) (E-1); a carga vem do simulador (D2, #28); a coleta das séries, do `export_metrics.py` (D4, #30); e o teto de réplicas, da calibração (D5, #31).
 
 ## Resumo
 
@@ -20,7 +20,7 @@ R1a é a variante graciosa de R1, explicada na [seção do R1](#r1--worker-morto
 
 ## Modos de execução
 
-Todo cenário roda nos três modos do protocolo (E-1), no mesmo cluster, com os mesmos limites de recursos, a mesma imagem (`querido-diario-data-processing:tcc-fila`) e a mesma amostra de PDFs (D1). A única diferença entre eles é a arquitetura.
+Todo cenário roda nos três modos do [protocolo](protocolo.md) (E-1), no mesmo cluster, com os mesmos limites de recursos, a mesma imagem (`querido-diario-data-processing:tcc-fila`) e a mesma amostra de PDFs (D1). A única diferença entre eles é a arquitetura.
 
 | Modo | O que é | Como aplicar (no `querido-diario-deployment`) | Disparo do processamento |
 |---|---|---|---|
@@ -66,7 +66,7 @@ WHERE file_url LIKE 'sim://%' AND NOT processed
 
 ### Repetições e registro
 
-Três repetições por cenário × modo (E-1). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<cenario>/<modo>/<run>.csv`.
+Três repetições por cenário × modo, na ordem e com os critérios de validade do [protocolo](protocolo.md). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<cenario>/<modo>/<run>.csv`.
 
 ## Instantes e medidas
 
