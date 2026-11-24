@@ -188,6 +188,8 @@ Variante com `kubectl delete pod <pod> -n $NS`, sem `--force`, e com o `visibili
 
 Antes da primeira execução, conferir um arquivo corrompido direto no Tika (`curl -s -o /dev/null -w '%{http_code}' -T corrompido.pdf http://localhost:9998/tika`, com port-forward) e confirmar que a resposta não é 200.
 
+Conferido em 24/11/2026 com a imagem `okfn-brasil/querido-diario-apache-tika-server:latest` e um arquivo gerado pelo `pdf_corrompido()` do simulador: HTTP 422 e nenhum texto, com ou sem `Content-Type: application/pdf` (o `file --mime-type` também dá `application/pdf`). Um PDF sintético normal da amostra, para comparação, dá HTTP 200 com o texto completo.
+
 | Modo | Resposta esperada |
 |---|---|
 | A | Cada corrompido gera um erro no log do Job, que segue para o próximo diário. Os 10 terminam `processed=false` e entram no push com `status="error"`. Não há DLQ: a cada execução de hora em hora, o CronJob tenta os 10 de novo |
@@ -250,6 +252,6 @@ Para não haver efeito de aprendizado, cada pessoa faz um único modo. Se houver
 
 O que este documento pressupõe e ainda precisa estar implementado:
 
-- **D2 (#28):** opção do simulador para inserir diários corrompidos no meio da carga (R2), gravando os ids.
+- ~~**D2 (#28):** opção do simulador para inserir diários corrompidos no meio da carga (R2), gravando os ids.~~ Feito: `--corrupt K`, com os ids no `.json` da execução.
 - **D4 (#30):** além das séries do Prometheus, exportar a contagem de `processed` do Postgres ao longo da execução (necessária no modo A) e o conteúdo da DLQ no fim.
 - **`run_experiment.sh` (E-2):** limpar o Redis da fila entre execuções (B e C); manter o CronJob suspenso no A, exceto no E2; disparar o processamento logo depois da inserção; registrar os instantes de cada injeção de falha; no R1, aplicar e reverter o `QUEUE_VISIBILITY_TIMEOUT`.

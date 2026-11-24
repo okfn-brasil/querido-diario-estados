@@ -173,6 +173,6 @@ Mudanças feitas depois da primeira execução válida, com a data, o motivo e a
 
 ## Requisitos para os outros itens
 
-- **D2 (#28):** opção `--seed` no simulador, para que a repetição *k* sorteie a mesma sequência de PDFs nos três modos.
+- ~~**D2 (#28):** opção `--seed` no simulador, para que a repetição *k* sorteie a mesma sequência de PDFs nos três modos.~~ Feito: `--seed`, que fixa a sequência de PDFs e as posições dos corrompidos.
 - **D4 (#30):** passo do `query_range` de 15 s e saída dos metadados do Postgres e da DLQ no `.json` da execução.
 - **E-2 (#33):** o `run_experiment.sh` faz o checklist de [Antes de cada execução](#antes-de-cada-execução), suspende o `themes-from-queue` no B e no C, registra commits e *digest* e grava o `.json` e o `.log` de cada execução.
