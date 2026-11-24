@@ -1,0 +1,51 @@
+# Pod para rodar o export_metrics.py de dentro do namespace no Revoada (D4, #30).
+# Não temos port-forward nem proxy da API para o namespace monitoring, então a
+# consulta ao Prometheus precisa sair de um pod do nosso namespace.
+#
+#   NS=querido-diario-tcc; CTX="--context revoada-testes"
+#   kubectl apply -f simulador/k8s/export-metrics-pod.yaml -n $NS $CTX
+#   kubectl wait --for=condition=Ready pod/export-metrics -n $NS $CTX
+#   kubectl cp simulador/export_metrics.py $NS/export-metrics:/work/ $CTX
+#   kubectl cp simulador/load_simulator.py $NS/export-metrics:/work/ $CTX
+#   kubectl exec -n $NS $CTX export-metrics -- uv run /work/export_metrics.py \
+#       --start <t0> --end <t_fim> --cenario E1 --modo C --run E1-C-1 \
+#       --step 30 --namespace $NS --saida /work/resultados
+#   kubectl cp $NS/export-metrics:/work/resultados resultados/ $CTX
+#
+# O pod fica de pé durante a campanha; o .json do run_experiment.sh (se houver)
+# precisa ser copiado para /work/resultados/<cenario>/<modo>/ antes do export.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: export-metrics
+  labels:
+    app.kubernetes.io/name: export-metrics
+    app.kubernetes.io/part-of: querido-diario-tcc
+spec:
+  restartPolicy: Never
+  containers:
+    - name: export
+      image: ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+      command: ["sleep", "infinity"]
+      workingDir: /work
+      env:
+        - name: QD_EXPORT_PROMETHEUS_URL
+          value: http://prometheus-k8s.monitoring.svc:9090
+        - name: QD_EXPORT_REDIS_URL
+          value: redis://redis-queue:6379/0
+        - name: QD_DATA_DB_USER
+          valueFrom: { secretKeyRef: { name: app-secret, key: QD_DATA_DB_USER, optional: true } }
+        - name: QD_DATA_DB_PASSWORD
+          valueFrom: { secretKeyRef: { name: app-secret, key: QD_DATA_DB_PASSWORD, optional: true } }
+        - name: QD_SIM_DB_URL
+          value: postgresql://$(QD_DATA_DB_USER):$(QD_DATA_DB_PASSWORD)@postgres-rw:5432/queridodiario
+        - name: UV_CACHE_DIR
+          value: /work/.uv-cache
+      resources:
+        requests: { cpu: 50m, memory: 128Mi }
+        limits: { memory: 1Gi }  # o uv chega a ~700 Mi ao instalar as dependências
+      volumeMounts:
+        - { name: work, mountPath: /work }
+  volumes:
+    - name: work
+      emptyDir: {}

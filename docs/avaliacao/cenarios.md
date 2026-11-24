@@ -253,5 +253,5 @@ Para não haver efeito de aprendizado, cada pessoa faz um único modo. Se houver
 O que este documento pressupõe e ainda precisa estar implementado:
 
 - ~~**D2 (#28):** opção do simulador para inserir diários corrompidos no meio da carga (R2), gravando os ids.~~ Feito: `--corrupt K`, com os ids no `.json` da execução.
-- **D4 (#30):** além das séries do Prometheus, exportar a contagem de `processed` do Postgres ao longo da execução (necessária no modo A) e o conteúdo da DLQ no fim.
+- ~~**D4 (#30):** além das séries do Prometheus, exportar a contagem de `processed` do Postgres ao longo da execução (necessária no modo A) e o conteúdo da DLQ no fim.~~ Feito: `export_metrics.py --acompanhar` grava a contagem durante a execução, e o export do fim junta as séries `pg_*` ao CSV e a DLQ ao `.json` ([exportacao.md](exportacao.md)).
 - **`run_experiment.sh` (E-2):** limpar o Redis da fila entre execuções (B e C); manter o CronJob suspenso no A, exceto no E2; disparar o processamento logo depois da inserção; registrar os instantes de cada injeção de falha; no R1, aplicar e reverter o `QUEUE_VISIBILITY_TIMEOUT`.
