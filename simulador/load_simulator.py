@@ -587,11 +587,13 @@ def limpar(args) -> None:
                 Bucket=conf["s3_bucket"],
                 Delete={"Objects": [{"Key": k} for k in lote], "Quiet": True},
             )
-            falhas = resposta.get("Errors", [])
+            # O .txt só existe para diários já processados. O S3 e o MinIO tratam
+            # chave ausente como sucesso, mas o Garage devolve NoSuchKey
+            falhas = [e for e in resposta.get("Errors", []) if e.get("Code") != "NoSuchKey"]
             if falhas:
                 sys.exit(f"storage: {len(falhas)} falha(s) ao apagar, ex.: {falhas[0]}")
             apagados += len(lote)
-        log(f"storage: {apagados} chave(s) apagada(s) (PDF + .txt)")
+        log(f"storage: {apagados} chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)")
 
         # 3. Postgres por último: se algo acima falhar, o --cleanup pode rodar de novo
         with conexao.cursor() as cur:
