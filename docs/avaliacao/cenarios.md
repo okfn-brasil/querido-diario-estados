@@ -43,7 +43,7 @@ O modo B separa o efeito da *fila* (retentativa, DLQ, devolução de mensagens) 
 
 ### Carga
 
-Salvo indicação, todos os cenários usam a carga do E1: `python simulador/load_simulator.py --profile burst --total N --territory 3299999`, ou seja, N diários sintéticos inseridos em 5 min a partir da amostra do D1. No kind de um notebook, N fica entre 200 e 500. No Revoada, N e o perfil `peak-day` seguem o D2 e o D5.
+Salvo indicação, todos os cenários usam a carga do E1: `python simulador/load_simulator.py --profile burst --total N --territory 3299999`, ou seja, N diários sintéticos inseridos em 5 min a partir da amostra do D1. O N de cada cenário e de cada campanha está em [Parâmetros fixados](protocolo.md#parâmetros-fixados) (300 no E1 e no R1, 100 no R1a, no R2 e no R3, na campanha K). O perfil `peak-day` do D2 não entra nos cenários: sozinho, ele ocuparia 8 h, e cada campanha cabe em 1 dia.
 
 O processamento é **disparado manualmente logo depois que o simulador termina a inserção**, nos três modos (coluna "Disparo" da tabela acima). Esse instante é o **t0** de todas as medidas.
 
@@ -66,7 +66,7 @@ WHERE file_url LIKE 'sim://%' AND NOT processed
 
 ### Repetições e registro
 
-Três repetições por cenário × modo, na ordem e com os critérios de validade do [protocolo](protocolo.md). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<cenario>/<modo>/<run>.csv`.
+Três repetições por cenário × modo (uma no E2), na ordem e com os critérios de validade do [protocolo](protocolo.md). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<cenario>/<modo>/<run>.csv`.
 
 ## Instantes e medidas
 
