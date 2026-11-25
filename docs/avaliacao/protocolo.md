@@ -48,7 +48,7 @@ Os limites de cada componente que **é** a arquitetura não são igualados, porq
 | Campanha | Ambiente | Escopo | Situação |
 |---|---|---|---|
 | **K** (obrigatória) | kind local (`querido-diario-dev`), em uma única máquina, com o hardware registrado (CPU, memória dada ao Docker, versão do kind e do Kubernetes) | todos os cenários | — |
-| **R** (se houver infraestrutura) | namespace `querido-diario-tcc` no Revoada (`--context revoada-testes`) | E1 e E2, com N maior e o teto do D5; R1a, R2 e R3 se couberem no dia | acesso configurado em 24/11; falta liberar `ServiceMonitor`/`PodMonitor` no namespace (#42) |
+| **R** (se houver infraestrutura) | namespace `querido-diario-tcc` no Revoada (`--context revoada-testes`) | E1 e E2, com N maior e o teto do D5; R1a, R2 e R3 se couberem no dia | acesso configurado em 24/11; o `prometheus-k8s` do cluster raspa os `ServiceMonitor`/`PodMonitor` do namespace e o Pushgateway já está no ar (#42, componente `revoada-monitoring` do `querido-diario-deployment`); falta o overlay do Revoada (#55) |
 
 **Cada campanha roda em no máximo 1 dia**, sem intervenção depois do piloto (ver [Orçamento de tempo](#orçamento-de-tempo)). Isso reduz a variação do ambiente entre a primeira e a última execução e, no Revoada, o tempo em que o experimento divide o cluster com a produção do Querido Diário (namespace `querido-diario`).
 
