@@ -119,11 +119,11 @@ Estimativa a partir da validação funcional (C7, no kind): ~4 s por diário no 
 
 O R1 fica fora da campanha R: com o teto do D5, a fila esvazia rápido demais para a condição de fila restante sem um N muito maior. A margem até 24 h cobre o ambiente ser até ~1,6× (K) ou ~1,9× (R) mais lento que o estimado. Os tempos da campanha R são extrapolados do kind, e o piloto é o que os confirma.
 
-O `run_experiment.sh` roda uma execução; a campanha inteira, na ordem abaixo, roda por um script que o chama em sequência (E-2, #33), continua depois de uma execução inválida (refazendo-a na mesma posição) e permite retomar do meio.
+O `run_experiment.sh` roda uma execução; a campanha inteira, na ordem abaixo, roda pelo `run_campaign.sh`, que o chama em sequência, continua depois de uma execução inválida (refazendo-a na mesma posição) e permite retomar do meio ([execucao.md](execucao.md)). Ele roda por blocos, sempre entre cenários (piloto, E1, R1, R1a + R2 + R3, E2), para que a campanha possa ser interrompida entre eles se a máquina não aguentar tudo de uma vez; uma campanha dividida que passe de 1 dia é registrada em [Desvios do protocolo](#desvios-do-protocolo).
 
 ## Antes de cada execução
 
-Checklist feito pelo `run_experiment.sh` (#33), ou à mão enquanto ele não existir. Cada item que falhar impede a execução.
+Checklist feito pelo `run_experiment.sh` ([execucao.md](execucao.md)). Cada item que falhar impede a execução.
 
 1. O cluster e o modo estão certos: overlay aplicado (`dev` no A, `dev-queue` no B e no C) e, no B, o `ScaledObject` com `minReplicaCount=maxReplicaCount=1`; no C, com o teto da campanha.
 2. Imagem: o *digest* da imagem do data-processing em uso é o registrado para a campanha.
@@ -131,7 +131,7 @@ Checklist feito pelo `run_experiment.sh` (#33), ou à mão enquanto ele não exi
 4. Infraestrutura saudável: o OpenSearch está *green* ou *yellow*, e todos os pods de infraestrutura estão `Ready`, sem reinícios desde a execução anterior (um reinício é anotado).
 5. `python simulador/load_simulator.py --cleanup`.
 6. B e C: fila vazia, 0 workers ocupados e `FLUSHDB` no `redis-queue` (ver [cenarios.md](cenarios.md#antes-de-cada-execução)).
-7. CronJobs: no A, `data-processing` suspenso (exceto no E2); no B e no C, `themes-from-queue` suspenso.
+7. CronJobs: no A, `data-processing` suspenso (exceto no E2); no B e no C, `themes-from-queue` suspenso e, até o disparo, também o `enqueue-extraction` (exceto no E2; ver [cenarios.md](cenarios.md#carga)).
 8. Nenhum diário sintético pendente (`SELECT count(*) FROM gazettes WHERE file_url LIKE 'sim://%'` dá 0).
 9. Espera de **2 min** com o sistema ocioso (no C, com 0 réplicas).
 
@@ -216,4 +216,4 @@ Mudanças feitas depois da primeira execução válida, com a data, o motivo e a
 
 - ~~**D2 (#28):** opção `--seed` no simulador, para que a repetição *k* sorteie a mesma sequência de PDFs nos três modos.~~ Feito: `--seed`, que fixa a sequência de PDFs e as posições dos corrompidos.
 - ~~**D4 (#30):** passo do `query_range` de 15 s (30 s na campanha R) e saída dos metadados do Postgres e da DLQ no `.json` da execução; rodar ao fim de cada execução e, no Revoada, de dentro do namespace `querido-diario-tcc`.~~ Feito: `simulador/export_metrics.py` ([exportacao.md](exportacao.md)), com `--step`, a chave `export` no `.json` e o pod `simulador/k8s/export-metrics-pod.yaml` para o Revoada.
-- **E-2 (#33):** o `run_experiment.sh` faz o checklist de [Antes de cada execução](#antes-de-cada-execução), suspende o `themes-from-queue` no B e no C, registra commits e *digest* e grava o `.json` e o `.log` de cada execução. Um script de campanha chama o `run_experiment.sh` para cada execução, na ordem de [Repetições e ordem](#repetições-e-ordem), e permite retomar do meio.
+- ~~**E-2 (#33):** o `run_experiment.sh` faz o checklist de [Antes de cada execução](#antes-de-cada-execução), suspende o `themes-from-queue` no B e no C, registra commits e *digest* e grava o `.json` e o `.log` de cada execução. Um script de campanha chama o `run_experiment.sh` para cada execução, na ordem de [Repetições e ordem](#repetições-e-ordem), e permite retomar do meio.~~ Feito: `simulador/run_experiment.sh` e `simulador/run_campaign.sh`, com os parâmetros de cada campanha em `simulador/campanhas/` ([execucao.md](execucao.md)).

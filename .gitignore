@@ -1,2 +1,6 @@
 simulador/amostras/*.pdf
 simulador/execucoes/
+resultados/.experimento.lock
+resultados/.infra-*.json
+resultados/nao-executadas/
+__pycache__/

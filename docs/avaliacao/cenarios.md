@@ -48,7 +48,7 @@ Salvo indicação, todos os cenários usam a carga do E1: `python simulador/load
 O processamento é **disparado manualmente logo depois que o simulador termina a inserção**, nos três modos (coluna "Disparo" da tabela acima). Esse instante é o **t0** de todas as medidas.
 
 - No modo A, o Job lê a lista de pendentes uma vez, no início. Se fosse disparado antes do fim da inserção, ele não veria todos os diários.
-- Nos modos B e C, o agendamento de 5 em 5 min do `enqueue-extraction` continua ativo. Ele não atrapalha (o produtor não enfileira de novo um diário que já está na fila, por causa de `qd:enqueued:{id}`), e o disparo manual elimina a espera de até 5 min.
+- Nos modos B e C, o agendamento de 5 em 5 min do `enqueue-extraction` fica **suspenso da preparação até o disparo manual** e é reativado logo depois do t0. Sem isso, um agendamento que caísse durante a inserção enfileiraria parte dos diários e o processamento começaria antes do t0, o que não acontece no A (visto num teste do `run_experiment.sh` em 24/11/2026: 2 de 8 diários já processados 3 s depois do t0). Depois do t0, o agendamento não atrapalha (o produtor não enfileira de novo um diário que já está na fila, por causa de `qd:enqueued:{id}`). No E2 ele fica ativo o tempo todo, porque faz parte do repouso do B e do C.
 - Disparar o baseline na hora é favorável a ele: em produção, o diário espera até a próxima hora cheia. Essa espera estrutural (de 0 a 60 min, 30 min em média) não entra nas medidas do experimento. Ela é reportada à parte, ao discutir a latência coleta → indexado.
 
 ### Fim da execução
@@ -254,4 +254,4 @@ O que este documento pressupõe e ainda precisa estar implementado:
 
 - ~~**D2 (#28):** opção do simulador para inserir diários corrompidos no meio da carga (R2), gravando os ids.~~ Feito: `--corrupt K`, com os ids no `.json` da execução.
 - ~~**D4 (#30):** além das séries do Prometheus, exportar a contagem de `processed` do Postgres ao longo da execução (necessária no modo A) e o conteúdo da DLQ no fim.~~ Feito: `export_metrics.py --acompanhar` grava a contagem durante a execução, e o export do fim junta as séries `pg_*` ao CSV e a DLQ ao `.json` ([exportacao.md](exportacao.md)).
-- **`run_experiment.sh` (E-2):** limpar o Redis da fila entre execuções (B e C); manter o CronJob suspenso no A, exceto no E2; disparar o processamento logo depois da inserção; registrar os instantes de cada injeção de falha; no R1, aplicar e reverter o `QUEUE_VISIBILITY_TIMEOUT`.
+- ~~**`run_experiment.sh` (E-2):** limpar o Redis da fila entre execuções (B e C); manter o CronJob suspenso no A, exceto no E2; disparar o processamento logo depois da inserção; registrar os instantes de cada injeção de falha; no R1, aplicar e reverter o `QUEUE_VISIBILITY_TIMEOUT`.~~ Feito: `simulador/run_experiment.sh` ([execucao.md](execucao.md)).
