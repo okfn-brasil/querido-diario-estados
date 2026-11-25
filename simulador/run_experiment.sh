@@ -163,6 +163,7 @@ contagem() {
 }
 
 PF_PID=""
+CARGA_REMOTA=0
 prom() {  # prom '<PromQL>' → JSON da /api/v1/query
     if [[ $AMBIENTE == kind ]]; then
         curl -sf --get "http://localhost:9092/api/v1/query" --data-urlencode "query=$1"
@@ -235,8 +236,19 @@ restaurar() {
         kc patch cronjob data-processing -p '{"spec":{"suspend":true}}' >/dev/null 2>&1 || log "aviso: não consegui suspender o data-processing"
         E2_DESSUSPENSO=0
     fi
-    # Uma réplica do Prometheus (port-forward) em kind
-    [[ -n $PF_PID ]] && { kill -- "-$PF_PID" 2>/dev/null || true; PF_PID=""; }
+    # Carga interrompida no Revoada: matar o kubectl exec não mata o simulador
+    # dentro do pod ([l] para o sh não achar a si mesmo)
+    if [[ $CARGA_REMOTA == 1 ]]; then
+        log "interrompendo o load_simulator.py dentro do pod export-metrics"
+        kc exec export-metrics -- sh -c 'for p in /proc/[0-9]*; do
+            tr "\0" " " < $p/cmdline 2>/dev/null | grep -q "[l]oad_simulator.py --profile" && kill -TERM ${p#/proc/}; done; true' \
+            >/dev/null 2>&1 || log "aviso: não consegui interromper o simulador no pod"
+        CARGA_REMOTA=0
+    fi
+    # Uma réplica do Prometheus (port-forward) em kind. Com `if`, não `&&`: no
+    # Revoada PF_PID fica vazio e o `&&` como último comando faria a função
+    # devolver 1 (e o set -e derrubar a execução no fim)
+    if [[ -n $PF_PID ]]; then kill -- "-$PF_PID" 2>/dev/null || true; PF_PID=""; fi
 }
 
 ao_sair() {
@@ -870,8 +882,10 @@ else
     args=(--profile burst --total "$N" --territory "$TERRITORIO" --seed "$SEED")
     (( CORROMPIDOS > 0 )) && args+=(--corrupt "$CORROMPIDOS")
     set +e
+    [[ $AMBIENTE != kind ]] && CARGA_REMOTA=1
     simulador "${args[@]}" 2>&1 | tee "$TMP/carga.log"
     status_carga=${PIPESTATUS[0]}
+    CARGA_REMOTA=0
     set -e
     marca t_carga_fim
     registro=$(grep -o 'registro: .*\.json' "$TMP/carga.log" | tail -1 | cut -d' ' -f2- || true)
