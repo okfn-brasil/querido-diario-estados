@@ -203,7 +203,8 @@ imagens_usadas() {  # digests da imagem do data-processing nos pods da execuçã
     kc get pods -o json | jq --arg job "${JOB_PREFIXO:-exp-}" '[.items[]
         | select(.metadata.name | test("^(" + $job + "|extraction-worker|enqueue-extraction)"))
         | .metadata.name as $p | .status.containerStatuses[]?
-        | select(.image | test("querido-diario-data-processing[:@]"))
+        # O containerd do Revoada põe em .image o ID da imagem (sha256:…); o nome fica em .imageID
+        | select((.image + " " + .imageID) | test("querido-diario-data-processing[:@]"))
         | {pod: $p, imagem: .image, digest: (.imageID | capture("(?<d>sha256:[0-9a-f]+)$").d // .imageID)}]'
 }
 

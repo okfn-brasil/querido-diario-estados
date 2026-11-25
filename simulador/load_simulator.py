@@ -322,7 +322,7 @@ def cliente_s3(conf):
         aws_secret_access_key=conf["s3_secret"],
         region_name=conf["s3_region"],
         config=Config(s3={"addressing_style": "path"}, retries={"max_attempts": 5},
-                      max_pool_connections=32),
+                      read_timeout=300, max_pool_connections=32),
     )
 
 
@@ -582,7 +582,9 @@ def limpar(args) -> None:
         for _, _, caminho in linhas:
             chaves += [caminho, str(Path(caminho).with_suffix(".txt"))]
         apagados = 0
-        for lote in _lotes(chaves, 1000):
+        # Lotes pequenos: o Garage do Revoada (ceph-block-hdd) apaga ~10 chaves/s, e um
+        # lote de 1000 estourava o read_timeout em todas as tentativas
+        for lote in _lotes(chaves, 100):
             resposta = s3.delete_objects(
                 Bucket=conf["s3_bucket"],
                 Delete={"Objects": [{"Key": k} for k in lote], "Quiet": True},
