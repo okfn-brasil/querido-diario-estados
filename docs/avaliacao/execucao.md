@@ -58,7 +58,7 @@ O que ela faz, na ordem:
 
    | Cenário | Quando | O que o script faz |
    |---|---|---|
-   | R1 | ~10% processados e um worker ocupado | `QUEUE_VISIBILITY_TIMEOUT=300` no `extraction-worker` antes da carga; `kubectl delete pod --grace-period=0 --force` no worker mais antigo (A: no pod do Job), t_kill. Guarda as mensagens de `unacked` no instante da falha e quando cada uma saiu de `unacked_index`; a última a sair é a órfã (t_restore). No A, t_restore é o pod novo do Job. No fim, restaura o timeout padrão |
+   | R1 | ~10% processados e um worker ocupado | `QUEUE_VISIBILITY_TIMEOUT=300` no `extraction-worker` antes da carga; SIGKILL no processo do worker mais antigo (A: no contêiner do Job), pelo nó do kind (`crictl inspect` → PID → `kill -KILL`; ver [cenarios.md](cenarios.md#r1--worker-morto-no-meio-do-processamento)), t_kill. Guarda as mensagens de `unacked` no instante da falha e quando cada uma saiu de `unacked_index`; a última a sair é a órfã (t_restore). No A, a recuperação é a volta do contêiner do Job. No fim, restaura o timeout padrão |
    | R1a | ~10% processados | `kubectl delete pod` (SIGTERM), t_kill, e t_pod_removido quando o pod some (duração do desligamento) |
    | R3 | ~25% processados | `scale sts opensearch --replicas=0` (t_down), 60 s, `--replicas=1` (t_up_cmd) e espera o pod pronto (t_ready). Indisponibilidade real = t_ready − t_down |
    | E2 | — | sem carga: janela de 30 min. No A, o CronJob `data-processing` é reativado durante a janela e suspenso de novo no fim |

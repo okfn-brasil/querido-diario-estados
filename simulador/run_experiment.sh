@@ -888,6 +888,24 @@ else
         fi
     }
 
+    # R1: SIGKILL no processo principal do contêiner, de fora, pelo nó do kind
+    # (como um OOMKill). Um `kubectl delete pod --grace-period=0 --force` não
+    # serve: o kubelet ainda manda SIGTERM e só mata 2 s depois (containerd:
+    # "StopContainer ... with timeout 2 (s)"), e nesse tempo o Celery termina o
+    # diário, confirma a mensagem e devolve à fila as reservadas, sem deixar
+    # órfã (visto no R1-B de verificação de 25/11/2026). O kubelet reinicia o
+    # contêiner no mesmo pod
+    matar_sigkill() {  # matar_sigkill <pod> <contêiner>
+        local no cid pid
+        [[ $AMBIENTE == kind ]] || { log "ERRO: o R1 com SIGKILL só roda no kind (precisa do nó)"; return 1; }
+        no=$(kc get pod "$1" -o jsonpath='{.spec.nodeName}')
+        cid=$(kc get pod "$1" -o json | jq -r --arg c "$2" '.status.containerStatuses[] | select(.name == $c) | .containerID | sub("^[a-z]+://"; "")')
+        [[ -n $no && -n $cid ]] || return 1
+        pid=$(docker exec "$no" crictl inspect "$cid" | jq -r '.info.pid // empty')
+        [[ $pid =~ ^[0-9]+$ ]] || return 1
+        docker exec "$no" kill -KILL "$pid"
+    }
+
     injetar_falha() {
         case $CENARIO in
         R1|R1a)
@@ -900,7 +918,7 @@ else
             local t
             t=$(agora)
             if [[ $CENARIO == R1 ]]; then
-                kc delete pod "$vitima" --grace-period=0 --force --wait=false >/dev/null 2>&1 || true
+                matar_sigkill "$vitima" "$([[ $MODO == A ]] && echo data-processing || echo worker)" || return 1
             else
                 kc delete pod "$vitima" --wait=false >/dev/null
                 # Duração do desligamento: do delete até o pod sumir
@@ -918,7 +936,7 @@ else
                 rq hgetall unacked > "$TMP/unacked" || true
             fi
             meta '.falha = {tipo: $tipo, pod: $p, processados_na_falha: ($pr | tonumber), pendentes_na_falha: ($pe | tonumber), fila_na_falha: ($f | tonumber)}' \
-                --arg tipo "$([[ $CENARIO == R1 ]] && echo 'delete --grace-period=0 --force' || echo 'delete (SIGTERM)')" \
+                --arg tipo "$([[ $CENARIO == R1 ]] && echo 'SIGKILL no processo principal do contêiner (kill -9 pelo nó)' || echo 'delete (SIGTERM)')" \
                 --arg p "$vitima" --arg pr "$processados" --arg pe "$pendentes" --arg f "$fila"
             if [[ $MODO != A && -s $TMP/unacked ]]; then
                 local tag corpo gid
