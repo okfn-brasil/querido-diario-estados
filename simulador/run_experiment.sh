@@ -384,12 +384,15 @@ simulador() {
         (cd "$RAIZ" && uv run -q simulador/load_simulator.py "$@" --port-forward \
             --namespace "$NAMESPACE" --context "$CONTEXTO")
     else
-        # O pod não tem tzdata: o fuso vai como deslocamento POSIX (-0300 → UTC+03:00),
-        # para o log da carga sair no mesmo horário do resto
-        local z; z=$(date +%z)
-        kc exec export-metrics -- env TZ="LOCAL$([[ ${z:0:1} == - ]] && echo + || echo -)${z:1:2}:${z:3:2}" \
-            uv run -q /work/load_simulator.py "$@"
+        kc exec export-metrics -- env TZ="$(tz_pod)" uv run -q /work/load_simulator.py "$@"
     fi
+}
+
+# O pod export-metrics não tem tzdata: o fuso vai como deslocamento POSIX
+# (-0300 → LOCAL+03:00), para os logs de dentro do pod saírem no horário do resto
+tz_pod() {
+    local z; z=$(date +%z)
+    echo "LOCAL$([[ ${z:0:1} == - ]] && echo + || echo -)${z:1:2}:${z:3:2}"
 }
 
 # ---------------------------------------------------------------------------
@@ -721,7 +724,7 @@ exportar() {
         kc cp "$PASTA_SIM/load_simulator.py" "export-metrics:/work/load_simulator.py"
         kc cp "$JSON" "export-metrics:$remoto/$RUN.json"
         [[ -f $PASTA_RUN/$RUN-postgres.csv ]] && kc cp "$PASTA_RUN/$RUN-postgres.csv" "export-metrics:$remoto/$RUN-postgres.csv"
-        kc exec export-metrics -- uv run -q /work/export_metrics.py --start "$inicio" --end "$fim" \
+        kc exec export-metrics -- env TZ="$(tz_pod)" uv run -q /work/export_metrics.py --start "$inicio" --end "$fim" \
             --cenario "$CENARIO" --modo "$MODO" --run "$RUN" --step "$PASSO_S" \
             --namespace "$NAMESPACE" --saida /work/resultados
         kc cp "export-metrics:$remoto/$RUN.csv" "$PASTA_RUN/$RUN.csv"
