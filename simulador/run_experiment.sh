@@ -276,6 +276,8 @@ trap 'exit 130' INT TERM
 case $CENARIO in
     E1) N=$N_E1 ;; R1) N=$N_R1 ;; E2) N=0 ;; *) N=$N_ROBUSTEZ ;;
 esac
+# O R1 tem N maior que o E1 e espera o visibility_timeout da órfã: timeout próprio
+[[ $CENARIO == R1 ]] && TIMEOUT_S=${TIMEOUT_R1_S:-$TIMEOUT_S}
 CORROMPIDOS=0
 [[ $CENARIO == R2 || $CENARIO == M1 ]] && CORROMPIDOS=$CORROMPIDOS_R2
 VT=""
@@ -605,6 +607,32 @@ checklist() {
     local restantes
     restantes=$(pg "SELECT count(*) FROM gazettes WHERE file_url LIKE 'sim://%'")
     if [[ $restantes == 0 ]]; then check sinteticos 1 "0 diários sintéticos"; else check sinteticos 0 "$restantes diários sintéticos depois do --cleanup"; fi
+
+    # 8a. Grupo do baseline no Pushgateway (A, só no kind). O data-processing
+    # envia com POST (pushadd), que mantém as métricas que um push não traz:
+    # sem apagar o grupo, um Job que não processasse nada deixaria lá os
+    # histogramas da execução anterior com um push_time novo. No Revoada o
+    # Pushgateway é o da produção e o grupo não é apagado
+    if [[ $MODO == A && $AMBIENTE == kind ]]; then
+        if apagar_grupo_pushgateway; then
+            check pushgateway 1 "grupo job=data-processing apagado"
+        else
+            check pushgateway 0 "não consegui apagar o grupo job=data-processing do Pushgateway ($PUSHGATEWAY_SVC)"
+        fi
+    fi
+}
+
+apagar_grupo_pushgateway() {
+    local ns=${PUSHGATEWAY_SVC%%/*} svc=${PUSHGATEWAY_SVC#*/} pf ok=1
+    setsid kubectl --context "$CONTEXTO" port-forward -n "$ns" "svc/$svc" 9093:9091 >/dev/null 2>&1 9>&- &
+    pf=$!
+    for _ in $(seq 50); do curl -sf localhost:9093/-/ready >/dev/null 2>&1 && break; sleep 0.2; done
+    if curl -sf -X DELETE localhost:9093/metrics/job/data-processing >/dev/null &&
+        ! curl -sf localhost:9093/metrics | grep -q '^push_time_seconds{.*job="data-processing"'; then
+        ok=0
+    fi
+    kill "$pf" 2>/dev/null || true
+    return $ok
 }
 
 aplicar_modo
@@ -698,6 +726,56 @@ disparar() {  # disparar <cronjob>: cria o Job de disparo e devolve o nome em $J
     meta '.jobs += [{nome: $j, cronjob: $c, criado: ($t | tonumber)}]' --arg j "$JOB" --arg c "$1" --arg t "$t"
     log "Job $JOB criado a partir de cronjob/$1"
     T_DISPARO=$t
+}
+
+# A: log da tentativa que falhou, enquanto o pod ainda roda (depois que ele
+# termina, o kubelet pode remover o contêiner anterior). Um arquivo por
+# pod × reinício em $TMP, juntados no <run>-job.log por registrar_tentativas_job
+capturar_tentativa_anterior() {
+    local p r
+    while read -r p r; do
+        [[ -n $p && $r -gt 0 && ! -e $TMP/anterior-$p-$r ]] || continue
+        kc logs "$p" --previous > "$TMP/anterior-$p-$r" 2>&1 || true
+    done < <(kc get pods -o json 2>/dev/null | jq -r --arg pre "$JOB_PREFIXO" '.items[]
+        | select((.metadata.labels["job-name"] // "") | startswith($pre))
+        | "\(.metadata.name) \(.status.containerStatuses[0].restartCount // 0)"' || true)
+}
+
+# A: tentativas do contêiner de cada pod dos Jobs da execução. Um reinício
+# (restartPolicy: OnFailure) fora do R1 e do R1a é anotado: no kind, a fase de
+# temas falha com 429 do OpenSearch (circuit breaker, heap de 512 MiB) e o
+# Job só termina na segunda tentativa. Os logs de todas as tentativas vão
+# para <run>-job.log
+registrar_tentativas_job() {
+    local pods tentativas p r
+    capturar_tentativa_anterior
+    pods=$(kc get pods -o json | jq -c --arg pre "$JOB_PREFIXO" '[.items[]
+        | select((.metadata.labels["job-name"] // "") | startswith($pre))
+        | {pod: .metadata.name, job: .metadata.labels["job-name"], fase: .status.phase,
+           reinicios: (.status.containerStatuses[0].restartCount // 0),
+           ultima_falha: (.status.containerStatuses[0].lastState.terminated // null
+               | if . then {codigo: .exitCode, motivo: .reason, fim: .finishedAt} else null end)}]')
+    meta '.job_tentativas = $p' --argjson p "$pods"
+    : > "$PASTA_RUN/$RUN-job.log"
+    for p in $(jq -r '.[].pod' <<<"$pods"); do
+        r=$(jq -r --arg p "$p" '.[] | select(.pod == $p) | .reinicios' <<<"$pods")
+        # Depois que o pod termina, o kubelet pode já ter removido o contêiner
+        # da tentativa anterior: o --previous falha e isso não é erro da execução
+        local f capturou=0
+        for f in "$TMP/anterior-$p-"*; do
+            [[ -e $f ]] || continue
+            { echo "===== $p: tentativa anterior ao reinício ${f##*-}"; cat "$f"; } >> "$PASTA_RUN/$RUN-job.log"
+            capturou=1
+        done
+        if (( r > 0 && capturou == 0 )); then
+            { echo "===== $p: tentativa anterior (--previous)"; kc logs "$p" --previous 2>&1 || true; } >> "$PASTA_RUN/$RUN-job.log"
+        fi
+        { echo "===== $p: última tentativa"; kc logs "$p" 2>&1 || true; } >> "$PASTA_RUN/$RUN-job.log"
+    done
+    tentativas=$(jq -r '[.[] | select(.reinicios > 0) | "\(.pod): \(.reinicios) reinício(s), última falha com código \(.ultima_falha.codigo // "?") (\(.ultima_falha.motivo // "?"))"] | join("; ")' <<<"$pods")
+    if [[ -n $tentativas && $CENARIO != R1 && $CENARIO != R1a ]]; then
+        anomalia "o contêiner do Job reiniciou: $tentativas (ver $RUN-job.log)"
+    fi
 }
 
 # Contagem do Postgres a cada 15 s durante a execução (t_doc1 e vazão no A)
@@ -1008,9 +1086,10 @@ else
             # As métricas qd_* do baseline só vão ao Pushgateway no fim do Job
             # (depois dos temas): exporta até lá, a análise corta em t_vazio
             log "esperando o fim do Job $JOB_ATUAL (temas e push das métricas)"
-            job_fim() { [[ $(estado_job "$JOB_ATUAL") != ativo ]]; }
+            job_fim() { capturar_tentativa_anterior; [[ $(estado_job "$JOB_ATUAL") != ativo ]]; }
             if esperar "$TIMEOUT_JOB_S" "fim do Job" job_fim; then
                 marca t_job_fim
+                registrar_tentativas_job
                 # O push chega ao Pushgateway no fim do Job; o Prometheus só o
                 # vê no próximo scrape. Sem a margem, a exportação perde o resumo
                 local_margem=$(( 2 * PASSO_S + 15 ))
@@ -1100,6 +1179,19 @@ if exportar "${INST[t0]}" "$T_FIM_EXPORT" || { log "export falhou; tentando de n
     pend_fim=$(jq -r '.export.postgres_fim.pendentes_sem_dlq // empty' "$JSON")
     dlq_fim=$(jq -r '.export.dlq.tamanho // empty' "$JSON")
     log "no fim: pendentes fora da DLQ = ${pend_fim:-?}, DLQ = ${dlq_fim:-—}"
+    # A: as séries qd_* vêm do push do Job. Sem elas, o tempo por diário e a
+    # latência coleta → indexado do baseline faltam. No R1 e no R1a, as do pod
+    # morto se perdem por definição (cenarios.md, "Métricas do baseline")
+    if [[ $MODO == A && $N -gt 0 ]]; then
+        qd_a=$(jq -r '.export.prometheus_resumo.processados_por_status // {} | add // 0' "$JSON")
+        if [[ $qd_a == 0 ]]; then
+            if [[ $CENARIO == R1 || $CENARIO == R1a ]]; then
+                anomalia "sem séries qd_* do Pushgateway (o pod morto não enviou as métricas)"
+            else
+                invalida "sem séries qd_* do Pushgateway: o push do Job não chegou ou veio vazio (ver $RUN-job.log)"
+            fi
+        fi
+    fi
     if [[ $CENARIO == R2 || $CENARIO == M1 ]] && [[ $MODO != A && -n $dlq_fim && $dlq_fim != "$CORROMPIDOS" ]]; then
         anomalia "DLQ com $dlq_fim item(ns), esperado $CORROMPIDOS (resultado da arquitetura)"
     fi

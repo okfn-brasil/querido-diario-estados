@@ -43,7 +43,7 @@ O modo B separa o efeito da *fila* (retentativa, DLQ, devolução de mensagens) 
 
 ### Carga
 
-Salvo indicação, todos os cenários usam a carga do E1: `python simulador/load_simulator.py --profile burst --total N --territory 3299999`, ou seja, N diários sintéticos inseridos em 5 min a partir da amostra do D1. O N de cada cenário e de cada campanha está em [Parâmetros fixados](protocolo.md#parâmetros-fixados) (300 no E1 e no R1, 100 no R1a, no R2 e no R3, na campanha K). O perfil `peak-day` do D2 não entra nos cenários: sozinho, ele ocuparia 8 h, e cada campanha cabe em 1 dia.
+Salvo indicação, todos os cenários usam a carga do E1: `python simulador/load_simulator.py --profile burst --total N --territory 3299999`, ou seja, N diários sintéticos inseridos em 5 min a partir da amostra do D1. O N de cada cenário e de cada campanha está em [Parâmetros fixados](protocolo.md#parâmetros-fixados) (300 no E1, 1500 no R1 e 100 no R1a, no R2 e no R3, na campanha K). O perfil `peak-day` do D2 não entra nos cenários: sozinho, ele ocuparia 8 h, e cada campanha cabe em 1 dia.
 
 O processamento é **disparado manualmente logo depois que o simulador termina a inserção**, nos três modos (coluna "Disparo" da tabela acima). Esse instante é o **t0** de todas as medidas.
 
@@ -95,7 +95,7 @@ Medidas:
 
 **Pods de processamento** considerados em CPU·s, memória·s e no E2: no A, o pod do Job `data-processing` e o `apache-tika`; no B e no C, os pods `extraction-worker` (worker + Tika sidecar), o `redis-queue` (com o `redis-exporter`) e os pods dos Jobs `enqueue-extraction`. O operador do KEDA (namespace `keda`) é reportado à parte: ele é um componente do cluster e pode servir a outras aplicações.
 
-**Métricas do baseline.** O CronJob só envia as métricas `qd_*` ao Pushgateway no fim da execução (ver `observabilidade.md`). Por isso, no modo A, t_doc1 e a vazão ao longo do tempo vêm do Postgres (o `run_experiment.sh` consulta a contagem de `processed=true` periodicamente) ou dos logs do Job, e não do Prometheus. Se o pod do Job morrer (R1), as métricas daquela execução se perdem e só o Postgres conta.
+**Métricas do baseline.** O CronJob só envia as métricas `qd_*` ao Pushgateway no fim da execução (ver `observabilidade.md`). Por isso, no modo A, t_doc1 e a vazão ao longo do tempo vêm do Postgres (o `run_experiment.sh` consulta a contagem de `processed=true` periodicamente) ou dos logs do Job, e não do Prometheus. Se o pod do Job morrer (R1), as métricas daquela execução se perdem e só o Postgres conta. O envio é um POST (`pushadd_to_gateway`, okfn-brasil/querido-diario-data-processing#133), que só substitui as métricas enviadas: antes era um PUT, e no piloto da campanha K (25/11/2026) a segunda tentativa do Job, sem diários pendentes, apagava as métricas da primeira. Isso acontece porque, no kind, a fase de temas falha com HTTP 429 do OpenSearch (circuit breaker, heap de 512 MiB) depois da extração, e o `restartPolicy: OnFailure` repete o Job. Os temas ficam fora da medição; o `run_experiment.sh` anota o reinício como anomalia e guarda os logs das tentativas em `<run>-job.log`.
 
 ## E1 · Burst de diários
 

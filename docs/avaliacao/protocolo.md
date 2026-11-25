@@ -63,7 +63,8 @@ Valores fixados para a campanha K. Eles são preenchidos **antes** da primeira e
 | Parâmetro | Valor (campanha K) | Observação |
 |---|---|---|
 | Perfil de carga | `burst` | N diários inseridos em 5 min (D2) |
-| N do E1 e do R1 | 300 | dentro da faixa 200–500 do D2. O R1 não pode ter N menor: depois do t_kill, a fila precisa durar mais que `visibility_timeout` + 2 min (ver [cenarios.md](cenarios.md#r1--worker-morto-no-meio-do-processamento)) |
+| N do E1 | 300 | dentro da faixa 200–500 do D2 |
+| N do R1 | 1500 | depois do t_kill, a fila precisa durar mais que `visibility_timeout` + 2 min = 420 s (ver [cenarios.md](cenarios.md#r1--worker-morto-no-meio-do-processamento)). No piloto (25/11/2026), 300 diários esvaziaram em 206 s no B e 142 s no C (~2,1 diários/s): com 300, a fila acabaria antes de a mensagem órfã voltar. Com 1500 e a falha com 10% processados, restam ~1350 diários, ~590 s no C e ~930 s no B. Fica acima da faixa do D2, que vale para a vazão; o R1 mede recuperação |
 | N do R1a, R2 e R3 | 100 | esses cenários medem perda, isolamento e recuperação, não vazão. Com 100 diários, ainda há processamento antes, durante e depois de cada falha, e a campanha cabe em 1 dia |
 | Revisão de N depois do piloto | — | refazer o [orçamento](#orçamento-de-tempo) com as durações medidas no piloto. Se a campanha passar de 20 h, reduzir o N do E1 (até 200) e registrar; o do R1 só cai se a condição de fila restante continuar valendo |
 | Território | `3299999` | Governo do Estado do Espírito Santo |
@@ -74,6 +75,7 @@ Valores fixados para a campanha K. Eles são preenchidos **antes** da primeira e
 | Indisponibilidade do OpenSearch no R3 | 60 s nominais | reportar a real (t_ready − t_down) |
 | Janela do E2 | 30 min | depois de 2 min de espera ociosa |
 | Timeout de uma execução | 3 × a duração do E1 do modo A na execução piloto | estourou → execução inválida (ver [Validade](#validade-de-uma-execução)) |
+| Timeout do R1 | 3300 s | o critério acima escalado para o N do R1 (3 × 197 s × 1500/300 ≈ 2955 s), mais os 300 s do `visibility_timeout` que a órfã espera |
 | Passo das séries | 15 s | o Prometheus raspa a cada 10 s (`monitoring-values.yaml`) e os PodMonitors do worker e do `redis-queue` a cada 15 s; o `export_metrics.py` usa o maior dos dois como passo do `query_range` |
 
 Na campanha R, mudam: N do E1 = 500, teto do modo C = o do D5, e passo das séries = 30 s (o kube-prometheus do Revoada raspa o cAdvisor e o kube-state-metrics a cada 30 s). O piloto da campanha R revisa esses valores da mesma forma.
@@ -95,16 +97,18 @@ O piloto é anotado no diário de bordo, marcado como piloto.
 
 Estimativa a partir da validação funcional (C7, no kind): ~4 s por diário no baseline e ~3,3 s por diário em cada worker. Cada execução soma ~3 min de preparação (checklist, cleanup e 2 min de repouso) e ~2 min de troca de modo, que acontece quase sempre por causa da ordem em quadrado latino. No modo C, somam-se o *cold start* do Tika (~30 s) e o `cooldownPeriod` do KEDA (120 s) até as réplicas voltarem a 0.
 
-**Campanha K** (teto 2):
+**Campanha K** (teto 2), revisada com o piloto de 25/11/2026: o processamento foi bem mais rápido que na C7 (~0,66 s por diário no A e no B, ~0,47 s no C), e cada E1 levou ~12 min, a maior parte fixa (5 min de inserção, 2 min de repouso, preparação e exportação).
 
 | Etapa | Execuções | Tempo |
 |---|---|---|
-| Piloto (E1 nos três modos) | 3 | ~1 h |
-| E1 (N = 300) | 9 | ~3 h |
-| R1 (N = 300, com o `visibility_timeout` de 300 s no B e no C) | 9 | ~3,5 h |
+| Piloto (E1 nos três modos) | 3 | 37 min (medido) |
+| E1 (N = 300) | 9 | ~1,8 h |
+| R1 (N = 1500, com o `visibility_timeout` de 300 s no B e no C) | 9 | ~4 h |
 | R1a, R2, R3 (N = 100) | 27 | ~5 h |
 | E2 (30 min, 1 por modo) | 3 | ~1,75 h |
-| **Total** | **51** | **~14,5 h** |
+| **Total** | **51** | **~13 h** |
+
+A estimativa anterior, da C7 (~4 s por diário no baseline e ~3,3 s por worker), dava ~14,5 h com N = 300 no R1.
 
 **Campanha R** (teto do D5):
 
@@ -158,6 +162,7 @@ Uma execução é **inválida** se acontecer qualquer um destes:
 - o timeout estourou;
 - um pod de infraestrutura (Postgres, OpenSearch, Garage, Redis, Prometheus) reiniciou ou foi `OOMKilled`, **salvo** quando isso é o estímulo do cenário (o OpenSearch no R3);
 - o Prometheus ficou mais de 1 min sem raspar algum alvo usado pelas medidas (buraco nas séries);
+- no modo A, as séries `qd_*` do Job não chegaram ao Pushgateway (push ausente ou vazio), salvo no R1 e no R1a, em que as do pod morto se perdem por definição;
 - algum item do checklist anterior foi pulado ou estava errado (por exemplo, o modo B rodou com teto 2);
 - uma interferência externa foi observada (no kind: outra carga pesada na máquina; no Revoada: manutenção ou carga anormal de terceiros).
 

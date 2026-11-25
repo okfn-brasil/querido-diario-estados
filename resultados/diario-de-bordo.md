@@ -38,3 +38,50 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Arquivos:** `VAL-C-1.{csv,json}` gerados pelo `export_metrics.py` no pod `export-metrics` (passo 30 s, 1558 linhas; séries vazias: só `oomkilled`); não versionados, por serem de validação
 - **Anomalias:** o operador do KEDA do Revoada não reconciliou o `ScaledObject` (sem finalizer, status ou HPA), então o escalonamento 0 → teto → 0 não foi validado. O OpenSearch não subiu no Ceph sem `fsGroup: 1000` (corrigido no overlay)
 - **Validade:** fora da campanha. Os modos B e C da campanha R dependem de o KEDA funcionar no namespace
+
+### E1-A-piloto · 2026-11-25 02:34
+
+- **Campanha:** K
+- **Tipo:** piloto
+- **Commits:** data-processing `ae4abc3` (main-estados) · deployment `e704158` (main-estados) · estados `fa08a37` (tcc/e2-execucao)
+- **Imagem:** `sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b`
+- **Parâmetros:** N = 300, *seed* = 1, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-25T05:36:33+00:00; t_carga_fim = 2026-11-25T05:41:35+00:00; t0 = 2026-11-25T05:41:35+00:00; t_vazio = 2026-11-25T05:44:52+00:00; t_job_fim = 2026-11-25T05:46:43+00:00; t_fim = 2026-11-25T05:47:28+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 3.3 min até t_vazio
+- **Arquivos:** `resultados/piloto/E1/A/E1-A-piloto.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** piloto, fora dos resultados
+
+### E1-B-piloto · 2026-11-25 02:47
+
+- **Campanha:** K
+- **Tipo:** piloto
+- **Commits:** data-processing `ae4abc3` (main-estados) · deployment `e704158` (main-estados) · estados `fa08a37` (tcc/e2-execucao)
+- **Imagem:** `sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b`
+- **Parâmetros:** N = 300, *seed* = 1, teto = 1, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-25T05:50:24+00:00; t_carga_fim = 2026-11-25T05:55:25+00:00; t0 = 2026-11-25T05:55:25+00:00; t_vazio = 2026-11-25T05:58:51+00:00; t_fim = 2026-11-25T05:59:36+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 3.4 min até t_vazio
+- **Arquivos:** `resultados/piloto/E1/B/E1-B-piloto.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** piloto, fora dos resultados
+
+### E1-C-piloto · 2026-11-25 02:59
+
+- **Campanha:** K
+- **Tipo:** piloto
+- **Commits:** data-processing `ae4abc3` (main-estados) · deployment `e704158` (main-estados) · estados `fa08a37` (tcc/e2-execucao)
+- **Imagem:** `sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b`
+- **Parâmetros:** N = 300, *seed* = 1, teto = 2, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-25T06:01:56+00:00; t_carga_fim = 2026-11-25T06:06:56+00:00; t0 = 2026-11-25T06:06:56+00:00; t_vazio = 2026-11-25T06:09:19+00:00; t_zero = 2026-11-25T06:11:14+00:00; t_fim = 2026-11-25T06:11:14+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.4 min até t_vazio
+- **Arquivos:** `resultados/piloto/E1/C/E1-C-piloto.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** piloto, fora dos resultados
+
+### Ajustes depois do piloto da campanha K · 2026-11-25
+
+- **Métricas do modo A:** no E1-A-piloto, as séries `qd_*` vieram vazias, sem que o script percebesse. Causa (reproduzida com os logs das duas tentativas): o Job extrai os 300 diários e falha nos temas com HTTP 429 do OpenSearch (circuit breaker, heap de 512 MiB no kind); o `finally` envia as métricas, o `restartPolicy: OnFailure` sobe outra tentativa, que não acha pendentes e enviava o registro vazio com PUT, apagando o grupo. O mesmo ocorreu no R1-A e no E2-A dos testes de 24/11. Correção: `pushadd_to_gateway` (POST) em okfn-brasil/querido-diario-data-processing#133. A imagem `tcc-fila` foi refeita a partir da anterior trocando só `monitoring/metrics.py` (o resto do código é idêntico ao `ae4abc3`; a anterior ficou como `tcc-fila-ae4abc3`). Novo *digest*: `sha256:58fc08b35ec2ae4c0cae17f61729903a813b8756a9bd465c79de6e35ac22fade`. Os tempos do piloto não mudam (a extração é a mesma); só o push mudou
+- **`run_experiment.sh`:** no modo A, o checklist apaga o grupo `job=data-processing` do Pushgateway (só no kind); o reinício do contêiner do Job vira anomalia, com os logs das tentativas em `<run>-job.log`; o A sem séries `qd_*` é inválido (fora do R1 e do R1a). Conferido num E1-A de validação (fora da campanha): Job reiniciou como antes, 300 observações no Pushgateway, execução válida
+- **Parâmetros fixados:** `IMAGEM_DIGEST` acima; `TIMEOUT_S` = 3 × 197 s = 591 s; N do R1 = 1500 (com 300, a fila esvaziaria em 142–206 s, antes de `visibility_timeout` + 2 min), com timeout próprio de 3300 s; máximo de `qd_gazette_processing_seconds` < 10 s, bem abaixo do `visibility_timeout` de 300 s do R1; orçamento revisado para ~13 h
+- **Memória:** mínimo de 827 MiB disponíveis no piloto (E1-C, 2 workers + Tika), swap até 2,8 GiB
+
