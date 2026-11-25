@@ -9,7 +9,7 @@ Os parâmetros fixados de cada campanha ficam em `simulador/campanhas/K.env` e `
 
 ## Antes da campanha
 
-1. Repositórios irmãos em `main-estados`, sem mudanças locais: `querido-diario-deployment` (os overlays saem dele) e `querido-diario-data-processing` (só o commit é registrado). Por padrão ficam ao lado deste repositório; em outro lugar, `QD_DEPLOYMENT_DIR` e `QD_DATA_PROCESSING_DIR`.
+1. Repositórios irmãos em `main-estados`, sem mudanças locais: `querido-diario-deployment` (os overlays saem dele) e `querido-diario-data-processing` (só o commit é registrado). Por padrão ficam ao lado deste repositório; em outro lugar, `QD_DEPLOYMENT_DIR` e `QD_DATA_PROCESSING_DIR`. Até okfn-brasil/querido-diario-data-processing#133 entrar na `main-estados`, a imagem da campanha K é a do commit `144d805` (branch `tcc/pushadd-metricas`): aponte `QD_DATA_PROCESSING_DIR` para um checkout dessa branch, para o commit registrado bater com a imagem.
 2. A amostra do D1 baixada em `simulador/amostras/` (os PDFs não são versionados): `python3 simulador/montar_amostra.py baixar`.
 3. `uv`, `jq`, `kubectl` e, no kind, `docker` (para ler o *digest* da imagem no nó).
 4. Kind: a pilha de pé (`make k8s-local-up`, `make k8s-local-monitoring` e `make k8s-local-queue` uma vez, para o KEDA e a imagem `:tcc-fila`). Revoada: VPN ligada e os segredos do namespace criados (`k8s/overlays/revoada-tcc/README.md` no deployment).
