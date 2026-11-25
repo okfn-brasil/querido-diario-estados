@@ -14,11 +14,11 @@
 #
 # Opções:
 #   --campanha K|R      parâmetros de simulador/campanhas/<K|R>.env (padrão K)
-#   --piloto            execução piloto: resultados em resultados/piloto/, não
+#   --piloto            execução piloto: resultados em resultados/<campanha>/piloto/, não
 #                       exige IMAGEM_DIGEST nem repositórios limpos
 #   --teto N            teto do modo C (padrão: o da campanha; D5)
 #   --seed N            semente do simulador (padrão: k do <run>)
-#   --saida DIR         pasta raiz dos resultados (padrão resultados/)
+#   --saida DIR         pasta raiz dos resultados (padrão resultados/<campanha>/)
 #   --permitir-sujo     roda com mudanças locais nos repositórios (a execução
 #                       fica inválida, salvo no piloto)
 #   --so-checklist      prepara o modo, faz o checklist e para
@@ -28,7 +28,7 @@
 # (arquivos em .../<modo>/invalidas/, entrada no diário); 1 = não rodou
 # (checklist falhou, erro de uso ou de ambiente).
 #
-# Grava em resultados/<cenario>/<modo>/:
+# Grava em resultados/<campanha>/<cenario>/<modo>/:
 #   <run>.json           metadados (parâmetros, commits, digest, instantes,
 #                        checklist, falha, validade) + a chave "export" do D4
 #   <run>.csv            séries do Prometheus entre t0 e o fim (export_metrics.py)
@@ -88,8 +88,8 @@ DP=${QD_DATA_PROCESSING_DIR:-$RAIZ/../querido-diario-data-processing}
 [[ -d $DEP/k8s ]] || { echo "querido-diario-deployment não encontrado em $DEP (defina QD_DEPLOYMENT_DIR)" >&2; exit 1; }
 
 if [[ -n $SAIDA_ARG ]]; then SAIDA=$(realpath -m "$SAIDA_ARG")
-elif [[ $PILOTO == 1 ]]; then SAIDA=$RAIZ/resultados/piloto
-else SAIDA=$RAIZ/resultados; fi
+elif [[ $PILOTO == 1 ]]; then SAIDA=$RAIZ/resultados/$CAMPANHA/piloto
+else SAIDA=$RAIZ/resultados/$CAMPANHA; fi
 PASTA_RUN=$SAIDA/$CENARIO/$MODO
 JSON=$PASTA_RUN/$RUN.json
 LOG=$PASTA_RUN/$RUN.log

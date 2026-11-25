@@ -194,7 +194,7 @@ for linha in "${PLANO[@]}"; do
                 log "$run inválida: refazendo na mesma posição"
                 ;;
             *)
-                log "PARADA: $run não rodou (código $codigo: checklist ou ambiente). Veja resultados/nao-executadas/ e rode de novo para retomar"
+                log "PARADA: $run não rodou (código $codigo: checklist ou ambiente). Veja resultados/<campanha>/nao-executadas/ e rode de novo para retomar"
                 exit 1
                 ;;
         esac

@@ -48,7 +48,7 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Parâmetros:** N = 300, *seed* = 1, timeout = 7200 s
 - **Instantes (UTC):** t_carga_inicio = 2026-11-25T05:36:33+00:00; t_carga_fim = 2026-11-25T05:41:35+00:00; t0 = 2026-11-25T05:41:35+00:00; t_vazio = 2026-11-25T05:44:52+00:00; t_job_fim = 2026-11-25T05:46:43+00:00; t_fim = 2026-11-25T05:47:28+00:00
 - **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 3.3 min até t_vazio
-- **Arquivos:** `resultados/piloto/E1/A/E1-A-piloto.{csv,json,log}`
+- **Arquivos:** `resultados/K/piloto/E1/A/E1-A-piloto.{csv,json,log}`
 - **Anomalias:** nenhuma detectada pelo script
 - **Validade:** piloto, fora dos resultados
 
@@ -61,7 +61,7 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Parâmetros:** N = 300, *seed* = 1, teto = 1, timeout = 7200 s
 - **Instantes (UTC):** t_carga_inicio = 2026-11-25T05:50:24+00:00; t_carga_fim = 2026-11-25T05:55:25+00:00; t0 = 2026-11-25T05:55:25+00:00; t_vazio = 2026-11-25T05:58:51+00:00; t_fim = 2026-11-25T05:59:36+00:00
 - **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 3.4 min até t_vazio
-- **Arquivos:** `resultados/piloto/E1/B/E1-B-piloto.{csv,json,log}`
+- **Arquivos:** `resultados/K/piloto/E1/B/E1-B-piloto.{csv,json,log}`
 - **Anomalias:** nenhuma detectada pelo script
 - **Validade:** piloto, fora dos resultados
 
@@ -74,7 +74,7 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Parâmetros:** N = 300, *seed* = 1, teto = 2, timeout = 7200 s
 - **Instantes (UTC):** t_carga_inicio = 2026-11-25T06:01:56+00:00; t_carga_fim = 2026-11-25T06:06:56+00:00; t0 = 2026-11-25T06:06:56+00:00; t_vazio = 2026-11-25T06:09:19+00:00; t_zero = 2026-11-25T06:11:14+00:00; t_fim = 2026-11-25T06:11:14+00:00
 - **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.4 min até t_vazio
-- **Arquivos:** `resultados/piloto/E1/C/E1-C-piloto.{csv,json,log}`
+- **Arquivos:** `resultados/K/piloto/E1/C/E1-C-piloto.{csv,json,log}`
 - **Anomalias:** nenhuma detectada pelo script
 - **Validade:** piloto, fora dos resultados
 

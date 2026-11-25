@@ -66,7 +66,7 @@ WHERE file_url LIKE 'sim://%' AND NOT processed
 
 ### Repetições e registro
 
-Três repetições por cenário × modo (uma no E2), na ordem e com os critérios de validade do [protocolo](protocolo.md). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<cenario>/<modo>/<run>.csv`.
+Três repetições por cenário × modo (uma no E2), na ordem e com os critérios de validade do [protocolo](protocolo.md). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<campanha>/<cenario>/<modo>/<run>.csv`.
 
 ## Instantes e medidas
 

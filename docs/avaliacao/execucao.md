@@ -19,7 +19,7 @@ Os parâmetros fixados de cada campanha ficam em `simulador/campanhas/K.env` e `
 ## Campanha
 
 ```bash
-simulador/run_campaign.sh K piloto      # E1 nos três modos, em resultados/piloto/
+simulador/run_campaign.sh K piloto      # E1 nos três modos, em resultados/K/piloto/
 # conferir o piloto e fixar IMAGEM_DIGEST, TIMEOUT_S e, se preciso, N em campanhas/K.env
 simulador/run_campaign.sh K             # E1 → R1 → R1a, R2, R3 → E2
 simulador/run_campaign.sh K --listar    # situação de cada posição
@@ -33,7 +33,7 @@ Dentro de um cenário, os modos giram por repetição (quadrado latino do protoc
 |---|---|---|
 | 0 | execução válida (ou piloto concluído) | segue para a próxima posição |
 | 2 | execução inválida | refaz logo, na mesma posição, com a próxima letra (`E1-C-2b`). Com mais de 3 inválidas num mesmo cenário × modo, para |
-| 1 | não rodou (checklist ou ambiente) | para. O `.json` e o `.log` vão para `resultados/nao-executadas/`; corrigir e rodar de novo, que retoma da mesma posição |
+| 1 | não rodou (checklist ou ambiente) | para. O `.json` e o `.log` vão para `resultados/<campanha>/nao-executadas/`; corrigir e rodar de novo, que retoma da mesma posição |
 
 O M1 e o D5 (#31) não entram na campanha. O M1 é um R2 conduzido com cada pessoa participante: `run_experiment.sh M1 C M1-C-1`, e o diagnóstico é cronometrado à parte. O D5 usa `run_experiment.sh E1 C E1-C-D5t4-1 --teto 4`.
 
@@ -71,7 +71,7 @@ Interrompido (Ctrl+C) ou com erro depois de a carga começar, o script restaura 
 
 ### Arquivos
 
-Em `resultados/<cenario>/<modo>/` (no piloto, `resultados/piloto/...`):
+Em `resultados/<campanha>/<cenario>/<modo>/` (no piloto, `resultados/<campanha>/piloto/...`; `<campanha>` é `K` ou `R`):
 
 | Arquivo | Conteúdo |
 |---|---|

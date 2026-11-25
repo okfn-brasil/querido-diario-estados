@@ -1,7 +1,7 @@
 {
-  "run": "E1-A-piloto",
+  "run": "E1-C-piloto",
   "cenario": "E1",
-  "modo": "A",
+  "modo": "C",
   "campanha": "K",
   "piloto": true,
   "repeticao": 1,
@@ -9,7 +9,7 @@
   "contexto": "kind-querido-diario-dev",
   "namespace": "querido-diario",
   "maquina": "muriel-ThinkPad-E14-Gen-4",
-  "inicio_script": 1795584844.925,
+  "inicio_script": 1795586378.843,
   "parametros": {
     "n": 300,
     "seed": 1,
@@ -26,24 +26,24 @@
     "fracao_falha": null
   },
   "instantes": {
-    "t_carga_inicio": 1795584993.375,
-    "t_carga_fim": 1795585295.336,
-    "t0": 1795585295.358,
-    "t_rep1_obs": 1795585302.488,
-    "t_doc1_obs": 1795585302.497,
-    "t_vazio": 1795585492.217,
-    "t_job_fim": 1795585603.007,
-    "t_fim": 1795585648.019
+    "t_carga_inicio": 1795586516.113,
+    "t_carga_fim": 1795586816.924,
+    "t0": 1795586816.945,
+    "t_rep1_obs": 1795586830.013,
+    "t_doc1_obs": 1795586835.949,
+    "t_vazio": 1795586959.385,
+    "t_zero": 1795587074.166,
+    "t_fim": 1795587074.176
   },
   "instantes_iso": {
-    "t_carga_inicio": "2026-11-25T05:36:33Z",
-    "t_carga_fim": "2026-11-25T05:41:35Z",
-    "t0": "2026-11-25T05:41:35Z",
-    "t_rep1_obs": "2026-11-25T05:41:42Z",
-    "t_doc1_obs": "2026-11-25T05:41:42Z",
-    "t_vazio": "2026-11-25T05:44:52Z",
-    "t_job_fim": "2026-11-25T05:46:43Z",
-    "t_fim": "2026-11-25T05:47:28Z"
+    "t_carga_inicio": "2026-11-25T06:01:56Z",
+    "t_carga_fim": "2026-11-25T06:06:56Z",
+    "t0": "2026-11-25T06:06:56Z",
+    "t_rep1_obs": "2026-11-25T06:07:10Z",
+    "t_doc1_obs": "2026-11-25T06:07:15Z",
+    "t_vazio": "2026-11-25T06:09:19Z",
+    "t_zero": "2026-11-25T06:11:14Z",
+    "t_fim": "2026-11-25T06:11:14Z"
   },
   "checklist": [
     {
@@ -59,7 +59,12 @@
     {
       "item": "modo",
       "ok": true,
-      "detalhe": "overlay k8s/overlays/dev: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila"
+      "detalhe": "ScaledObject min=0 max=2 Ready"
+    },
+    {
+      "item": "visibility_timeout",
+      "ok": true,
+      "detalhe": "padrão (2 h)"
     },
     {
       "item": "imagem",
@@ -69,7 +74,7 @@
     {
       "item": "monitoramento",
       "ok": true,
-      "detalhe": "up == 1 para pushgateway"
+      "detalhe": "up == 1 para pushgateway redis-queue"
     },
     {
       "item": "infraestrutura",
@@ -77,9 +82,14 @@
       "detalhe": "OpenSearch yellow; 8 pods de infraestrutura prontos"
     },
     {
+      "item": "redis_fila",
+      "ok": true,
+      "detalhe": "FLUSHDB; fila, DLQ e unacked vazias"
+    },
+    {
       "item": "cronjobs",
       "ok": true,
-      "detalhe": "suspensos: data-processing=true"
+      "detalhe": "suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true"
     },
     {
       "item": "sinteticos",
@@ -89,9 +99,9 @@
   ],
   "jobs": [
     {
-      "nome": "exp-e1-a-piloto-1795585295",
-      "cronjob": "data-processing",
-      "criado": 1795585295.358
+      "nome": "exp-e1-c-piloto-1795586816",
+      "cronjob": "enqueue-extraction",
+      "criado": 1795586816.945
     }
   ],
   "validade": {
@@ -100,9 +110,9 @@
     "anomalias": []
   },
   "maquina_local": {
-    "disco_uso_pct": 82,
-    "memoria_disponivel_mib": 2304,
-    "carga_1min": "4.41",
+    "disco_uso_pct": 83,
+    "memoria_disponivel_mib": 1405,
+    "carga_1min": "1.00",
     "outros_conteineres": []
   },
   "commits": {
@@ -128,19 +138,28 @@
     "esperada": "",
     "usadas": [
       {
-        "pod": "exp-e1-a-piloto-1795585295-577kx",
+        "pod": "enqueue-extraction-29926435-c4tqp",
+        "imagem": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila",
+        "digest": "sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b"
+      },
+      {
+        "pod": "exp-e1-c-piloto-1795586816-k8dnf",
+        "imagem": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila",
+        "digest": "sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b"
+      },
+      {
+        "pod": "extraction-worker-6d45cbc665-f9cbv",
+        "imagem": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila",
+        "digest": "sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b"
+      },
+      {
+        "pod": "extraction-worker-6d45cbc665-rhzcr",
         "imagem": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila",
         "digest": "sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b"
       }
     ]
   },
   "infra_inicio": {
-    "apache-tika-5f458659fd-zr5ss": {
-      "uid": "87f86e96-3105-4154-af7d-52ccea953fb2",
-      "restarts": 0,
-      "oom": false,
-      "ready": true
-    },
     "garage-645b9bf785-9qg6k": {
       "uid": "8463152f-7f3f-4b8a-9eb0-1f6b95aa0478",
       "restarts": 8,
@@ -156,6 +175,12 @@
     "redis-5485c45868-hsf4f": {
       "uid": "ba2b64f3-8833-41e3-832f-a01a09c5ecea",
       "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-6b8b564bd9-xkcft": {
+      "uid": "ae52ec6c-4332-4f16-a000-939583e1c3dd",
+      "restarts": 0,
       "oom": false,
       "ready": true
     },
@@ -192,27 +217,21 @@
     "duracao_planejada_s": 300.0,
     "seed": 1,
     "territory": "3299999",
-    "inicio": "2026-11-25T05:36:36.195027+00:00",
-    "fim": "2026-11-25T05:41:35.241944+00:00",
+    "inicio": "2026-11-25T06:01:57.793752+00:00",
+    "fim": "2026-11-25T06:06:56.841511+00:00",
     "duracao_real_s": 299.0,
-    "atraso_max_s": 0.057,
+    "atraso_max_s": 0.051,
     "atraso_p95_s": 0.025,
     "bytes_enviados": 1334033933,
     "corrompidos_ids": [],
     "ids_min_max": [
-      543,
-      842
+      1143,
+      1442
     ],
     "erros_detalhe": [],
     "amostra": "simulador/amostras/manifest.csv"
   },
   "infra_fim": {
-    "apache-tika-5f458659fd-zr5ss": {
-      "uid": "87f86e96-3105-4154-af7d-52ccea953fb2",
-      "restarts": 0,
-      "oom": false,
-      "ready": true
-    },
     "garage-645b9bf785-9qg6k": {
       "uid": "8463152f-7f3f-4b8a-9eb0-1f6b95aa0478",
       "restarts": 8,
@@ -228,6 +247,12 @@
     "redis-5485c45868-hsf4f": {
       "uid": "ba2b64f3-8833-41e3-832f-a01a09c5ecea",
       "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-6b8b564bd9-xkcft": {
+      "uid": "ae52ec6c-4332-4f16-a000-939583e1c3dd",
+      "restarts": 0,
       "oom": false,
       "ready": true
     },
@@ -257,80 +282,92 @@
     }
   },
   "export_janela": {
-    "inicio": 1795585295.358,
-    "fim": 1795585648.019
+    "inicio": 1795586816.945,
+    "fim": 1795587074.176
   },
   "export": {
-    "gerado_em": "2026-11-25T05:47:29+00:00",
-    "run": "E1-A-piloto",
+    "gerado_em": "2026-11-25T06:11:16+00:00",
+    "run": "E1-C-piloto",
     "cenario": "E1",
-    "modo": "A",
+    "modo": "C",
     "namespace": "querido-diario",
     "contexto": "kind-querido-diario-dev",
-    "inicio": "2026-11-25T05:41:35+00:00",
-    "fim": "2026-11-25T05:47:28+00:00",
-    "inicio_ts": 1795585295.358,
-    "fim_ts": 1795585648.019,
+    "inicio": "2026-11-25T06:06:56+00:00",
+    "fim": "2026-11-25T06:11:14+00:00",
+    "inicio_ts": 1795586816.945,
+    "fim_ts": 1795587074.176,
     "passo_s": 15,
     "janela_rate": "60s",
     "prometheus": "http://localhost:9091",
     "linhas_por_serie": {
-      "processados": 0,
-      "vazao_por_min": 0,
-      "tempo_diario_p50_s": 0,
-      "tempo_diario_p95_s": 0,
-      "coleta_indexado_p50_s": 0,
-      "coleta_indexado_p95_s": 0,
-      "push_time_s": 3,
-      "fila": 0,
-      "dlq": 0,
-      "replicas_desejadas": 0,
-      "replicas": 0,
-      "replicas_disponiveis": 0,
-      "cpu_cores": 284,
-      "memoria_bytes": 284,
-      "request_cpu_cores": 24,
-      "request_memoria_bytes": 335,
-      "pod_fase": 335,
-      "reinicios": 335,
+      "processados": 16,
+      "vazao_por_min": 15,
+      "tempo_diario_p50_s": 10,
+      "tempo_diario_p95_s": 10,
+      "coleta_indexado_p50_s": 10,
+      "coleta_indexado_p95_s": 10,
+      "push_time_s": 18,
+      "fila": 18,
+      "dlq": 18,
+      "replicas_desejadas": 18,
+      "replicas": 18,
+      "replicas_disponiveis": 18,
+      "cpu_cores": 230,
+      "memoria_bytes": 232,
+      "request_cpu_cores": 51,
+      "request_memoria_bytes": 307,
+      "pod_fase": 307,
+      "reinicios": 325,
       "oomkilled": 0,
-      "alvo_up": 24
+      "alvo_up": 53
     },
     "series_vazias": [
-      "coleta_indexado_p50_s",
-      "coleta_indexado_p95_s",
-      "dlq",
-      "fila",
-      "oomkilled",
-      "processados",
-      "replicas",
-      "replicas_desejadas",
-      "replicas_disponiveis",
-      "tempo_diario_p50_s",
-      "tempo_diario_p95_s",
-      "vazao_por_min"
+      "oomkilled"
     ],
     "prometheus_resumo": {
       "observacao": null,
-      "push_time": "2026-11-25T05:46:34+00:00",
-      "processados_por_status": {},
+      "processados_por_status": {
+        "ok": 300.0
+      },
       "tempo_diario_s": {
-        "buckets": {},
-        "soma": null,
-        "contagem": null,
-        "p50": null,
-        "p95": null,
-        "p99": null,
-        "media": null
+        "buckets": {
+          "1.0": 223.0,
+          "2.0": 275.0,
+          "5.0": 300.0,
+          "10.0": 300.0,
+          "20.0": 300.0,
+          "40.0": 300.0,
+          "80.0": 300.0,
+          "160.0": 300.0,
+          "320.0": 300.0,
+          "+Inf": 300.0
+        },
+        "soma": 248.29546062700592,
+        "contagem": 300.0,
+        "p50": 0.672645739910314,
+        "p95": 3.2,
+        "p99": 4.640000000000001,
+        "media": 0.8276515354233531
       },
       "coleta_indexado_s": {
-        "buckets": {},
-        "soma": null,
-        "contagem": null,
-        "p50": null,
-        "p95": null,
-        "p99": null,
-        "media": null
+        "buckets": {
+          "60.0": 31.0,
+          "300.0": 201.0,
+          "900.0": 300.0,
+          "1800.0": 300.0,
+          "3600.0": 300.0,
+          "7200.0": 300.0,
+          "14400.0": 300.0,
+          "43200.0": 300.0,
+          "86400.0": 300.0,
+          "+Inf": 300.0
+        },
+        "soma": 68593.579876,
+        "contagem": 300.0,
+        "p50": 228.0,
+        "p95": 809.0909090909091,
+        "p99": 881.8181818181819,
+        "media": 228.64526625333335
       }
     },
     "postgres_fim": {
@@ -339,15 +376,20 @@
       "pendentes": 0,
       "pendentes_sem_dlq": 0
     },
-    "dlq": null
+    "dlq": {
+      "tamanho": 0,
+      "ids": [],
+      "entradas": []
+    }
   },
   "lacunas": {
     "tolerancia_s": 75.0,
     "alvos": [
-      "pushgateway"
+      "pushgateway",
+      "redis-queue"
     ],
     "problemas": []
   },
-  "fim_script": 1795585649.681,
-  "pasta_resultados": "resultados/piloto/E1/A"
+  "fim_script": 1795587076.675,
+  "pasta_resultados": "resultados/K/piloto/E1/C"
 }

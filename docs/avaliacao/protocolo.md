@@ -168,7 +168,7 @@ Uma execução é **inválida** se acontecer qualquer um destes:
 
 **Não invalida** a execução um comportamento ruim *da arquitetura em teste*: worker `OOMKilled`, diários na DLQ, perdas, réplicas que não voltam a 0. Isso é resultado, e é registrado como tal. A diferença entre "o ambiente falhou" e "a arquitetura falhou" é decidida e justificada no diário de bordo no momento da execução.
 
-Execuções inválidas nunca são apagadas: ficam no diário de bordo, com o motivo, e os CSVs delas vão para `resultados/<cenario>/<modo>/invalidas/`. Se um mesmo cenário × modo tiver mais de 3 execuções inválidas, as execuções param e o problema é investigado antes de continuar.
+Execuções inválidas nunca são apagadas: ficam no diário de bordo, com o motivo, e os CSVs delas vão para `resultados/<campanha>/<cenario>/<modo>/invalidas/`. Se um mesmo cenário × modo tiver mais de 3 execuções inválidas, as execuções param e o problema é investigado antes de continuar.
 
 ## Registro
 
@@ -180,9 +180,9 @@ Cada execução, inclusive o piloto e as inválidas, ganha uma entrada em [`resu
 
 | Arquivo | Conteúdo | Quem gera |
 |---|---|---|
-| `resultados/<cenario>/<modo>/<run>.csv` | séries do Prometheus entre t0 e o fim (D4) | `export_metrics.py` |
-| `resultados/<cenario>/<modo>/<run>.json` | metadados: instantes (t0, t_rep1, t_doc1, t_vazio, t_zero e os das falhas), parâmetros, commits, *digest*, contagens finais do Postgres e conteúdo da DLQ | `run_experiment.sh` + `export_metrics.py` |
-| `resultados/<cenario>/<modo>/<run>.log` | saída do `run_experiment.sh` | `run_experiment.sh` |
+| `resultados/<campanha>/<cenario>/<modo>/<run>.csv` | séries do Prometheus entre t0 e o fim (D4) | `export_metrics.py` |
+| `resultados/<campanha>/<cenario>/<modo>/<run>.json` | metadados: instantes (t0, t_rep1, t_doc1, t_vazio, t_zero e os das falhas), parâmetros, commits, *digest*, contagens finais do Postgres e conteúdo da DLQ | `run_experiment.sh` + `export_metrics.py` |
+| `resultados/<campanha>/<cenario>/<modo>/<run>.log` | saída do `run_experiment.sh` | `run_experiment.sh` |
 
 Os commits registrados são os de `main-estados` de `querido-diario-data-processing` e `querido-diario-deployment`, e o da `main` deste repositório (que fixa o protocolo, o simulador e a amostra). Uma execução com mudanças locais não commitadas em qualquer desses repositórios não é válida.
 

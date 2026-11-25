@@ -16,7 +16,7 @@ python simulador/export_metrics.py --start <t0> --end <t_fim> \
     --cenario E1 --modo A --run E1-A-1 --port-forward
 ```
 
-`--start` e `--end` aceitam timestamp Unix (`date +%s`) ou ISO 8601; sem fuso, vale o horário local. Com `--invalida`, os arquivos vão para `resultados/<cenario>/<modo>/invalidas/`. Com `uv run simulador/export_metrics.py ...`, as dependências (`psycopg2-binary`, `redis` e `requests`) se instalam sozinhas.
+`--start` e `--end` aceitam timestamp Unix (`date +%s`) ou ISO 8601; sem fuso, vale o horário local. Com `--invalida`, os arquivos vão para `resultados/<campanha>/<cenario>/<modo>/invalidas/`. Com `uv run simulador/export_metrics.py ...`, as dependências (`psycopg2-binary`, `redis` e `requests`) se instalam sozinhas.
 
 | Opção | Padrão | Observação |
 |---|---|---|
@@ -46,7 +46,7 @@ Formato longo, uma linha por ponto:
 | `valor` | número; pontos `NaN` (por exemplo, percentil sem diários na janela) não são gravados |
 
 ```python
-df = pd.read_csv("resultados/E1/C/E1-C-1.csv")
+df = pd.read_csv("resultados/K/E1/C/E1-C-1.csv")
 fila = df[df.serie == "fila"].set_index("timestamp").valor
 ```
 
