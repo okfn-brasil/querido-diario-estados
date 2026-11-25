@@ -39,6 +39,24 @@ spec:
           valueFrom: { secretKeyRef: { name: app-secret, key: QD_DATA_DB_PASSWORD, optional: true } }
         - name: QD_SIM_DB_URL
           value: postgresql://$(QD_DATA_DB_USER):$(QD_DATA_DB_PASSWORD)@postgres-rw:5432/queridodiario
+        # Simulador de carga dentro do cluster: pela VPN, o upload dos PDFs
+        # ficava em ~2 MB/s e 500 diários levavam 22 min em vez dos 5 min do
+        # burst (piloto da campanha R, 25/11/2026). Daqui, fala direto com os
+        # serviços do namespace
+        - name: QD_SIM_S3_ENDPOINT
+          value: http://garage:3900
+        - name: QD_SIM_S3_ACCESS_KEY
+          valueFrom: { secretKeyRef: { name: app-secret, key: STORAGE_ACCESS_KEY, optional: true } }
+        - name: QD_SIM_S3_SECRET_KEY
+          valueFrom: { secretKeyRef: { name: app-secret, key: STORAGE_ACCESS_SECRET, optional: true } }
+        - name: QD_SIM_S3_BUCKET
+          valueFrom: { secretKeyRef: { name: app-secret, key: STORAGE_BUCKET, optional: true } }
+        - name: QD_SIM_OPENSEARCH_URL
+          value: http://opensearch:9200
+        - name: QD_SIM_OPENSEARCH_USER
+          valueFrom: { secretKeyRef: { name: app-secret, key: QUERIDO_DIARIO_OPENSEARCH_USER, optional: true } }
+        - name: QD_SIM_OPENSEARCH_PASSWORD
+          valueFrom: { secretKeyRef: { name: app-secret, key: QUERIDO_DIARIO_OPENSEARCH_PASSWORD, optional: true } }
         - name: UV_CACHE_DIR
           value: /work/.uv-cache
       resources:

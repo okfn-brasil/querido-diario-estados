@@ -340,12 +340,45 @@ if [[ $AMBIENTE == kind ]]; then
     PF_PID=$!
     for _ in $(seq 50); do curl -sf localhost:9092/-/ready >/dev/null 2>&1 && break; sleep 0.2; done
 else
+    # Um pod de antes da carga dentro do cluster não tem as variáveis do
+    # simulador (o env de um pod não muda): recria
+    if kc get pod export-metrics >/dev/null 2>&1 && \
+        ! kc get pod export-metrics -o json | jq -e '.spec.containers[0].env[] | select(.name == "QD_SIM_S3_ENDPOINT")' >/dev/null; then
+        log "recriando o pod export-metrics (sem as variáveis do simulador)"
+        kc delete pod export-metrics --wait=true >/dev/null
+    fi
     if ! kc get pod export-metrics >/dev/null 2>&1; then
         log "criando o pod export-metrics (simulador/k8s/export-metrics-pod.yaml)"
         kc apply -f "$PASTA_SIM/k8s/export-metrics-pod.yaml"
     fi
     kc wait --for=condition=Ready pod/export-metrics --timeout=5m >/dev/null
+    # O simulador roda dentro do pod (carga na velocidade da rede do cluster, não
+    # da VPN): copia o script sempre e a amostra só quando muda (~470 MB, uma vez
+    # por pod). A versão da amostra é o hash da lista de arquivos e tamanhos
+    kc cp "$PASTA_SIM/load_simulator.py" "export-metrics:/work/load_simulator.py"
+    versao_amostra=$(cd "$PASTA_SIM" && find amostras -type f -printf '%P %s\n' | sort | sha256sum | cut -c1-16)
+    if [[ $(kc exec export-metrics -- cat /work/amostras/.versao 2>/dev/null) != "$versao_amostra" ]]; then
+        log "copiando a amostra de PDFs para o pod export-metrics ($(du -sh "$PASTA_SIM/amostras" | cut -f1); só na primeira vez)"
+        kc exec export-metrics -- rm -rf /work/amostras
+        tar -C "$PASTA_SIM" -cf - amostras | kc exec -i export-metrics -- tar -C /work -xf -
+        kc exec export-metrics -- sh -c "echo $versao_amostra > /work/amostras/.versao"
+    fi
 fi
+
+# load_simulator.py: no kind, local com port-forwards; no Revoada, dentro do pod
+# export-metrics (as conexões vêm do env do pod)
+simulador() {
+    if [[ $AMBIENTE == kind ]]; then
+        (cd "$RAIZ" && uv run -q simulador/load_simulator.py "$@" --port-forward \
+            --namespace "$NAMESPACE" --context "$CONTEXTO")
+    else
+        # O pod não tem tzdata: o fuso vai como deslocamento POSIX (-0300 → UTC+03:00),
+        # para o log da carga sair no mesmo horário do resto
+        local z; z=$(date +%z)
+        kc exec export-metrics -- env TZ="LOCAL$([[ ${z:0:1} == - ]] && echo + || echo -)${z:1:2}:${z:3:2}" \
+            uv run -q /work/load_simulator.py "$@"
+    fi
+}
 
 # ---------------------------------------------------------------------------
 # Modo: overlay, teto e QUEUE_VISIBILITY_TIMEOUT
@@ -548,8 +581,7 @@ checklist() {
 
     # 5. Diários sintéticos da execução anterior
     log "load_simulator.py --cleanup"
-    (cd "$RAIZ" && uv run -q simulador/load_simulator.py --cleanup --port-forward \
-        --namespace "$NAMESPACE" --context "$CONTEXTO")
+    simulador --cleanup
 
     # 6. Fila vazia, nenhum worker ocupado e FLUSHDB (B e C)
     if [[ $MODO != A ]]; then
@@ -835,15 +867,22 @@ else
     # ---------------------------------------------------------------- carga
     iniciar_acompanhamento
     marca t_carga_inicio
-    args=(--profile burst --total "$N" --territory "$TERRITORIO" --seed "$SEED"
-          --port-forward --namespace "$NAMESPACE" --context "$CONTEXTO")
+    args=(--profile burst --total "$N" --territory "$TERRITORIO" --seed "$SEED")
     (( CORROMPIDOS > 0 )) && args+=(--corrupt "$CORROMPIDOS")
     set +e
-    (cd "$RAIZ" && uv run -q simulador/load_simulator.py "${args[@]}") 2>&1 | tee "$TMP/carga.log"
+    simulador "${args[@]}" 2>&1 | tee "$TMP/carga.log"
     status_carga=${PIPESTATUS[0]}
     set -e
     marca t_carga_fim
     registro=$(grep -o 'registro: .*\.json' "$TMP/carga.log" | tail -1 | cut -d' ' -f2- || true)
+    if [[ $AMBIENTE != kind && -n $registro ]]; then
+        # O registro ficou no pod (/work/execucoes/): traz o .json e o .csv
+        local_reg=$PASTA_SIM/execucoes/$(basename "$registro")
+        mkdir -p "$PASTA_SIM/execucoes"
+        kc cp "export-metrics:$registro" "$local_reg" >/dev/null 2>&1 || true
+        kc cp "export-metrics:${registro%.json}.csv" "${local_reg%.json}.csv" >/dev/null 2>&1 || true
+        registro=$local_reg
+    fi
     if [[ -n $registro && -f $registro ]]; then
         cp "$registro" "$PASTA_RUN/$RUN-carga.json"
         [[ -f ${registro%.json}.csv ]] && cp "${registro%.json}.csv" "$PASTA_RUN/$RUN-carga.csv"
