@@ -970,3 +970,12 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t8-1.{csv,json,log}`
 - **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
 - **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### D5: teto da campanha R · 2026-11-26 20:32
+
+- **Execuções:** E1-C-D5t2-1, E1-C-D5t4-1, E1-C-D5t6-1, E1-C-D5t8-1 (N = 500, seed 1), todas válidas e todas chegando ao teto
+- **t0 → t_vazio:** 394, 229, 168 e 143 s (1,27; 2,18; 2,98 e 3,50 diários/s). Ganho por réplica a mais: 0,45 (2→4), 0,40 (4→6) e 0,26 (6→8) diário/s, contra 0,64 por réplica com teto 2
+- **OpenSearch:** CPU máxima de 1,0, 2,0, 2,3 e 3,9 núcleos; tempo por diário (p50, mediana) de 1,06, 1,20, 1,25 e 1,31 s
+- **Decisão:** teto 6, o último ponto antes de o ganho por réplica cair abaixo de ~50% e de o OpenSearch começar a pesar. Igual ao provisório, então o E1-C-piloto continua representativo (173 s contra 168 s no D5)
+- **Ressalva:** 1 execução por teto; a diferença entre 6 e 8 (15%) é da ordem da variação entre repetições vista na K (15–20%)
+

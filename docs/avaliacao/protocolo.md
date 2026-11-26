@@ -78,7 +78,7 @@ Valores fixados para a campanha K. Eles são preenchidos **antes** da primeira e
 | Timeout do R1 | 3300 s | o critério acima escalado para o N do R1 (3 × 197 s × 1500/300 ≈ 2955 s), mais os 300 s do `visibility_timeout` que a órfã espera |
 | Passo das séries | 15 s | o Prometheus raspa a cada 10 s (`monitoring-values.yaml`) e os PodMonitors do worker e do `redis-queue` a cada 15 s; o `export_metrics.py` usa o maior dos dois como passo do `query_range` |
 
-Na campanha R, mudam: N do E1 = 500, teto do modo C = o do D5, e passo das séries = 30 s (o kube-prometheus do Revoada raspa o cAdvisor e o kube-state-metrics a cada 30 s). O piloto da campanha R revisa esses valores da mesma forma.
+Na campanha R, mudam: N do E1 = 500, teto do modo C = 6 (calibrado no D5 em 26/11/2026: com teto 2, 4, 6 e 8, a fila esvaziou em 394, 229, 168 e 143 s; de 6 para 8, cada réplica a mais rende ~40% de uma réplica do teto 2, contra ~60% até 6, e a CPU do OpenSearch quase dobra), e passo das séries = 30 s (o kube-prometheus do Revoada raspa o cAdvisor e o kube-state-metrics a cada 30 s). O piloto da campanha R revisa esses valores da mesma forma.
 
 ## Execução piloto
 
