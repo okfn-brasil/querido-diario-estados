@@ -918,3 +918,55 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Linha do `.tsv`:** o E1-A-pilotoh aparece com código 0 porque, no piloto, o `run_experiment.sh` sai com 0 mesmo quando a execução é inválida
 - **Fixado:** `TIMEOUT_S` = 3 × 702 s = 2106 s; orçamento da R revisto para ~6,5 h obrigatórias. Ver [Desvios do protocolo](../docs/avaliacao/protocolo.md#desvios-do-protocolo)
 
+
+### E1-C-D5t2-1 · 2026-11-26 19:40
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 2, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T22:42:23+00:00; t_carga_fim = 2026-11-26T22:47:23+00:00; t0 = 2026-11-26T22:47:24+00:00; t_vazio = 2026-11-26T22:53:57+00:00; t_zero = 2026-11-26T22:55:52+00:00; t_fim = 2026-11-26T22:55:52+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 6.6 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t2-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-D5t4-1 · 2026-11-26 19:55
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 4, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T22:58:16+00:00; t_carga_fim = 2026-11-26T23:03:16+00:00; t0 = 2026-11-26T23:03:17+00:00; t_vazio = 2026-11-26T23:07:06+00:00; t_zero = 2026-11-26T23:08:55+00:00; t_fim = 2026-11-26T23:08:55+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 3.8 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t4-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-D5t6-1 · 2026-11-26 20:08
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T23:11:18+00:00; t_carga_fim = 2026-11-26T23:16:18+00:00; t0 = 2026-11-26T23:16:19+00:00; t_vazio = 2026-11-26T23:19:07+00:00; t_zero = 2026-11-26T23:20:56+00:00; t_fim = 2026-11-26T23:20:56+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.8 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t6-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-D5t8-1 · 2026-11-26 20:21
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 8, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T23:23:19+00:00; t_carga_fim = 2026-11-26T23:28:20+00:00; t0 = 2026-11-26T23:28:20+00:00; t_vazio = 2026-11-26T23:30:43+00:00; t_zero = 2026-11-26T23:32:38+00:00; t_fim = 2026-11-26T23:32:38+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.4 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t8-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
