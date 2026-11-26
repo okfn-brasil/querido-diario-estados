@@ -1,0 +1,50 @@
+{
+  "garage-645b9bf785-9qg6k": {
+    "uid": "8463152f-7f3f-4b8a-9eb0-1f6b95aa0478",
+    "restarts": 9,
+    "oom": false,
+    "ready": true
+  },
+  "opensearch-0": {
+    "uid": "cb4f4baf-4da9-4872-bc1f-005525b0d389",
+    "restarts": 1,
+    "oom": false,
+    "ready": true
+  },
+  "redis-5485c45868-hsf4f": {
+    "uid": "ba2b64f3-8833-41e3-832f-a01a09c5ecea",
+    "restarts": 9,
+    "oom": false,
+    "ready": true
+  },
+  "redis-queue-6b8b564bd9-l8rz7": {
+    "uid": "53d7f529-08bd-43c2-ba58-8b2d3e93e399",
+    "restarts": 0,
+    "oom": false,
+    "ready": true
+  },
+  "postgres-1": {
+    "uid": "544a6224-f0df-40bc-9d34-ea4d43ec6561",
+    "restarts": 10,
+    "oom": false,
+    "ready": true
+  },
+  "monitoring-kube-state-metrics-7cd8689fcf-mnhs9": {
+    "uid": "cdd01e31-748b-4caf-8f76-20c14640e2bf",
+    "restarts": 10,
+    "oom": false,
+    "ready": true
+  },
+  "prometheus-monitoring-kube-prometheus-prometheus-0": {
+    "uid": "f84a399a-0b6c-4922-942f-40a7aaf8acdf",
+    "restarts": 12,
+    "oom": false,
+    "ready": true
+  },
+  "pushgateway-prometheus-pushgateway-646c5ccfbd-l5r58": {
+    "uid": "639d9ff4-6828-48ef-a214-c3bc9b055aca",
+    "restarts": 6,
+    "oom": false,
+    "ready": true
+  }
+}

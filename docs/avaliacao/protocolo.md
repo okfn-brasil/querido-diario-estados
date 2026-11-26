@@ -215,7 +215,8 @@ Mudanças feitas depois da primeira execução válida, com a data, o motivo e a
 
 | Data | Mudança | Motivo | Execuções afetadas |
 |---|---|---|---|
-| — | — | — | — |
+| 2026-11-25 | Campanha K rodada em blocos: E1 e R1 na noite de 25 para 26/11 (20:59–02:44); robustez (R1a, R2, R3) e E2 em outro dia. Passa de 24 h desde a primeira execução (piloto, 25/11 02:34) | A máquina (7,4 GiB) não comporta a campanha inteira acompanhada num dia só; os blocos rodam à noite, com a máquina dedicada | Todas da campanha K (a ordem dentro de cada cenário não muda) |
+| 2026-11-25 | `run_experiment.sh` passa a esperar (até 120 s) o ScaledObject ficar `Ready` depois de aplicar os modos B e C (`a3b81f3`). Não muda o que é medido | O checklist do E1-C-3 viu `Ready=False` 1 s depois do apply (KEDA ainda reconciliando) e a campanha parou com código 1, sem medir nada (`resultados/K/nao-executadas/E1-C-3-20261125T221428.*`); retomada às 22:19 | E1-C-3 em diante (rodaram com `a3b81f3`); as anteriores, com `65b09d0` |
 
 ## Requisitos para os outros itens
 

@@ -1,0 +1,28 @@
+[22:13:38] execução E1-C-3: cenário E1, modo C, campanha K (kind-querido-diario-dev/querido-diario)
+[22:13:38] N = 300, seed = 3, teto = 2, corrompidos = 0
+[22:13:38] máquina local: disco 84% usado, 1862 MiB de memória disponível, carga 1.34
+[22:13:39] aplicando o modo C
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+[22:13:55] checklist
+[22:13:55]   ✔ repositorios: sem mudanças locais
+[22:13:55]   ✔ maquina_dedicada: só o nó do kind no Docker
+[22:13:56]   ✘ modo: ScaledObject min=0 max=2 Ready=False (esperado min=0 max=2 Ready=True; KEDA reconciliando?)
+[22:13:56]   ✔ visibility_timeout: padrão (2 h)
+[22:13:56]   ✔ imagem: sha256:58fc08b35ec2ae4c0cae17f61729903a813b8756a9bd465c79de6e35ac22fade
+[22:14:21]   ✔ monitoramento: up == 1 para pushgateway redis-queue
+[22:14:22]   ✔ infraestrutura: OpenSearch yellow; 8 pods de infraestrutura prontos
+[22:14:22] load_simulator.py --cleanup
+[22:14:22] port-forward svc/postgres-rw → localhost:5434
+[22:14:23] port-forward svc/garage → localhost:3910
+[22:14:23] port-forward svc/opensearch → localhost:9210
+[22:14:24] 300 diário(s) sintético(s) no Postgres
+[22:14:24] OpenSearch: 528 documento(s) removido(s)
+[22:14:25] storage: 600 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[22:14:25] Postgres: 300 linha(s) apagada(s)
+[22:14:26]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[22:14:27]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[22:14:28]   ✔ sinteticos: 0 diários sintéticos
+[22:14:28] checklist falhou: a execução não roda (protocolo, 'Antes de cada execução')
+[22:14:28] reativando o agendamento do enqueue-extraction
+[22:14:28] registro do checklist em resultados/K/nao-executadas/E1-C-3-20261125T221428.{json,log}

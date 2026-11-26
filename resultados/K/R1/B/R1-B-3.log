@@ -1,0 +1,103 @@
+[02:18:46] execução R1-B-3: cenário R1, modo B, campanha K (kind-querido-diario-dev/querido-diario)
+[02:18:46] N = 1500, seed = 3, teto = 1, corrompidos = 0, QUEUE_VISIBILITY_TIMEOUT = 300 s
+[02:18:46] máquina local: disco 86% usado, 2012 MiB de memória disponível, carga 0.67
+[02:18:46] aplicando o modo B
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+Waiting for deployment "extraction-worker" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "extraction-worker" rollout to finish: 1 old replicas are pending termination...
+deployment "extraction-worker" successfully rolled out
+[02:19:14] checklist
+[02:19:14]   ✔ repositorios: sem mudanças locais
+[02:19:14]   ✔ maquina_dedicada: só o nó do kind no Docker
+[02:19:14]   ✔ modo: ScaledObject min=1 max=1 Ready
+[02:19:14]   ✔ visibility_timeout: 300
+[02:19:14]   ✔ imagem: sha256:58fc08b35ec2ae4c0cae17f61729903a813b8756a9bd465c79de6e35ac22fade
+[02:19:14]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[02:19:15]   ✔ infraestrutura: OpenSearch yellow; 8 pods de infraestrutura prontos
+[02:19:15] load_simulator.py --cleanup
+[02:19:15] port-forward svc/postgres-rw → localhost:5434
+[02:19:16] port-forward svc/garage → localhost:3910
+[02:19:16] port-forward svc/opensearch → localhost:9210
+[02:19:16] 1500 diário(s) sintético(s) no Postgres
+[02:19:18] OpenSearch: 1913 documento(s) removido(s)
+[02:19:22] storage: 3000 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[02:19:22] Postgres: 1500 linha(s) apagada(s)
+[02:19:23]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[02:19:24]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[02:19:25]   ✔ sinteticos: 0 diários sintéticos
+[02:19:25] espera ociosa de 120 s
+[02:21:25] t_carga_inicio = 2026-11-26T05:21:25Z
+[02:21:25] perfil burst: 1500 diários em 5.0 min, seed 3, 104 PDFs na amostra
+  [acompanhar] [02:21:25] port-forward svc/postgres-rw → localhost:5436
+[02:21:25] port-forward svc/postgres-rw → localhost:5434
+  [acompanhar] [02:21:26] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [02:21:26] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/K/R1/B/R1-B-3-postgres.csv
+[02:21:26] port-forward svc/garage → localhost:3910
+[02:21:26] port-forward svc/opensearch → localhost:9210
+[02:21:41] agendados 75/1500, concluídos 74
+[02:21:56] agendados 150/1500, concluídos 149
+[02:22:11] agendados 225/1500, concluídos 224
+[02:22:26] agendados 300/1500, concluídos 299
+[02:22:41] agendados 375/1500, concluídos 374
+[02:22:56] agendados 450/1500, concluídos 449
+[02:23:11] agendados 525/1500, concluídos 524
+[02:23:26] agendados 600/1500, concluídos 599
+[02:23:41] agendados 675/1500, concluídos 674
+[02:23:56] agendados 750/1500, concluídos 749
+[02:24:11] agendados 825/1500, concluídos 824
+[02:24:26] agendados 900/1500, concluídos 899
+[02:24:41] agendados 975/1500, concluídos 974
+[02:24:56] agendados 1050/1500, concluídos 1049
+[02:25:11] agendados 1125/1500, concluídos 1124
+[02:25:26] agendados 1200/1500, concluídos 1199
+[02:25:41] agendados 1275/1500, concluídos 1274
+[02:25:56] agendados 1350/1500, concluídos 1349
+[02:26:11] agendados 1425/1500, concluídos 1424
+[02:26:26] agendados 1500/1500, concluídos 1499
+[02:26:26] fim: 1500 inseridos, 0 erro(s), 299.8 s, atraso máx. 0.068 s
+[02:26:26] registro: /home/muriel/.cache/qd-worktrees/e2-execucao/simulador/execucoes/20261126T052127Z_burst.json
+[02:26:27] t_carga_fim = 2026-11-26T05:26:27Z
+[02:26:29] Job exp-r1-b-3-1795670787 criado a partir de cronjob/enqueue-extraction
+[02:26:29] t0 = 2026-11-26T05:26:27Z
+[02:26:29] esperando os pendentes chegarem a 0 (timeout 3300 s)
+[02:26:30] t_rep1_obs = 2026-11-26T05:26:30Z
+[02:26:30] processados 0/1500, pendentes 1500, fila 0, réplicas 1
+[02:26:36] t_doc1_obs = 2026-11-26T05:26:36Z
+[02:27:33] processados 79/1500, pendentes 1421, fila 1420, réplicas 1
+[02:28:19] t_kill = 2026-11-26T05:28:18Z
+[02:28:22] mensagens reservadas na falha: 0f612d27-5bd0-4e65-bf46-10881eb8346a a6e541b2-fea4-443b-80c7-083aeca4fcf3 (gazettes 24890 24888)
+[02:28:34] processados 170/1500, pendentes 1330, fila 1328, réplicas 1
+[02:29:39] processados 267/1500, pendentes 1233, fila 1231, réplicas 1
+[02:30:43] processados 363/1500, pendentes 1137, fila 1135, réplicas 1
+[02:31:48] processados 471/1500, pendentes 1029, fila 1026, réplicas 1
+[02:32:52] processados 583/1500, pendentes 917, fila 915, réplicas 1
+[02:33:57] processados 688/1500, pendentes 812, fila 810, réplicas 1
+[02:35:01] processados 788/1500, pendentes 712, fila 711, réplicas 1
+[02:36:04] processados 886/1500, pendentes 614, fila 613, réplicas 1
+[02:37:06] processados 983/1500, pendentes 517, fila 516, réplicas 1
+[02:38:08] processados 1081/1500, pendentes 419, fila 418, réplicas 1
+[02:39:11] processados 1170/1500, pendentes 330, fila 329, réplicas 1
+[02:40:13] processados 1255/1500, pendentes 245, fila 243, réplicas 1
+[02:41:16] processados 1331/1500, pendentes 169, fila 168, réplicas 1
+[02:42:19] processados 1401/1500, pendentes 99, fila 98, réplicas 1
+[02:43:21] processados 1488/1500, pendentes 12, fila 11, réplicas 1
+[02:43:32] t_vazio = 2026-11-26T05:43:32Z
+[02:43:32] margem de 45 s para o Prometheus raspar o worker
+[02:44:17] t_fim = 2026-11-26T05:44:17Z
+[02:44:18] t_restore = 2026-11-26T05:34:55Z
+[02:44:18] t_restore − t_kill = 397 s (análise: conferir com o log dos workers)
+  [acompanhar] [02:44:18] acompanhamento encerrado
+[02:44:18] restaurando o QUEUE_VISIBILITY_TIMEOUT padrão do extraction-worker
+[02:44:19] exportando as séries (05:26:27 → 05:44:17 UTC)
+[02:44:19] R1-B-3: 2026-11-26T05:26:27+00:00 → 2026-11-26T05:44:17+00:00 (1071 s), passo 15 s, rate[60s], namespace querido-diario
+[02:44:19] port-forward svc/monitoring-kube-prometheus-prometheus → localhost:9091
+[02:44:19] port-forward svc/postgres-rw → localhost:5435
+[02:44:20] port-forward svc/redis-queue → localhost:6380
+[02:44:20] 6315 linha(s) em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/K/R1/B/R1-B-3.csv
+[02:44:20] resumo em R1-B-3.json; séries vazias: oomkilled
+[02:44:20] Postgres: {'sinteticos': 1500, 'processados': 1500, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+[02:44:20] DLQ: 0 item(ns)
+[02:44:20] no fim: pendentes fora da DLQ = 0, DLQ = 0
+entrada R1-B-3 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[02:44:20] execução R1-B-3 concluída: resultados/K/R1/B/R1-B-3.*
