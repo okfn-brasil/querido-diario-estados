@@ -410,6 +410,9 @@ esperar() {  # esperar <timeout_s> <descrição> <comando...>: repete até o com
 
 replicas() { kc get deployment extraction-worker -o jsonpath="{.$1}" 2>/dev/null || true; }
 worker_pronto() { [[ $(replicas status.readyReplicas) == 1 && $(replicas spec.replicas) == 1 ]]; }
+# O KEDA leva alguns segundos para reconciliar um ScaledObject recém-criado
+# (E1-C-3, 25/11/2026: Ready=False 1 s depois do apply reprovou o checklist)
+scaledobject_pronto() { [[ $(kc get scaledobject extraction-worker -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null) == True ]]; }
 workers_zero() { [[ $(replicas spec.replicas) == 0 ]] && [[ -z $(kc get pods -l app=extraction-worker -o name 2>/dev/null) ]]; }
 
 aplicar_modo() {
@@ -437,6 +440,7 @@ aplicar_modo() {
         [[ $MODO == B ]] && min=1 max=1
         kc patch scaledobject extraction-worker --type merge \
             -p "{\"spec\":{\"minReplicaCount\":$min,\"maxReplicaCount\":$max}}" >/dev/null
+        esperar 120 "ScaledObject Ready" scaledobject_pronto || true
         if [[ -n $VT ]]; then
             kc set env deployment/extraction-worker "QUEUE_VISIBILITY_TIMEOUT=$VT" >/dev/null
             VT_APLICADO=1
