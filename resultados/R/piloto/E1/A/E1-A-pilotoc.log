@@ -1,0 +1,72 @@
+[18:10:18] execução E1-A-pilotoc: cenário E1, modo A, campanha R (revoada-testes/querido-diario-tcc), PILOTO
+[18:10:18] N = 500, seed = 1, teto = 6, corrompidos = 0
+[18:10:18] máquina local: disco 84% usado, 1413 MiB de memória disponível, carga 0.66
+[18:10:20] aplicando o modo A
+deployment "apache-tika" successfully rolled out
+[18:10:22] checklist
+[18:10:22]   ✔ repositorios: sem mudanças locais
+[18:10:22] anomalia: querido-diario-deployment na branch 'tcc/revoada-opensearch-memoria', não em main-estados
+[18:10:22]   ✔ modo: overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila@sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[18:10:23]   ✔ imagem: sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[18:10:23]   ✔ monitoramento: up == 1 para pushgateway
+[18:10:24]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[18:10:24] load_simulator.py --cleanup
+[18:10:24] 0 diário(s) sintético(s) no Postgres
+[18:10:25]   ✔ cronjobs: suspensos: data-processing=true
+[18:10:25]   ✔ sinteticos: 0 diários sintéticos
+[18:10:25] espera ociosa de 120 s
+[18:12:26] t_carga_inicio = 2026-11-25T21:12:26Z
+[18:12:26] perfil burst: 500 diários em 5.0 min, seed 1, 104 PDFs na amostra
+  [acompanhar] [18:12:26] port-forward svc/postgres-rw → localhost:5436
+  [acompanhar] [18:12:26] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/piloto/E1/A/E1-A-pilotoc-postgres.csv
+[18:12:41] agendados 25/500, concluídos 24
+[18:12:56] agendados 50/500, concluídos 49
+[18:13:11] agendados 75/500, concluídos 74
+[18:13:26] agendados 100/500, concluídos 99
+[18:13:41] agendados 125/500, concluídos 124
+[18:13:56] agendados 150/500, concluídos 149
+[18:14:11] agendados 175/500, concluídos 174
+[18:14:26] agendados 200/500, concluídos 199
+[18:14:41] agendados 225/500, concluídos 224
+[18:14:56] agendados 250/500, concluídos 249
+[18:15:11] agendados 275/500, concluídos 274
+[18:15:26] agendados 300/500, concluídos 299
+[18:15:41] agendados 325/500, concluídos 324
+[18:15:56] agendados 350/500, concluídos 349
+[18:16:11] agendados 375/500, concluídos 374
+[18:16:26] agendados 400/500, concluídos 399
+[18:16:41] agendados 425/500, concluídos 424
+[18:16:56] agendados 450/500, concluídos 448
+[18:17:11] agendados 475/500, concluídos 474
+[18:17:26] agendados 500/500, concluídos 499
+[18:17:26] fim: 500 inseridos, 0 erro(s), 299.5 s, atraso máx. 2.154 s
+[18:17:26] registro: /work/execucoes/20261125T211226Z_burst.json
+[18:17:26] t_carga_fim = 2026-11-25T21:17:26Z
+[18:17:27] Job exp-e1-a-pilotoc-1795641447 criado a partir de cronjob/data-processing
+[18:17:27] t0 = 2026-11-25T21:17:27Z
+[18:17:27] esperando os pendentes chegarem a 0 (timeout 7200 s)
+[18:17:28] processados 0/500, pendentes 500
+[18:17:33] t_rep1_obs = 2026-11-25T21:17:33Z
+[18:17:33] t_doc1_obs = 2026-11-25T21:17:33Z
+[18:18:30] processados 34/500, pendentes 466
+[18:19:32] processados 70/500, pendentes 430
+[18:20:36] processados 102/500, pendentes 398
+[18:21:39] processados 136/500, pendentes 364
+[18:22:41] processados 174/500, pendentes 326
+[18:23:44] processados 207/500, pendentes 293
+[18:24:46] processados 248/500, pendentes 252
+[18:25:47] processados 282/500, pendentes 218
+[18:26:50] processados 318/500, pendentes 182
+[18:27:54] processados 357/500, pendentes 143
+[18:28:56] processados 391/500, pendentes 109
+[18:29:58] processados 429/500, pendentes 71
+[18:31:00] processados 469/500, pendentes 31
+[18:31:45] t_vazio = 2026-11-25T21:31:45Z
+[18:31:45] esperando o fim do Job exp-e1-a-pilotoc-1795641447 (temas e push das métricas)
+[18:38:02] t_job_fim = 2026-11-25T21:38:02Z
+[18:38:03] margem de 75 s para o Prometheus raspar o push
+[18:39:18] t_fim = 2026-11-25T21:39:18Z
+  [acompanhar] [18:39:18] acompanhamento encerrado
+[18:39:18] INVÁLIDA: erro do run_experiment.sh (linha 1210: [[ -n $PF_PID ]])
+entrada E1-A-pilotoc acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[18:39:18] execução E1-A-pilotoc INVÁLIDA: erro do run_experiment.sh (linha 1210: [[ -n $PF_PID ]])

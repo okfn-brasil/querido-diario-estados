@@ -1,0 +1,101 @@
+[20:17:24] execução E1-B-pilotob: cenário E1, modo B, campanha R (revoada-testes/querido-diario-tcc), PILOTO
+[20:17:24] N = 500, seed = 1, teto = 1, corrompidos = 0
+[20:17:24] máquina local: disco 84% usado, 5490 MiB de memória disponível, carga 0.13
+[20:17:26] aplicando o modo B
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+Warning: PollingInterval is configured but is not relevant for scaling. It only affects scaling when minReplicaCount = 0, idleReplicaCount is set, or useCachedMetrics is enabled, but it still controls how often KEDA refreshes the ScaledObject status conditions and events
+Warning: CooldownPeriod is configured but is not relevant. CooldownPeriod is only relevant when minReplicaCount = 0 or idleReplicaCount is set
+deployment "extraction-worker" successfully rolled out
+[20:17:57] checklist
+[20:17:57]   ✔ repositorios: sem mudanças locais
+[20:17:57] anomalia: querido-diario-deployment na branch 'tcc/revoada-opensearch-memoria', não em main-estados
+[20:17:57]   ✔ modo: ScaledObject min=1 max=1 Ready
+[20:17:57]   ✔ visibility_timeout: padrão (2 h)
+[20:17:58]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[20:18:00]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[20:18:01]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[20:18:01] load_simulator.py --cleanup
+[20:18:01] 500 diário(s) sintético(s) no Postgres
+[20:19:00] OpenSearch: 852 documento(s) removido(s)
+Traceback (most recent call last):
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/connectionpool.py", line 540, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/connection.py", line 638, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/http/client.py", line 1430, in getresponse
+    response.begin()
+  File "/usr/local/lib/python3.12/http/client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/http/client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/httpsession.py", line 509, in send
+    urllib_response = conn.urlopen(
+                      ^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/util/retry.py", line 485, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/util/util.py", line 39, in reraise
+    raise value
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/connectionpool.py", line 542, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/urllib3/connectionpool.py", line 373, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: AWSHTTPConnectionPool(host='garage', port=3900): Read timed out. (read timeout=60)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/work/load_simulator.py", line 655, in <module>
+    main()
+  File "/work/load_simulator.py", line 641, in main
+    limpar(args)
+  File "/work/load_simulator.py", line 586, in limpar
+    resposta = s3.delete_objects(
+               ^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/client.py", line 606, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/context.py", line 123, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/client.py", line 1076, in _make_api_call
+    http, parsed_response = self._make_request(
+                            ^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/client.py", line 1100, in _make_request
+    return self._endpoint.make_request(operation_model, request_dict)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/endpoint.py", line 119, in make_request
+    return self._send_request(request_dict, operation_model)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/endpoint.py", line 231, in _send_request
+    raise exception
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/endpoint.py", line 281, in _do_get_response
+    http_response = self._send(request)
+                    ^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/endpoint.py", line 385, in _send
+    return self.http_session.send(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/.uv-cache/environments-v2/load-simulator-5da536ce95f152f4/lib/python3.12/site-packages/botocore/httpsession.py", line 548, in send
+    raise ReadTimeoutError(endpoint_url=request.url, error=e)
+botocore.exceptions.ReadTimeoutError: Read timeout on endpoint URL: "http://garage:3900/queridodiariobucket?delete"
+command terminated with exit code 1
+[20:25:02] registro do checklist em resultados/R/piloto/nao-executadas/E1-B-pilotob-20261125T202502.{json,log}

@@ -110,15 +110,15 @@ Estimativa a partir da validação funcional (C7, no kind): ~4 s por diário no 
 
 A estimativa anterior, da C7 (~4 s por diário no baseline e ~3,3 s por worker), dava ~14,5 h com N = 300 no R1.
 
-**Campanha R** (teto do D5):
+**Campanha R** (teto do D5), revisada com o piloto de 26/11/2026 (volumes em `local-path`): cada E1 levou ~21 min no A e no B e ~12 min no C (teto 6), com t0 → t_vazio de 702 s no A, 728 s no B e 173 s no C. O `TIMEOUT_S` da R fica em 3 × 702 s = 2106 s.
 
 | Etapa | Execuções | Tempo |
 |---|---|---|
-| Piloto (E1 nos três modos) | 3 | ~1,25 h |
+| Piloto (E1 nos três modos) | 3 | 54 min (medido, só as válidas) |
 | D5: E1 no modo C com teto 2, 4, 6 e 8, 1 execução por teto (#31) | 4 | ~1 h |
-| E1 (N = 500) | 9 | ~4,25 h |
+| E1 (N = 500) | 9 | ~2,75 h |
 | E2 (30 min, 1 por modo) | 3 | ~1,75 h |
-| **Subtotal obrigatório** | **19** | **~8,25 h** |
+| **Subtotal obrigatório** | **19** | **~6,5 h** |
 | R1a, R2, R3 (N = 100), se couberem | 27 | ~4,5 h |
 
 O R1 fica fora da campanha R: com o teto do D5, a fila esvazia rápido demais para a condição de fila restante sem um N muito maior. A margem até 24 h cobre o ambiente ser até ~1,6× (K) ou ~1,9× (R) mais lento que o estimado. Os tempos da campanha R são extrapolados do kind, e o piloto é o que os confirma.
@@ -218,6 +218,8 @@ Mudanças feitas depois da primeira execução válida, com a data, o motivo e a
 | 2026-11-25 | Campanha K rodada em blocos: E1 e R1 em 25/11 20:59 – 26/11 02:44, robustez (R1a, R2, R3) e E2 em 26/11 02:53–09:26. Do piloto (25/11 02:34) ao fim passaram ~31 h, mais que as 24 h do protocolo | O piloto rodou na madrugada de 25/11 e a campanha só pôde começar à noite, depois das correções do piloto e da verificação curta; os blocos permitem parar entre cenários se a máquina (7,4 GiB) não aguentar | Todas da campanha K (a ordem dentro de cada cenário não muda) |
 | 2026-11-25 | `run_experiment.sh` passa a esperar (até 120 s) o ScaledObject ficar `Ready` depois de aplicar os modos B e C (`a3b81f3`). Não muda o que é medido | O checklist do E1-C-3 viu `Ready=False` 1 s depois do apply (KEDA ainda reconciliando) e a campanha parou com código 1, sem medir nada (`resultados/K/nao-executadas/E1-C-3-20261125T221428.*`); retomada às 22:19 | E1-C-3 em diante (rodaram com `a3b81f3`); as anteriores, com `65b09d0` |
 | 2026-11-26 | Os pods do QD fora do experimento (api, backend, celery-beat, celery-worker, frontend, garage-webui) ficaram com 1 réplica em todas as execuções válidas da campanha K, e não em 0 como previsto para poupar memória | O `kubectl apply` do overlay `dev`, ao aplicar o modo A, os recria (25/11 20:59:41, no E1-A-1). Ficam ociosos, sem carga do experimento, e a condição foi a mesma nos três modos e em todas as repetições | Todas as 48 da campanha K |
+| 2026-11-26 | Campanha R: Postgres, OpenSearch e Garage em `local-path` (disco local do nó), e não no `ceph-block-hdd` (deployment `a3b25e0`). Com isso, o limite do OpenSearch, que tinha subido para 3 GiB no piloto, volta aos 1500 MiB do dev, como na K | O Ceph do Revoada é compartilhado com o QD de produção; sob a carga dela, um fsync de 4 KB levava de 2 a 6 s nos nossos volumes, contra ~1,5 ms no `local-path` (26/11), e os tempos medidos passariam a depender da produção. Autorizado pelo admin do Revoada, que lembrou que o perfil fica diferente de um ambiente com Ceph (ameaça à validade externa). Os três modos usam o mesmo disco | Toda a campanha R, a partir do E1-A-pilotoh |
+| 2026-11-26 | Campanha R: limite de memória do Tika (compartilhado no A, sidecar no B e no C) de 1500 MiB para 2 GiB, com o mesmo heap (`-Xmx1400m`) (deployment `cb7b241`) | O Tika foi OOMKilled no E1-A-pilotoh. Com o heap quase no limite do contêiner, sobravam ~100 MiB fora do heap, que crescem com o número de CPUs visto pela JVM (12 no notebook, 96 nas hipos); na K não houve nenhum OOM em 48 execuções | Toda a campanha R, a partir do E1-A-pilotoi |
 
 ## Requisitos para os outros itens
 
