@@ -1,0 +1,353 @@
+{
+  "run": "E1-A-piloto",
+  "cenario": "E1",
+  "modo": "A",
+  "campanha": "K",
+  "piloto": true,
+  "repeticao": 1,
+  "ambiente": "kind",
+  "contexto": "kind-querido-diario-dev",
+  "namespace": "querido-diario",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795584844.925,
+  "parametros": {
+    "n": 300,
+    "seed": 1,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 2,
+    "corrompidos": 0,
+    "visibility_timeout": null,
+    "passo_s": 15,
+    "timeout_s": 7200,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": null,
+    "fracao_falha": null
+  },
+  "instantes": {
+    "t_carga_inicio": 1795584993.375,
+    "t_carga_fim": 1795585295.336,
+    "t0": 1795585295.358,
+    "t_rep1_obs": 1795585302.488,
+    "t_doc1_obs": 1795585302.497,
+    "t_vazio": 1795585492.217,
+    "t_job_fim": 1795585603.007,
+    "t_fim": 1795585648.019
+  },
+  "instantes_iso": {
+    "t_carga_inicio": "2026-11-25T05:36:33Z",
+    "t_carga_fim": "2026-11-25T05:41:35Z",
+    "t0": "2026-11-25T05:41:35Z",
+    "t_rep1_obs": "2026-11-25T05:41:42Z",
+    "t_doc1_obs": "2026-11-25T05:41:42Z",
+    "t_vazio": "2026-11-25T05:44:52Z",
+    "t_job_fim": "2026-11-25T05:46:43Z",
+    "t_fim": "2026-11-25T05:47:28Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "maquina_dedicada",
+      "ok": true,
+      "detalhe": "só o nó do kind no Docker"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "overlay k8s/overlays/dev: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b (IMAGEM_DIGEST ainda não fixado: copie para campanhas/K.env)"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 8 pods de infraestrutura prontos"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [
+    {
+      "nome": "exp-e1-a-piloto-1795585295",
+      "cronjob": "data-processing",
+      "criado": 1795585295.358
+    }
+  ],
+  "validade": {
+    "valida": true,
+    "motivos": [],
+    "anomalias": []
+  },
+  "maquina_local": {
+    "disco_uso_pct": 82,
+    "memoria_disponivel_mib": 2304,
+    "carga_1min": "4.41",
+    "outros_conteineres": []
+  },
+  "commits": {
+    "estados": {
+      "sha": "fa08a379914154c6ebf51d6f91e473ea3f6fc1e7",
+      "branch": "tcc/e2-execucao",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "e704158f6fe595d8e0c76ede1e48fbb43fd36bdc",
+      "branch": "main-estados",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "ae4abc35704f23931f9590813b67bffd36eb477b",
+      "branch": "main-estados",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila",
+    "digest_no_cluster": "sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b",
+    "esperada": "",
+    "usadas": [
+      {
+        "pod": "exp-e1-a-piloto-1795585295-577kx",
+        "imagem": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila",
+        "digest": "sha256:fc8e0e5a8dad58477e531cd0d9cb4566bc81db43c352f430230217cf9ea95c6b"
+      }
+    ]
+  },
+  "infra_inicio": {
+    "apache-tika-5f458659fd-zr5ss": {
+      "uid": "87f86e96-3105-4154-af7d-52ccea953fb2",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "garage-645b9bf785-9qg6k": {
+      "uid": "8463152f-7f3f-4b8a-9eb0-1f6b95aa0478",
+      "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "0331ae32-e678-4323-8be6-9cc4aaace845",
+      "restarts": 1,
+      "oom": false,
+      "ready": true
+    },
+    "redis-5485c45868-hsf4f": {
+      "uid": "ba2b64f3-8833-41e3-832f-a01a09c5ecea",
+      "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "544a6224-f0df-40bc-9d34-ea4d43ec6561",
+      "restarts": 9,
+      "oom": false,
+      "ready": true
+    },
+    "monitoring-kube-state-metrics-7cd8689fcf-mnhs9": {
+      "uid": "cdd01e31-748b-4caf-8f76-20c14640e2bf",
+      "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "prometheus-monitoring-kube-prometheus-prometheus-0": {
+      "uid": "f84a399a-0b6c-4922-942f-40a7aaf8acdf",
+      "restarts": 10,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-prometheus-pushgateway-646c5ccfbd-l5r58": {
+      "uid": "639d9ff4-6828-48ef-a214-c3bc9b055aca",
+      "restarts": 5,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "carga": {
+    "perfil": "burst",
+    "total_pedido": 300,
+    "inseridos": 300,
+    "erros": 0,
+    "duracao_planejada_s": 300.0,
+    "seed": 1,
+    "territory": "3299999",
+    "inicio": "2026-11-25T05:36:36.195027+00:00",
+    "fim": "2026-11-25T05:41:35.241944+00:00",
+    "duracao_real_s": 299.0,
+    "atraso_max_s": 0.057,
+    "atraso_p95_s": 0.025,
+    "bytes_enviados": 1334033933,
+    "corrompidos_ids": [],
+    "ids_min_max": [
+      543,
+      842
+    ],
+    "erros_detalhe": [],
+    "amostra": "simulador/amostras/manifest.csv"
+  },
+  "infra_fim": {
+    "apache-tika-5f458659fd-zr5ss": {
+      "uid": "87f86e96-3105-4154-af7d-52ccea953fb2",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "garage-645b9bf785-9qg6k": {
+      "uid": "8463152f-7f3f-4b8a-9eb0-1f6b95aa0478",
+      "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "0331ae32-e678-4323-8be6-9cc4aaace845",
+      "restarts": 1,
+      "oom": false,
+      "ready": true
+    },
+    "redis-5485c45868-hsf4f": {
+      "uid": "ba2b64f3-8833-41e3-832f-a01a09c5ecea",
+      "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "544a6224-f0df-40bc-9d34-ea4d43ec6561",
+      "restarts": 9,
+      "oom": false,
+      "ready": true
+    },
+    "monitoring-kube-state-metrics-7cd8689fcf-mnhs9": {
+      "uid": "cdd01e31-748b-4caf-8f76-20c14640e2bf",
+      "restarts": 8,
+      "oom": false,
+      "ready": true
+    },
+    "prometheus-monitoring-kube-prometheus-prometheus-0": {
+      "uid": "f84a399a-0b6c-4922-942f-40a7aaf8acdf",
+      "restarts": 10,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-prometheus-pushgateway-646c5ccfbd-l5r58": {
+      "uid": "639d9ff4-6828-48ef-a214-c3bc9b055aca",
+      "restarts": 5,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "export_janela": {
+    "inicio": 1795585295.358,
+    "fim": 1795585648.019
+  },
+  "export": {
+    "gerado_em": "2026-11-25T05:47:29+00:00",
+    "run": "E1-A-piloto",
+    "cenario": "E1",
+    "modo": "A",
+    "namespace": "querido-diario",
+    "contexto": "kind-querido-diario-dev",
+    "inicio": "2026-11-25T05:41:35+00:00",
+    "fim": "2026-11-25T05:47:28+00:00",
+    "inicio_ts": 1795585295.358,
+    "fim_ts": 1795585648.019,
+    "passo_s": 15,
+    "janela_rate": "60s",
+    "prometheus": "http://localhost:9091",
+    "linhas_por_serie": {
+      "processados": 0,
+      "vazao_por_min": 0,
+      "tempo_diario_p50_s": 0,
+      "tempo_diario_p95_s": 0,
+      "coleta_indexado_p50_s": 0,
+      "coleta_indexado_p95_s": 0,
+      "push_time_s": 3,
+      "fila": 0,
+      "dlq": 0,
+      "replicas_desejadas": 0,
+      "replicas": 0,
+      "replicas_disponiveis": 0,
+      "cpu_cores": 284,
+      "memoria_bytes": 284,
+      "request_cpu_cores": 24,
+      "request_memoria_bytes": 335,
+      "pod_fase": 335,
+      "reinicios": 335,
+      "oomkilled": 0,
+      "alvo_up": 24
+    },
+    "series_vazias": [
+      "coleta_indexado_p50_s",
+      "coleta_indexado_p95_s",
+      "dlq",
+      "fila",
+      "oomkilled",
+      "processados",
+      "replicas",
+      "replicas_desejadas",
+      "replicas_disponiveis",
+      "tempo_diario_p50_s",
+      "tempo_diario_p95_s",
+      "vazao_por_min"
+    ],
+    "prometheus_resumo": {
+      "observacao": null,
+      "push_time": "2026-11-25T05:46:34+00:00",
+      "processados_por_status": {},
+      "tempo_diario_s": {
+        "buckets": {},
+        "soma": null,
+        "contagem": null,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "media": null
+      },
+      "coleta_indexado_s": {
+        "buckets": {},
+        "soma": null,
+        "contagem": null,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "media": null
+      }
+    },
+    "postgres_fim": {
+      "sinteticos": 300,
+      "processados": 300,
+      "pendentes": 0,
+      "pendentes_sem_dlq": 0
+    },
+    "dlq": null
+  },
+  "lacunas": {
+    "tolerancia_s": 75.0,
+    "alvos": [
+      "pushgateway"
+    ],
+    "problemas": []
+  },
+  "fim_script": 1795585649.681,
+  "pasta_resultados": "resultados/K/piloto/E1/A"
+}

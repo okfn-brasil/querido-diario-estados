@@ -10,7 +10,7 @@ Aqui ficam só a definição dos cenários e como aplicá-los. O protocolo de ex
 |---|---|---|---|---|---|
 | E1 | Elasticidade | `burst` de N diários | fila vazia, 0 workers | escalar até o teto e voltar a 0 sem intervenção | tempo até a 1ª réplica, tempo até o 1º diário processado (inclui o *cold start* do Tika sidecar, ADR-0010), tempo até esvaziar, réplicas×tempo, CPU·s total |
 | E2 | Elasticidade/custo | nenhum diário por 30 min | ocioso | não consumir recursos de processamento | memória/CPU reservadas em repouso (baseline: CronJob + Tika fixo) |
-| R1 | Robustez | `kubectl delete pod --grace-period=0 --force` em um worker durante o processamento, com `QUEUE_VISIBILITY_TIMEOUT` reduzido | carga E1 | nenhum diário perdido; reprocessado depois do `visibility_timeout` | diários `processed=false` no fim (alvo 0), retentativas, tempo até o diário do pod morto ser reprocessado |
+| R1 | Robustez | SIGKILL no processo de um worker (`kill -9` pelo nó do kind) durante o processamento, com `QUEUE_VISIBILITY_TIMEOUT` reduzido | carga E1 | nenhum diário perdido; reprocessado depois do `visibility_timeout` | diários `processed=false` no fim (alvo 0), retentativas, tempo até o diário do pod morto ser reprocessado |
 | R1a | Robustez | `kubectl delete pod` (`SIGTERM`, desligamento gracioso) em um worker durante o processamento | carga E1 | o worker termina o diário atual antes de sair; nada é reprocessado | diários `processed=false` no fim (alvo 0), diários reprocessados (alvo 0), duração do desligamento |
 | R2 | Robustez | 10 PDFs corrompidos no meio da carga | carga E1 | corrompidos vão para a DLQ, o resto segue | itens na DLQ = 10, vazão dos demais |
 | R3 | Robustez | OpenSearch indisponível por 60 s (`kubectl scale sts opensearch --replicas=0`, depois 1) | carga E1 | retentativa com backoff, recupera sozinho | perdas (alvo 0), tempo extra até esvaziar |
@@ -43,7 +43,7 @@ O modo B separa o efeito da *fila* (retentativa, DLQ, devolução de mensagens) 
 
 ### Carga
 
-Salvo indicação, todos os cenários usam a carga do E1: `python simulador/load_simulator.py --profile burst --total N --territory 3299999`, ou seja, N diários sintéticos inseridos em 5 min a partir da amostra do D1. O N de cada cenário e de cada campanha está em [Parâmetros fixados](protocolo.md#parâmetros-fixados) (300 no E1 e no R1, 100 no R1a, no R2 e no R3, na campanha K). O perfil `peak-day` do D2 não entra nos cenários: sozinho, ele ocuparia 8 h, e cada campanha cabe em 1 dia.
+Salvo indicação, todos os cenários usam a carga do E1: `python simulador/load_simulator.py --profile burst --total N --territory 3299999`, ou seja, N diários sintéticos inseridos em 5 min a partir da amostra do D1. O N de cada cenário e de cada campanha está em [Parâmetros fixados](protocolo.md#parâmetros-fixados) (300 no E1, 1500 no R1 e 100 no R1a, no R2 e no R3, na campanha K). O perfil `peak-day` do D2 não entra nos cenários: sozinho, ele ocuparia 8 h, e cada campanha cabe em 1 dia.
 
 O processamento é **disparado manualmente logo depois que o simulador termina a inserção**, nos três modos (coluna "Disparo" da tabela acima). Esse instante é o **t0** de todas as medidas.
 
@@ -66,7 +66,7 @@ WHERE file_url LIKE 'sim://%' AND NOT processed
 
 ### Repetições e registro
 
-Três repetições por cenário × modo (uma no E2), na ordem e com os critérios de validade do [protocolo](protocolo.md). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<cenario>/<modo>/<run>.csv`.
+Três repetições por cenário × modo (uma no E2), na ordem e com os critérios de validade do [protocolo](protocolo.md). Cada execução é anotada em `resultados/diario-de-bordo.md`, com data, commit de cada repositório, modo, cenário, N, teto, os instantes de cada injeção de falha (t_kill, t_down etc.) e anomalias. As séries são exportadas com `export_metrics.py --start <t0> --end <t_fim>` para `resultados/<campanha>/<cenario>/<modo>/<run>.csv`.
 
 ## Instantes e medidas
 
@@ -95,7 +95,7 @@ Medidas:
 
 **Pods de processamento** considerados em CPU·s, memória·s e no E2: no A, o pod do Job `data-processing` e o `apache-tika`; no B e no C, os pods `extraction-worker` (worker + Tika sidecar), o `redis-queue` (com o `redis-exporter`) e os pods dos Jobs `enqueue-extraction`. O operador do KEDA (namespace `keda`) é reportado à parte: ele é um componente do cluster e pode servir a outras aplicações.
 
-**Métricas do baseline.** O CronJob só envia as métricas `qd_*` ao Pushgateway no fim da execução (ver `observabilidade.md`). Por isso, no modo A, t_doc1 e a vazão ao longo do tempo vêm do Postgres (o `run_experiment.sh` consulta a contagem de `processed=true` periodicamente) ou dos logs do Job, e não do Prometheus. Se o pod do Job morrer (R1), as métricas daquela execução se perdem e só o Postgres conta.
+**Métricas do baseline.** O CronJob só envia as métricas `qd_*` ao Pushgateway no fim da execução (ver `observabilidade.md`). Por isso, no modo A, t_doc1 e a vazão ao longo do tempo vêm do Postgres (o `run_experiment.sh` consulta a contagem de `processed=true` periodicamente) ou dos logs do Job, e não do Prometheus. Se o pod do Job morrer (R1), as métricas daquela execução se perdem e só o Postgres conta. O envio é um POST (`pushadd_to_gateway`, okfn-brasil/querido-diario-data-processing#133), que só substitui as métricas enviadas: antes era um PUT, e no piloto da campanha K (25/11/2026) a segunda tentativa do Job, sem diários pendentes, apagava as métricas da primeira. Isso acontece porque, no kind, a fase de temas falha com HTTP 429 do OpenSearch (circuit breaker, heap de 512 MiB) depois da extração, e o `restartPolicy: OnFailure` repete o Job. Os temas ficam fora da medição; o `run_experiment.sh` anota o reinício como anomalia e guarda os logs das tentativas em `<run>-job.log`.
 
 ## E1 · Burst de diários
 
@@ -136,9 +136,17 @@ Medidas:
 
 **Objetivo:** mostrar que um worker que morre de verdade (`SIGKILL`, nó que cai, OOM) não faz um diário se perder.
 
-### Por que `--grace-period=0 --force` e `QUEUE_VISIBILITY_TIMEOUT` reduzido (ADR-0009)
+### Por que SIGKILL e `QUEUE_VISIBILITY_TIMEOUT` reduzido (ADR-0009)
 
-Um `kubectl delete pod` simples manda `SIGTERM`. Com `terminationGracePeriodSeconds: 300`, o worker do Celery faz um desligamento gracioso: termina o diário atual, confirma a mensagem e só então sai. Nesse caso nada se perde, mas o teste também não exercita a recuperação. Para simular um worker que morre de fato, R1 usa `kubectl delete pod --grace-period=0 --force`: o pod some da API na hora e o processo é morto sem tempo de terminar o diário.
+Um `kubectl delete pod` simples manda `SIGTERM`. Com `terminationGracePeriodSeconds: 300`, o worker do Celery faz um desligamento gracioso: termina o diário atual, confirma a mensagem e só então sai. Nesse caso nada se perde, mas o teste também não exercita a recuperação. Para simular um worker que morre de fato, R1 manda SIGKILL direto no processo principal do contêiner, pelo nó do kind, como num OOMKill:
+
+```bash
+NO=$(kubectl get pod <pod> -n $NS -o jsonpath='{.spec.nodeName}')
+CID=$(kubectl get pod <pod> -n $NS -o jsonpath='{.status.containerStatuses[?(@.name=="worker")].containerID}' | sed 's|^containerd://||')
+docker exec $NO kill -KILL $(docker exec $NO crictl inspect $CID | jq -r .info.pid)
+```
+
+O plano era `kubectl delete pod --grace-period=0 --force`, mas ele não mata na hora: o pod some da API, e o kubelet ainda manda `SIGTERM` e só mata depois de 2 s (no containerd: `StopContainer ... with timeout 2 (s)`). Na verificação de 25/11/2026, nesses 2 s o worker do B terminou o diário (~0,6 s), confirmou a mensagem e devolveu à fila as reservadas: nenhuma órfã, e o R1 não exercitou a recuperação. O kubelet reinicia o contêiner morto no mesmo pod (o Tika sidecar continua de pé). No Revoada não há acesso ao nó; o R1 fica só na campanha K.
 
 No transporte Redis do Celery, a mensagem reservada por esse worker não volta para a lista `extraction`: ela fica guardada à parte, nas chaves `unacked` e `unacked_index`, e só é devolvida à fila depois do `visibility_timeout`. O padrão é 2 h, longo demais para um experimento. Por isso, no R1, o `extraction-worker` roda com o timeout reduzido:
 
@@ -152,9 +160,7 @@ O valor precisa ser **maior que o tempo do diário mais demorado da amostra do D
 
 1. Iniciar a carga do E1 com o timeout reduzido.
 2. Quando houver pelo menos um worker processando um diário e **ainda houver fila para mais que `visibility_timeout` + 2 min de processamento** (por exemplo, com no máximo 25% dos diários processados), escolher um pod de worker e anotar t_kill:
-   ```bash
-   kubectl delete pod <extraction-worker-...> -n $NS --grace-period=0 --force
-   ```
+   SIGKILL no contêiner `worker` desse pod, como acima.
 3. Logo depois, identificar a mensagem órfã: `kubectl exec -n $NS deploy/redis-queue -c redis -- redis-cli ZRANGE unacked_index 0 -1 WITHSCORES` lista as mensagens reservadas e o instante da entrega. A do pod morto é a que continua lá depois que os demais workers passam para o próximo diário. `HGET unacked <tag>` mostra o corpo da mensagem, com o `gazette_id`.
 4. Acompanhar até a tag sair de `unacked_index` (t_restore) e o diário ficar `processed=true` (t_reproc).
 
@@ -162,9 +168,9 @@ O valor precisa ser **maior que o tempo do diário mais demorado da amostra do D
 
 | Modo | Aplicação e resposta esperada |
 |---|---|
-| A | Mesmo comando no pod do Job `data-processing`. O Job (`restartPolicy: OnFailure`) cria outro pod, que relê os pendentes e reprocessa do início da lista, inclusive o diário interrompido. Não há `visibility_timeout`: o tempo de recuperação é a subida do pod novo. As métricas `qd_*` do pod morto se perdem (ver "Métricas do baseline") |
-| B | O Deployment recria o único worker (com *cold start* do Tika). O pod novo consome a fila e, depois de t_kill + `visibility_timeout`, recebe de volta a mensagem órfã |
-| C | Os demais workers seguem. O pod morto é recriado pelo Deployment, e a órfã volta à fila depois do `visibility_timeout` |
+| A | SIGKILL no contêiner `data-processing` do pod do Job. Com `restartPolicy: OnFailure`, o kubelet reinicia o contêiner no mesmo pod, que relê os pendentes e reprocessa do início da lista, inclusive o diário interrompido. Não há `visibility_timeout`: o tempo de recuperação é a volta do contêiner. As métricas `qd_*` do pod morto se perdem (ver "Métricas do baseline") |
+| B | O kubelet reinicia o contêiner do único worker no mesmo pod (o Tika sidecar continua de pé). O worker novo consome a fila e, depois de t_kill + `visibility_timeout`, recebe de volta a mensagem órfã |
+| C | Os demais workers seguem. O contêiner morto é reiniciado pelo kubelet, e a órfã volta à fila depois do `visibility_timeout` |
 
 **Medidas:** diários sintéticos `processed=false` no fim (alvo 0); retentativas (no B e no C, entregas repetidas do mesmo `gazette_id` nos logs dos workers; no A, diários processados mais de uma vez); t_restore − t_kill (esperado: ≈ `visibility_timeout`); t_reproc − t_kill; tempo extra até esvaziar em relação ao E1 do mesmo modo.
 

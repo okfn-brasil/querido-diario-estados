@@ -1,0 +1,87 @@
+[03:23:37] execução R1a-B-2: cenário R1a, modo B, campanha K (kind-querido-diario-dev/querido-diario)
+[03:23:37] N = 100, seed = 2, teto = 1, corrompidos = 0
+[03:23:37] máquina local: disco 84% usado, 2708 MiB de memória disponível, carga 0.85
+[03:23:37] aplicando o modo B
+deployment "redis-queue" successfully rolled out
+deployment "extraction-worker" successfully rolled out
+[03:23:51] checklist
+[03:23:51]   ✔ repositorios: sem mudanças locais
+[03:23:51]   ✔ maquina_dedicada: só o nó do kind no Docker
+[03:23:51]   ✔ modo: ScaledObject min=1 max=1 Ready
+[03:23:51]   ✔ visibility_timeout: padrão (2 h)
+[03:23:52]   ✔ imagem: sha256:58fc08b35ec2ae4c0cae17f61729903a813b8756a9bd465c79de6e35ac22fade
+[03:23:52]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[03:23:52]   ✔ infraestrutura: OpenSearch yellow; 8 pods de infraestrutura prontos
+[03:23:52] load_simulator.py --cleanup
+[03:23:53] port-forward svc/postgres-rw → localhost:5434
+[03:23:53] port-forward svc/garage → localhost:3910
+[03:23:53] port-forward svc/opensearch → localhost:9210
+[03:23:54] 100 diário(s) sintético(s) no Postgres
+[03:23:55] OpenSearch: 100 documento(s) removido(s)
+[03:23:56] storage: 200 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[03:23:56] Postgres: 100 linha(s) apagada(s)
+[03:23:57]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[03:23:58]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[03:23:58]   ✔ sinteticos: 0 diários sintéticos
+[03:23:58] espera ociosa de 120 s
+[03:25:59] t_carga_inicio = 2026-11-26T06:25:59Z
+[03:25:59] perfil burst: 100 diários em 5.0 min, seed 2, 104 PDFs na amostra
+  [acompanhar] [03:25:59] port-forward svc/postgres-rw → localhost:5436
+[03:25:59] port-forward svc/postgres-rw → localhost:5434
+  [acompanhar] [03:25:59] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [03:25:59] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/K/R1a/B/R1a-B-2-postgres.csv
+[03:25:59] port-forward svc/garage → localhost:3910
+[03:25:59] port-forward svc/opensearch → localhost:9210
+[03:26:12] agendados 5/100, concluídos 4
+[03:26:27] agendados 10/100, concluídos 9
+[03:26:42] agendados 15/100, concluídos 14
+[03:26:57] agendados 20/100, concluídos 19
+[03:27:12] agendados 25/100, concluídos 24
+[03:27:27] agendados 30/100, concluídos 29
+[03:27:42] agendados 35/100, concluídos 34
+[03:27:57] agendados 40/100, concluídos 39
+[03:28:12] agendados 45/100, concluídos 44
+[03:28:27] agendados 50/100, concluídos 49
+[03:28:42] agendados 55/100, concluídos 54
+[03:28:57] agendados 60/100, concluídos 59
+[03:29:12] agendados 65/100, concluídos 64
+[03:29:27] agendados 70/100, concluídos 69
+[03:29:42] agendados 75/100, concluídos 74
+[03:29:57] agendados 80/100, concluídos 79
+[03:30:12] agendados 85/100, concluídos 84
+[03:30:27] agendados 90/100, concluídos 89
+[03:30:42] agendados 95/100, concluídos 94
+[03:30:57] agendados 100/100, concluídos 99
+[03:30:57] fim: 100 inseridos, 0 erro(s), 297.0 s, atraso máx. 0.054 s
+[03:30:57] registro: /home/muriel/.cache/qd-worktrees/e2-execucao/simulador/execucoes/20261126T062600Z_burst.json
+[03:30:57] t_carga_fim = 2026-11-26T06:30:57Z
+[03:30:58] Job exp-r1a-b-2-1795674657 criado a partir de cronjob/enqueue-extraction
+[03:30:58] t0 = 2026-11-26T06:30:57Z
+[03:30:58] esperando os pendentes chegarem a 0 (timeout 591 s)
+[03:30:58] t_rep1_obs = 2026-11-26T06:30:58Z
+[03:30:59] processados 0/100, pendentes 100, fila 0, réplicas 1
+[03:31:06] t_doc1_obs = 2026-11-26T06:31:06Z
+[03:31:12] t_kill = 2026-11-26T06:31:12Z
+jq: error (at <stdin>:0): Cannot use null (null) as object key
+jq: invalid JSON text passed to --argjson
+Use jq --help for help with command-line options,
+or see the jq manpage, or online docs  at https://jqlang.github.io/jq
+[03:31:15] mensagens reservadas na falha:  (gazettes )
+[03:31:21] t_pod_removido = 2026-11-26T06:31:15Z
+[03:32:01] processados 81/100, pendentes 19, fila 18, réplicas 1
+[03:32:18] t_vazio = 2026-11-26T06:32:18Z
+[03:32:18] margem de 45 s para o Prometheus raspar o worker
+[03:33:03] t_fim = 2026-11-26T06:33:03Z
+  [acompanhar] [03:33:03] acompanhamento encerrado
+[03:33:04] exportando as séries (06:30:57 → 06:33:03 UTC)
+[03:33:04] R1a-B-2: 2026-11-26T06:30:57+00:00 → 2026-11-26T06:33:03+00:00 (126 s), passo 15 s, rate[60s], namespace querido-diario
+[03:33:04] port-forward svc/monitoring-kube-prometheus-prometheus → localhost:9091
+[03:33:04] port-forward svc/postgres-rw → localhost:5435
+[03:33:04] port-forward svc/redis-queue → localhost:6380
+[03:33:05] 783 linha(s) em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/K/R1a/B/R1a-B-2.csv
+[03:33:05] resumo em R1a-B-2.json; séries vazias: oomkilled
+[03:33:05] Postgres: {'sinteticos': 100, 'processados': 100, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+[03:33:05] DLQ: 0 item(ns)
+[03:33:05] no fim: pendentes fora da DLQ = 0, DLQ = 0
+entrada R1a-B-2 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[03:33:05] execução R1a-B-2 concluída: resultados/K/R1a/B/R1a-B-2.*

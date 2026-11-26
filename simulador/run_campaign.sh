@@ -149,8 +149,16 @@ for linha in "${PLANO[@]}"; do
     if [[ $(tentativas "$base" 0) -gt 0 ]]; then
         continue
     fi
+    tentativas_sessao=0
     while true; do
         inval=$(tentativas "$base" 2)
+        # O piloto não entra na conta das 3 inválidas por célula, mas também não
+        # pode repetir sem fim: para depois de 3 inválidas seguidas nesta sessão
+        if [[ $bloco == piloto ]] && (( tentativas_sessao >= 3 )); then
+            log "PARADA: 3 tentativas inválidas seguidas de $base nesta sessão; investigar antes de continuar"
+            exit 1
+        fi
+        tentativas_sessao=$((tentativas_sessao + 1))
         if [[ $bloco != piloto && $(invalidas_celula "$cenario" "$modo") -gt 3 ]]; then
             log "PARADA: mais de 3 execuções inválidas em $cenario × $modo; investigar antes de continuar (protocolo, 'Validade')"
             exit 1
@@ -194,7 +202,7 @@ for linha in "${PLANO[@]}"; do
                 log "$run inválida: refazendo na mesma posição"
                 ;;
             *)
-                log "PARADA: $run não rodou (código $codigo: checklist ou ambiente). Veja resultados/nao-executadas/ e rode de novo para retomar"
+                log "PARADA: $run não rodou (código $codigo: checklist ou ambiente). Veja resultados/<campanha>/nao-executadas/ e rode de novo para retomar"
                 exit 1
                 ;;
         esac

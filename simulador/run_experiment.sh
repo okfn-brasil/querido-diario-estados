@@ -14,11 +14,11 @@
 #
 # Opções:
 #   --campanha K|R      parâmetros de simulador/campanhas/<K|R>.env (padrão K)
-#   --piloto            execução piloto: resultados em resultados/piloto/, não
+#   --piloto            execução piloto: resultados em resultados/<campanha>/piloto/, não
 #                       exige IMAGEM_DIGEST nem repositórios limpos
 #   --teto N            teto do modo C (padrão: o da campanha; D5)
 #   --seed N            semente do simulador (padrão: k do <run>)
-#   --saida DIR         pasta raiz dos resultados (padrão resultados/)
+#   --saida DIR         pasta raiz dos resultados (padrão resultados/<campanha>/)
 #   --permitir-sujo     roda com mudanças locais nos repositórios (a execução
 #                       fica inválida, salvo no piloto)
 #   --so-checklist      prepara o modo, faz o checklist e para
@@ -28,7 +28,7 @@
 # (arquivos em .../<modo>/invalidas/, entrada no diário); 1 = não rodou
 # (checklist falhou, erro de uso ou de ambiente).
 #
-# Grava em resultados/<cenario>/<modo>/:
+# Grava em resultados/<campanha>/<cenario>/<modo>/:
 #   <run>.json           metadados (parâmetros, commits, digest, instantes,
 #                        checklist, falha, validade) + a chave "export" do D4
 #   <run>.csv            séries do Prometheus entre t0 e o fim (export_metrics.py)
@@ -88,8 +88,8 @@ DP=${QD_DATA_PROCESSING_DIR:-$RAIZ/../querido-diario-data-processing}
 [[ -d $DEP/k8s ]] || { echo "querido-diario-deployment não encontrado em $DEP (defina QD_DEPLOYMENT_DIR)" >&2; exit 1; }
 
 if [[ -n $SAIDA_ARG ]]; then SAIDA=$(realpath -m "$SAIDA_ARG")
-elif [[ $PILOTO == 1 ]]; then SAIDA=$RAIZ/resultados/piloto
-else SAIDA=$RAIZ/resultados; fi
+elif [[ $PILOTO == 1 ]]; then SAIDA=$RAIZ/resultados/$CAMPANHA/piloto
+else SAIDA=$RAIZ/resultados/$CAMPANHA; fi
 PASTA_RUN=$SAIDA/$CENARIO/$MODO
 JSON=$PASTA_RUN/$RUN.json
 LOG=$PASTA_RUN/$RUN.log
@@ -163,6 +163,7 @@ contagem() {
 }
 
 PF_PID=""
+CARGA_REMOTA=0
 prom() {  # prom '<PromQL>' → JSON da /api/v1/query
     if [[ $AMBIENTE == kind ]]; then
         curl -sf --get "http://localhost:9092/api/v1/query" --data-urlencode "query=$1"
@@ -202,7 +203,8 @@ imagens_usadas() {  # digests da imagem do data-processing nos pods da execuçã
     kc get pods -o json | jq --arg job "${JOB_PREFIXO:-exp-}" '[.items[]
         | select(.metadata.name | test("^(" + $job + "|extraction-worker|enqueue-extraction)"))
         | .metadata.name as $p | .status.containerStatuses[]?
-        | select(.image | test("querido-diario-data-processing[:@]"))
+        # O containerd do Revoada põe em .image o ID da imagem (sha256:…); o nome fica em .imageID
+        | select((.image + " " + .imageID) | test("querido-diario-data-processing[:@]"))
         | {pod: $p, imagem: .image, digest: (.imageID | capture("(?<d>sha256:[0-9a-f]+)$").d // .imageID)}]'
 }
 
@@ -235,8 +237,19 @@ restaurar() {
         kc patch cronjob data-processing -p '{"spec":{"suspend":true}}' >/dev/null 2>&1 || log "aviso: não consegui suspender o data-processing"
         E2_DESSUSPENSO=0
     fi
-    # Uma réplica do Prometheus (port-forward) em kind
-    [[ -n $PF_PID ]] && { kill -- "-$PF_PID" 2>/dev/null || true; PF_PID=""; }
+    # Carga interrompida no Revoada: matar o kubectl exec não mata o simulador
+    # dentro do pod ([l] para o sh não achar a si mesmo)
+    if [[ $CARGA_REMOTA == 1 ]]; then
+        log "interrompendo o load_simulator.py dentro do pod export-metrics"
+        kc exec export-metrics -- sh -c 'for p in /proc/[0-9]*; do
+            tr "\0" " " < $p/cmdline 2>/dev/null | grep -q "[l]oad_simulator.py --profile" && kill -TERM ${p#/proc/}; done; true' \
+            >/dev/null 2>&1 || log "aviso: não consegui interromper o simulador no pod"
+        CARGA_REMOTA=0
+    fi
+    # Uma réplica do Prometheus (port-forward) em kind. Com `if`, não `&&`: no
+    # Revoada PF_PID fica vazio e o `&&` como último comando faria a função
+    # devolver 1 (e o set -e derrubar a execução no fim)
+    if [[ -n $PF_PID ]]; then kill -- "-$PF_PID" 2>/dev/null || true; PF_PID=""; fi
 }
 
 ao_sair() {
@@ -276,6 +289,8 @@ trap 'exit 130' INT TERM
 case $CENARIO in
     E1) N=$N_E1 ;; R1) N=$N_R1 ;; E2) N=0 ;; *) N=$N_ROBUSTEZ ;;
 esac
+# O R1 tem N maior que o E1 e espera o visibility_timeout da órfã: timeout próprio
+[[ $CENARIO == R1 ]] && TIMEOUT_S=${TIMEOUT_R1_S:-$TIMEOUT_S}
 CORROMPIDOS=0
 [[ $CENARIO == R2 || $CENARIO == M1 ]] && CORROMPIDOS=$CORROMPIDOS_R2
 VT=""
@@ -338,12 +353,48 @@ if [[ $AMBIENTE == kind ]]; then
     PF_PID=$!
     for _ in $(seq 50); do curl -sf localhost:9092/-/ready >/dev/null 2>&1 && break; sleep 0.2; done
 else
+    # Um pod de antes da carga dentro do cluster não tem as variáveis do
+    # simulador (o env de um pod não muda): recria
+    if kc get pod export-metrics >/dev/null 2>&1 && \
+        ! kc get pod export-metrics -o json | jq -e '.spec.containers[0].env[] | select(.name == "QD_SIM_S3_ENDPOINT")' >/dev/null; then
+        log "recriando o pod export-metrics (sem as variáveis do simulador)"
+        kc delete pod export-metrics --wait=true >/dev/null
+    fi
     if ! kc get pod export-metrics >/dev/null 2>&1; then
         log "criando o pod export-metrics (simulador/k8s/export-metrics-pod.yaml)"
         kc apply -f "$PASTA_SIM/k8s/export-metrics-pod.yaml"
     fi
     kc wait --for=condition=Ready pod/export-metrics --timeout=5m >/dev/null
+    # O simulador roda dentro do pod (carga na velocidade da rede do cluster, não
+    # da VPN): copia o script sempre e a amostra só quando muda (~470 MB, uma vez
+    # por pod). A versão da amostra é o hash da lista de arquivos e tamanhos
+    kc cp "$PASTA_SIM/load_simulator.py" "export-metrics:/work/load_simulator.py"
+    versao_amostra=$(cd "$PASTA_SIM" && find amostras -type f -printf '%P %s\n' | sort | sha256sum | cut -c1-16)
+    if [[ $(kc exec export-metrics -- cat /work/amostras/.versao 2>/dev/null) != "$versao_amostra" ]]; then
+        log "copiando a amostra de PDFs para o pod export-metrics ($(du -sh "$PASTA_SIM/amostras" | cut -f1); só na primeira vez)"
+        kc exec export-metrics -- rm -rf /work/amostras
+        tar -C "$PASTA_SIM" -cf - amostras | kc exec -i export-metrics -- tar -C /work -xf -
+        kc exec export-metrics -- sh -c "echo $versao_amostra > /work/amostras/.versao"
+    fi
 fi
+
+# load_simulator.py: no kind, local com port-forwards; no Revoada, dentro do pod
+# export-metrics (as conexões vêm do env do pod)
+simulador() {
+    if [[ $AMBIENTE == kind ]]; then
+        (cd "$RAIZ" && uv run -q simulador/load_simulator.py "$@" --port-forward \
+            --namespace "$NAMESPACE" --context "$CONTEXTO")
+    else
+        kc exec export-metrics -- env TZ="$(tz_pod)" uv run -q /work/load_simulator.py "$@"
+    fi
+}
+
+# O pod export-metrics não tem tzdata: o fuso vai como deslocamento POSIX
+# (-0300 → LOCAL+03:00), para os logs de dentro do pod saírem no horário do resto
+tz_pod() {
+    local z; z=$(date +%z)
+    echo "LOCAL$([[ ${z:0:1} == - ]] && echo + || echo -)${z:1:2}:${z:3:2}"
+}
 
 # ---------------------------------------------------------------------------
 # Modo: overlay, teto e QUEUE_VISIBILITY_TIMEOUT
@@ -359,6 +410,9 @@ esperar() {  # esperar <timeout_s> <descrição> <comando...>: repete até o com
 
 replicas() { kc get deployment extraction-worker -o jsonpath="{.$1}" 2>/dev/null || true; }
 worker_pronto() { [[ $(replicas status.readyReplicas) == 1 && $(replicas spec.replicas) == 1 ]]; }
+# O KEDA leva alguns segundos para reconciliar um ScaledObject recém-criado
+# (E1-C-3, 25/11/2026: Ready=False 1 s depois do apply reprovou o checklist)
+scaledobject_pronto() { [[ $(kc get scaledobject extraction-worker -o jsonpath='{.status.conditions[?(@.type=="Ready")].status}' 2>/dev/null) == True ]]; }
 workers_zero() { [[ $(replicas spec.replicas) == 0 ]] && [[ -z $(kc get pods -l app=extraction-worker -o name 2>/dev/null) ]]; }
 
 aplicar_modo() {
@@ -386,6 +440,7 @@ aplicar_modo() {
         [[ $MODO == B ]] && min=1 max=1
         kc patch scaledobject extraction-worker --type merge \
             -p "{\"spec\":{\"minReplicaCount\":$min,\"maxReplicaCount\":$max}}" >/dev/null
+        esperar 120 "ScaledObject Ready" scaledobject_pronto || true
         if [[ -n $VT ]]; then
             kc set env deployment/extraction-worker "QUEUE_VISIBILITY_TIMEOUT=$VT" >/dev/null
             VT_APLICADO=1
@@ -546,8 +601,7 @@ checklist() {
 
     # 5. Diários sintéticos da execução anterior
     log "load_simulator.py --cleanup"
-    (cd "$RAIZ" && uv run -q simulador/load_simulator.py --cleanup --port-forward \
-        --namespace "$NAMESPACE" --context "$CONTEXTO")
+    simulador --cleanup
 
     # 6. Fila vazia, nenhum worker ocupado e FLUSHDB (B e C)
     if [[ $MODO != A ]]; then
@@ -605,6 +659,32 @@ checklist() {
     local restantes
     restantes=$(pg "SELECT count(*) FROM gazettes WHERE file_url LIKE 'sim://%'")
     if [[ $restantes == 0 ]]; then check sinteticos 1 "0 diários sintéticos"; else check sinteticos 0 "$restantes diários sintéticos depois do --cleanup"; fi
+
+    # 8a. Grupo do baseline no Pushgateway (A, só no kind). O data-processing
+    # envia com POST (pushadd), que mantém as métricas que um push não traz:
+    # sem apagar o grupo, um Job que não processasse nada deixaria lá os
+    # histogramas da execução anterior com um push_time novo. No Revoada o
+    # Pushgateway é o da produção e o grupo não é apagado
+    if [[ $MODO == A && $AMBIENTE == kind ]]; then
+        if apagar_grupo_pushgateway; then
+            check pushgateway 1 "grupo job=data-processing apagado"
+        else
+            check pushgateway 0 "não consegui apagar o grupo job=data-processing do Pushgateway ($PUSHGATEWAY_SVC)"
+        fi
+    fi
+}
+
+apagar_grupo_pushgateway() {
+    local ns=${PUSHGATEWAY_SVC%%/*} svc=${PUSHGATEWAY_SVC#*/} pf ok=1
+    setsid kubectl --context "$CONTEXTO" port-forward -n "$ns" "svc/$svc" 9093:9091 >/dev/null 2>&1 9>&- &
+    pf=$!
+    for _ in $(seq 50); do curl -sf localhost:9093/-/ready >/dev/null 2>&1 && break; sleep 0.2; done
+    if curl -sf -X DELETE localhost:9093/metrics/job/data-processing >/dev/null &&
+        ! curl -sf localhost:9093/metrics | grep -q '^push_time_seconds{.*job="data-processing"'; then
+        ok=0
+    fi
+    kill "$pf" 2>/dev/null || true
+    return $ok
 }
 
 aplicar_modo
@@ -649,7 +729,7 @@ exportar() {
         kc cp "$PASTA_SIM/load_simulator.py" "export-metrics:/work/load_simulator.py"
         kc cp "$JSON" "export-metrics:$remoto/$RUN.json"
         [[ -f $PASTA_RUN/$RUN-postgres.csv ]] && kc cp "$PASTA_RUN/$RUN-postgres.csv" "export-metrics:$remoto/$RUN-postgres.csv"
-        kc exec export-metrics -- uv run -q /work/export_metrics.py --start "$inicio" --end "$fim" \
+        kc exec export-metrics -- env TZ="$(tz_pod)" uv run -q /work/export_metrics.py --start "$inicio" --end "$fim" \
             --cenario "$CENARIO" --modo "$MODO" --run "$RUN" --step "$PASSO_S" \
             --namespace "$NAMESPACE" --saida /work/resultados
         kc cp "export-metrics:$remoto/$RUN.csv" "$PASTA_RUN/$RUN.csv"
@@ -698,6 +778,56 @@ disparar() {  # disparar <cronjob>: cria o Job de disparo e devolve o nome em $J
     meta '.jobs += [{nome: $j, cronjob: $c, criado: ($t | tonumber)}]' --arg j "$JOB" --arg c "$1" --arg t "$t"
     log "Job $JOB criado a partir de cronjob/$1"
     T_DISPARO=$t
+}
+
+# A: log da tentativa que falhou, enquanto o pod ainda roda (depois que ele
+# termina, o kubelet pode remover o contêiner anterior). Um arquivo por
+# pod × reinício em $TMP, juntados no <run>-job.log por registrar_tentativas_job
+capturar_tentativa_anterior() {
+    local p r
+    while read -r p r; do
+        [[ -n $p && $r -gt 0 && ! -e $TMP/anterior-$p-$r ]] || continue
+        kc logs "$p" --previous > "$TMP/anterior-$p-$r" 2>&1 || true
+    done < <(kc get pods -o json 2>/dev/null | jq -r --arg pre "$JOB_PREFIXO" '.items[]
+        | select((.metadata.labels["job-name"] // "") | startswith($pre))
+        | "\(.metadata.name) \(.status.containerStatuses[0].restartCount // 0)"' || true)
+}
+
+# A: tentativas do contêiner de cada pod dos Jobs da execução. Um reinício
+# (restartPolicy: OnFailure) fora do R1 e do R1a é anotado: no kind, a fase de
+# temas falha com 429 do OpenSearch (circuit breaker, heap de 512 MiB) e o
+# Job só termina na segunda tentativa. Os logs de todas as tentativas vão
+# para <run>-job.log
+registrar_tentativas_job() {
+    local pods tentativas p r
+    capturar_tentativa_anterior
+    pods=$(kc get pods -o json | jq -c --arg pre "$JOB_PREFIXO" '[.items[]
+        | select((.metadata.labels["job-name"] // "") | startswith($pre))
+        | {pod: .metadata.name, job: .metadata.labels["job-name"], fase: .status.phase,
+           reinicios: (.status.containerStatuses[0].restartCount // 0),
+           ultima_falha: (.status.containerStatuses[0].lastState.terminated // null
+               | if . then {codigo: .exitCode, motivo: .reason, fim: .finishedAt} else null end)}]')
+    meta '.job_tentativas = $p' --argjson p "$pods"
+    : > "$PASTA_RUN/$RUN-job.log"
+    for p in $(jq -r '.[].pod' <<<"$pods"); do
+        r=$(jq -r --arg p "$p" '.[] | select(.pod == $p) | .reinicios' <<<"$pods")
+        # Depois que o pod termina, o kubelet pode já ter removido o contêiner
+        # da tentativa anterior: o --previous falha e isso não é erro da execução
+        local f capturou=0
+        for f in "$TMP/anterior-$p-"*; do
+            [[ -e $f ]] || continue
+            { echo "===== $p: tentativa anterior ao reinício ${f##*-}"; cat "$f"; } >> "$PASTA_RUN/$RUN-job.log"
+            capturou=1
+        done
+        if (( r > 0 && capturou == 0 )); then
+            { echo "===== $p: tentativa anterior (--previous)"; kc logs "$p" --previous 2>&1 || true; } >> "$PASTA_RUN/$RUN-job.log"
+        fi
+        { echo "===== $p: última tentativa"; kc logs "$p" 2>&1 || true; } >> "$PASTA_RUN/$RUN-job.log"
+    done
+    tentativas=$(jq -r '[.[] | select(.reinicios > 0) | "\(.pod): \(.reinicios) reinício(s), última falha com código \(.ultima_falha.codigo // "?") (\(.ultima_falha.motivo // "?"))"] | join("; ")' <<<"$pods")
+    if [[ -n $tentativas && $CENARIO != R1 && $CENARIO != R1a ]]; then
+        anomalia "o contêiner do Job reiniciou: $tentativas (ver $RUN-job.log)"
+    fi
 }
 
 # Contagem do Postgres a cada 15 s durante a execução (t_doc1 e vazão no A)
@@ -757,15 +887,24 @@ else
     # ---------------------------------------------------------------- carga
     iniciar_acompanhamento
     marca t_carga_inicio
-    args=(--profile burst --total "$N" --territory "$TERRITORIO" --seed "$SEED"
-          --port-forward --namespace "$NAMESPACE" --context "$CONTEXTO")
+    args=(--profile burst --total "$N" --territory "$TERRITORIO" --seed "$SEED")
     (( CORROMPIDOS > 0 )) && args+=(--corrupt "$CORROMPIDOS")
     set +e
-    (cd "$RAIZ" && uv run -q simulador/load_simulator.py "${args[@]}") 2>&1 | tee "$TMP/carga.log"
+    [[ $AMBIENTE != kind ]] && CARGA_REMOTA=1
+    simulador "${args[@]}" 2>&1 | tee "$TMP/carga.log"
     status_carga=${PIPESTATUS[0]}
+    CARGA_REMOTA=0
     set -e
     marca t_carga_fim
     registro=$(grep -o 'registro: .*\.json' "$TMP/carga.log" | tail -1 | cut -d' ' -f2- || true)
+    if [[ $AMBIENTE != kind && -n $registro ]]; then
+        # O registro ficou no pod (/work/execucoes/): traz o .json e o .csv
+        local_reg=$PASTA_SIM/execucoes/$(basename "$registro")
+        mkdir -p "$PASTA_SIM/execucoes"
+        kc cp "export-metrics:$registro" "$local_reg" >/dev/null 2>&1 || true
+        kc cp "export-metrics:${registro%.json}.csv" "${local_reg%.json}.csv" >/dev/null 2>&1 || true
+        registro=$local_reg
+    fi
     if [[ -n $registro && -f $registro ]]; then
         cp "$registro" "$PASTA_RUN/$RUN-carga.json"
         [[ -f ${registro%.json}.csv ]] && cp "${registro%.json}.csv" "$PASTA_RUN/$RUN-carga.csv"
@@ -810,6 +949,24 @@ else
         fi
     }
 
+    # R1: SIGKILL no processo principal do contêiner, de fora, pelo nó do kind
+    # (como um OOMKill). Um `kubectl delete pod --grace-period=0 --force` não
+    # serve: o kubelet ainda manda SIGTERM e só mata 2 s depois (containerd:
+    # "StopContainer ... with timeout 2 (s)"), e nesse tempo o Celery termina o
+    # diário, confirma a mensagem e devolve à fila as reservadas, sem deixar
+    # órfã (visto no R1-B de verificação de 25/11/2026). O kubelet reinicia o
+    # contêiner no mesmo pod
+    matar_sigkill() {  # matar_sigkill <pod> <contêiner>
+        local no cid pid
+        [[ $AMBIENTE == kind ]] || { log "ERRO: o R1 com SIGKILL só roda no kind (precisa do nó)"; return 1; }
+        no=$(kc get pod "$1" -o jsonpath='{.spec.nodeName}')
+        cid=$(kc get pod "$1" -o json | jq -r --arg c "$2" '.status.containerStatuses[] | select(.name == $c) | .containerID | sub("^[a-z]+://"; "")')
+        [[ -n $no && -n $cid ]] || return 1
+        pid=$(docker exec "$no" crictl inspect "$cid" | jq -r '.info.pid // empty')
+        [[ $pid =~ ^[0-9]+$ ]] || return 1
+        docker exec "$no" kill -KILL "$pid"
+    }
+
     injetar_falha() {
         case $CENARIO in
         R1|R1a)
@@ -822,7 +979,7 @@ else
             local t
             t=$(agora)
             if [[ $CENARIO == R1 ]]; then
-                kc delete pod "$vitima" --grace-period=0 --force --wait=false >/dev/null 2>&1 || true
+                matar_sigkill "$vitima" "$([[ $MODO == A ]] && echo data-processing || echo worker)" || return 1
             else
                 kc delete pod "$vitima" --wait=false >/dev/null
                 # Duração do desligamento: do delete até o pod sumir
@@ -840,7 +997,7 @@ else
                 rq hgetall unacked > "$TMP/unacked" || true
             fi
             meta '.falha = {tipo: $tipo, pod: $p, processados_na_falha: ($pr | tonumber), pendentes_na_falha: ($pe | tonumber), fila_na_falha: ($f | tonumber)}' \
-                --arg tipo "$([[ $CENARIO == R1 ]] && echo 'delete --grace-period=0 --force' || echo 'delete (SIGTERM)')" \
+                --arg tipo "$([[ $CENARIO == R1 ]] && echo 'SIGKILL no processo principal do contêiner (kill -9 pelo nó)' || echo 'delete (SIGTERM)')" \
                 --arg p "$vitima" --arg pr "$processados" --arg pe "$pendentes" --arg f "$fila"
             if [[ $MODO != A && -s $TMP/unacked ]]; then
                 local tag corpo gid
@@ -1008,9 +1165,10 @@ else
             # As métricas qd_* do baseline só vão ao Pushgateway no fim do Job
             # (depois dos temas): exporta até lá, a análise corta em t_vazio
             log "esperando o fim do Job $JOB_ATUAL (temas e push das métricas)"
-            job_fim() { [[ $(estado_job "$JOB_ATUAL") != ativo ]]; }
+            job_fim() { capturar_tentativa_anterior; [[ $(estado_job "$JOB_ATUAL") != ativo ]]; }
             if esperar "$TIMEOUT_JOB_S" "fim do Job" job_fim; then
                 marca t_job_fim
+                registrar_tentativas_job
                 # O push chega ao Pushgateway no fim do Job; o Prometheus só o
                 # vê no próximo scrape. Sem a margem, a exportação perde o resumo
                 local_margem=$(( 2 * PASSO_S + 15 ))
@@ -1100,6 +1258,19 @@ if exportar "${INST[t0]}" "$T_FIM_EXPORT" || { log "export falhou; tentando de n
     pend_fim=$(jq -r '.export.postgres_fim.pendentes_sem_dlq // empty' "$JSON")
     dlq_fim=$(jq -r '.export.dlq.tamanho // empty' "$JSON")
     log "no fim: pendentes fora da DLQ = ${pend_fim:-?}, DLQ = ${dlq_fim:-—}"
+    # A: as séries qd_* vêm do push do Job. Sem elas, o tempo por diário e a
+    # latência coleta → indexado do baseline faltam. No R1 e no R1a, as do pod
+    # morto se perdem por definição (cenarios.md, "Métricas do baseline")
+    if [[ $MODO == A && $N -gt 0 ]]; then
+        qd_a=$(jq -r '.export.prometheus_resumo.processados_por_status // {} | add // 0' "$JSON")
+        if [[ $qd_a == 0 ]]; then
+            if [[ $CENARIO == R1 || $CENARIO == R1a ]]; then
+                anomalia "sem séries qd_* do Pushgateway (o pod morto não enviou as métricas)"
+            else
+                invalida "sem séries qd_* do Pushgateway: o push do Job não chegou ou veio vazio (ver $RUN-job.log)"
+            fi
+        fi
+    fi
     if [[ $CENARIO == R2 || $CENARIO == M1 ]] && [[ $MODO != A && -n $dlq_fim && $dlq_fim != "$CORROMPIDOS" ]]; then
         anomalia "DLQ com $dlq_fim item(ns), esperado $CORROMPIDOS (resultado da arquitetura)"
     fi

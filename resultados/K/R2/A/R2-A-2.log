@@ -1,0 +1,88 @@
+[05:16:11] execução R2-A-2: cenário R2, modo A, campanha K (kind-querido-diario-dev/querido-diario)
+[05:16:11] N = 100, seed = 2, teto = 2, corrompidos = 10
+[05:16:11] máquina local: disco 84% usado, 2768 MiB de memória disponível, carga 0.79
+[05:16:12] aplicando o modo A
+[05:16:12] removendo a fila de extração (ScaledObject primeiro)
+scaledobject.keda.sh "extraction-worker" deleted from querido-diario namespace
+deployment.apps "extraction-worker" deleted from querido-diario namespace
+deployment.apps "redis-queue" deleted from querido-diario namespace
+service "redis-queue" deleted from querido-diario namespace
+cronjob.batch "enqueue-extraction" deleted from querido-diario namespace
+cronjob.batch "themes-from-queue" deleted from querido-diario namespace
+persistentvolumeclaim "redis-queue-data" deleted from querido-diario namespace
+podmonitor.monitoring.coreos.com "extraction-worker" deleted from querido-diario namespace
+podmonitor.monitoring.coreos.com "redis-queue" deleted from querido-diario namespace
+Waiting for deployment "apache-tika" rollout to finish: 0 of 1 updated replicas are available...
+deployment "apache-tika" successfully rolled out
+[05:16:35] checklist
+[05:16:35]   ✔ repositorios: sem mudanças locais
+[05:16:35]   ✔ maquina_dedicada: só o nó do kind no Docker
+[05:16:35]   ✔ modo: overlay k8s/overlays/dev: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila
+[05:16:35]   ✔ imagem: sha256:58fc08b35ec2ae4c0cae17f61729903a813b8756a9bd465c79de6e35ac22fade
+[05:16:35]   ✔ monitoramento: up == 1 para pushgateway
+[05:16:36]   ✔ infraestrutura: OpenSearch yellow; 8 pods de infraestrutura prontos
+[05:16:36] load_simulator.py --cleanup
+[05:16:36] port-forward svc/postgres-rw → localhost:5434
+[05:16:37] port-forward svc/garage → localhost:3910
+[05:16:37] port-forward svc/opensearch → localhost:9210
+[05:16:38] 100 diário(s) sintético(s) no Postgres
+[05:16:39] OpenSearch: 90 documento(s) removido(s)
+[05:16:39] storage: 200 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[05:16:39] Postgres: 100 linha(s) apagada(s)
+[05:16:40]   ✔ cronjobs: suspensos: data-processing=true
+[05:16:40]   ✔ sinteticos: 0 diários sintéticos
+[05:16:40]   ✔ pushgateway: grupo job=data-processing apagado
+[05:16:40] espera ociosa de 120 s
+[05:18:40] t_carga_inicio = 2026-11-26T08:18:40Z
+[05:18:41] perfil burst: 100 diários em 5.0 min, seed 2, 104 PDFs na amostra
+  [acompanhar] [05:18:41] port-forward svc/postgres-rw → localhost:5436
+[05:18:41] port-forward svc/postgres-rw → localhost:5434
+  [acompanhar] [05:18:41] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/K/R2/A/R2-A-2-postgres.csv
+[05:18:41] port-forward svc/garage → localhost:3910
+[05:18:41] port-forward svc/opensearch → localhost:9210
+[05:18:54] agendados 5/100, concluídos 4
+[05:19:09] agendados 10/100, concluídos 9
+[05:19:24] agendados 15/100, concluídos 14
+[05:19:39] agendados 20/100, concluídos 19
+[05:19:54] agendados 25/100, concluídos 24
+[05:20:09] agendados 30/100, concluídos 29
+[05:20:24] agendados 35/100, concluídos 34
+[05:20:39] agendados 40/100, concluídos 39
+[05:20:54] agendados 45/100, concluídos 44
+[05:21:09] agendados 50/100, concluídos 49
+[05:21:24] agendados 55/100, concluídos 54
+[05:21:39] agendados 60/100, concluídos 59
+[05:21:54] agendados 65/100, concluídos 64
+[05:22:09] agendados 70/100, concluídos 69
+[05:22:24] agendados 75/100, concluídos 74
+[05:22:39] agendados 80/100, concluídos 79
+[05:22:54] agendados 85/100, concluídos 84
+[05:23:09] agendados 90/100, concluídos 89
+[05:23:24] agendados 95/100, concluídos 94
+[05:23:39] agendados 100/100, concluídos 99
+[05:23:39] fim: 100 inseridos, 0 erro(s), 297.0 s, atraso máx. 0.051 s
+[05:23:39] corrompidos: [26487, 26500, 26501, 26503, 26505, 26507, 26509, 26513, 26514, 26517]
+[05:23:39] registro: /home/muriel/.cache/qd-worktrees/e2-execucao/simulador/execucoes/20261126T081842Z_burst.json
+[05:23:39] t_carga_fim = 2026-11-26T08:23:39Z
+[05:23:39] Job exp-r2-a-2-1795681419 criado a partir de cronjob/data-processing
+[05:23:39] t0 = 2026-11-26T08:23:39Z
+[05:23:40] esperando os pendentes chegarem a 0 (timeout 591 s)
+[05:23:40] processados 0/100, pendentes 90
+[05:23:45] t_rep1_obs = 2026-11-26T08:23:45Z
+[05:23:45] t_doc1_obs = 2026-11-26T08:23:45Z
+[05:24:40] t_vazio = 2026-11-26T08:24:40Z
+[05:24:40] esperando o fim do Job exp-r2-a-2-1795681419 (temas e push das métricas)
+[05:25:49] t_job_fim = 2026-11-26T08:25:49Z
+[05:25:49] margem de 45 s para o Prometheus raspar o push
+[05:26:34] t_fim = 2026-11-26T08:26:34Z
+  [acompanhar] [05:26:34] acompanhamento encerrado
+[05:26:35] exportando as séries (08:23:39 → 08:26:34 UTC)
+[05:26:35] R2-A-2: 2026-11-26T08:23:39+00:00 → 2026-11-26T08:26:34+00:00 (175 s), passo 15 s, rate[60s], namespace querido-diario
+[05:26:35] port-forward svc/monitoring-kube-prometheus-prometheus → localhost:9091
+[05:26:35] port-forward svc/postgres-rw → localhost:5435
+[05:26:36] 795 linha(s) em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/K/R2/A/R2-A-2.csv
+[05:26:36] resumo em R2-A-2.json; séries vazias: dlq, fila, oomkilled, replicas, replicas_desejadas, replicas_disponiveis
+[05:26:36] Postgres: {'sinteticos': 100, 'processados': 90, 'pendentes': 10, 'pendentes_sem_dlq': 10}
+[05:26:36] no fim: pendentes fora da DLQ = 10, DLQ = —
+entrada R2-A-2 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[05:26:36] execução R2-A-2 concluída: resultados/K/R2/A/R2-A-2.*

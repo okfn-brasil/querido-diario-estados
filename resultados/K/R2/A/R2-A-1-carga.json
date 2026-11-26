@@ -1,0 +1,33 @@
+{
+  "perfil": "burst",
+  "total_pedido": 100,
+  "inseridos": 100,
+  "erros": 0,
+  "duracao_planejada_s": 300.0,
+  "seed": 1,
+  "territory": "3299999",
+  "inicio": "2026-11-26T07:29:10.278638+00:00",
+  "fim": "2026-11-26T07:34:07.289084+00:00",
+  "duracao_real_s": 297.0,
+  "atraso_max_s": 0.051,
+  "atraso_p95_s": 0.029,
+  "bytes_enviados": 410635387,
+  "corrompidos_ids": [
+    25973,
+    25974,
+    25978,
+    25991,
+    25993,
+    25996,
+    26000,
+    26001,
+    26010,
+    26017
+  ],
+  "ids_min_max": [
+    25943,
+    26042
+  ],
+  "erros_detalhe": [],
+  "amostra": "simulador/amostras/manifest.csv"
+}
