@@ -6,8 +6,8 @@
     "ready": true
   },
   "opensearch-0": {
-    "uid": "cb4f4baf-4da9-4872-bc1f-005525b0d389",
-    "restarts": 1,
+    "uid": "2ff00a92-050d-4303-9c26-b4507edb12ff",
+    "restarts": 0,
     "oom": false,
     "ready": true
   },
@@ -17,8 +17,8 @@
     "oom": false,
     "ready": true
   },
-  "redis-queue-6b8b564bd9-l8rz7": {
-    "uid": "53d7f529-08bd-43c2-ba58-8b2d3e93e399",
+  "redis-queue-6b8b564bd9-455z6": {
+    "uid": "f3288165-674b-4744-84da-50ab7cb9a777",
     "restarts": 0,
     "oom": false,
     "ready": true

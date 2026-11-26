@@ -1,0 +1,39 @@
+[08:21:19] execução E2-B-1: cenário E2, modo B, campanha K (kind-querido-diario-dev/querido-diario)
+[08:21:19] N = 0, seed = 1, teto = 1, corrompidos = 0
+[08:21:19] máquina local: disco 84% usado, 2397 MiB de memória disponível, carga 1.10
+[08:21:19] aplicando o modo B
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+deployment "extraction-worker" successfully rolled out
+[08:21:57] checklist
+[08:21:57]   ✔ repositorios: sem mudanças locais
+[08:21:57]   ✔ maquina_dedicada: só o nó do kind no Docker
+[08:21:57]   ✔ modo: ScaledObject min=1 max=1 Ready
+[08:21:57]   ✔ visibility_timeout: padrão (2 h)
+[08:21:57]   ✔ imagem: sha256:58fc08b35ec2ae4c0cae17f61729903a813b8756a9bd465c79de6e35ac22fade
+[08:21:57]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[08:21:58]   ✔ infraestrutura: OpenSearch yellow; 8 pods de infraestrutura prontos
+[08:21:58] load_simulator.py --cleanup
+[08:21:58] port-forward svc/postgres-rw → localhost:5434
+[08:21:58] port-forward svc/garage → localhost:3910
+[08:21:59] port-forward svc/opensearch → localhost:9210
+[08:21:59] 0 diário(s) sintético(s) no Postgres
+[08:22:00]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[08:22:01]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true
+[08:22:02]   ✔ sinteticos: 0 diários sintéticos
+[08:22:02] espera ociosa de 120 s
+[08:24:02] t0 = 2026-11-26T11:24:02Z
+[08:24:02] janela de repouso de 1800 s
+[08:54:02] t_fim = 2026-11-26T11:54:02Z
+[08:54:02] exportando as séries (11:24:02 → 11:54:02 UTC)
+[08:54:02] E2-B-1: 2026-11-26T11:24:02+00:00 → 2026-11-26T11:54:02+00:00 (1800 s), passo 15 s, rate[60s], namespace querido-diario
+[08:54:02] port-forward svc/monitoring-kube-prometheus-prometheus → localhost:9091
+[08:54:03] port-forward svc/postgres-rw → localhost:5435
+[08:54:03] port-forward svc/redis-queue → localhost:6380
+[08:54:03] 9939 linha(s) em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/K/E2/B/E2-B-1.csv
+[08:54:03] resumo em E2-B-1.json; séries vazias: coleta_indexado_p50_s, coleta_indexado_p95_s, oomkilled, processados, tempo_diario_p50_s, tempo_diario_p95_s, vazao_por_min
+[08:54:03] Postgres: {'sinteticos': 0, 'processados': 0, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+[08:54:03] DLQ: 0 item(ns)
+[08:54:03] no fim: pendentes fora da DLQ = 0, DLQ = 0
+entrada E2-B-1 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[08:54:03] execução E2-B-1 concluída: resultados/K/E2/B/E2-B-1.*

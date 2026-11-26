@@ -215,8 +215,9 @@ Mudanças feitas depois da primeira execução válida, com a data, o motivo e a
 
 | Data | Mudança | Motivo | Execuções afetadas |
 |---|---|---|---|
-| 2026-11-25 | Campanha K rodada em blocos: E1 e R1 na noite de 25 para 26/11 (20:59–02:44); robustez (R1a, R2, R3) e E2 em outro dia. Passa de 24 h desde a primeira execução (piloto, 25/11 02:34) | A máquina (7,4 GiB) não comporta a campanha inteira acompanhada num dia só; os blocos rodam à noite, com a máquina dedicada | Todas da campanha K (a ordem dentro de cada cenário não muda) |
+| 2026-11-25 | Campanha K rodada em blocos: E1 e R1 em 25/11 20:59 – 26/11 02:44, robustez (R1a, R2, R3) e E2 em 26/11 02:53–09:26. Do piloto (25/11 02:34) ao fim passaram ~31 h, mais que as 24 h do protocolo | O piloto rodou na madrugada de 25/11 e a campanha só pôde começar à noite, depois das correções do piloto e da verificação curta; os blocos permitem parar entre cenários se a máquina (7,4 GiB) não aguentar | Todas da campanha K (a ordem dentro de cada cenário não muda) |
 | 2026-11-25 | `run_experiment.sh` passa a esperar (até 120 s) o ScaledObject ficar `Ready` depois de aplicar os modos B e C (`a3b81f3`). Não muda o que é medido | O checklist do E1-C-3 viu `Ready=False` 1 s depois do apply (KEDA ainda reconciliando) e a campanha parou com código 1, sem medir nada (`resultados/K/nao-executadas/E1-C-3-20261125T221428.*`); retomada às 22:19 | E1-C-3 em diante (rodaram com `a3b81f3`); as anteriores, com `65b09d0` |
+| 2026-11-26 | Os pods do QD fora do experimento (api, backend, celery-beat, celery-worker, frontend, garage-webui) ficaram com 1 réplica em todas as execuções válidas da campanha K, e não em 0 como previsto para poupar memória | O `kubectl apply` do overlay `dev`, ao aplicar o modo A, os recria (25/11 20:59:41, no E1-A-1). Ficam ociosos, sem carga do experimento, e a condição foi a mesma nos três modos e em todas as repetições | Todas as 48 da campanha K |
 
 ## Requisitos para os outros itens
 
