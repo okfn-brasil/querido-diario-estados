@@ -1,0 +1,44 @@
+[19:38:31] execução E1-B-piloto: cenário E1, modo B, campanha R (revoada-testes/querido-diario-tcc), PILOTO
+[19:38:31] N = 500, seed = 1, teto = 1, corrompidos = 0
+[19:38:31] máquina local: disco 84% usado, 1488 MiB de memória disponível, carga 0.45
+[19:38:35] aplicando o modo B
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+Warning: PollingInterval is configured but is not relevant for scaling. It only affects scaling when minReplicaCount = 0, idleReplicaCount is set, or useCachedMetrics is enabled, but it still controls how often KEDA refreshes the ScaledObject status conditions and events
+Warning: CooldownPeriod is configured but is not relevant. CooldownPeriod is only relevant when minReplicaCount = 0 or idleReplicaCount is set
+deployment "extraction-worker" successfully rolled out
+[19:39:05] checklist
+[19:39:05]   ✔ repositorios: sem mudanças locais
+[19:39:05] anomalia: querido-diario-deployment na branch 'tcc/revoada-opensearch-memoria', não em main-estados
+[19:39:06]   ✔ modo: ScaledObject min=1 max=1 Ready
+[19:39:06]   ✔ visibility_timeout: padrão (2 h)
+[19:39:06]   ✔ imagem: sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[19:39:17]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[19:39:18]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[19:39:18] load_simulator.py --cleanup
+[19:39:18] 500 diário(s) sintético(s) no Postgres
+[19:39:19] OpenSearch: 574 documento(s) removido(s)
+[19:40:07] storage: 1000 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[19:40:07] Postgres: 500 linha(s) apagada(s)
+[19:40:09]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[19:40:11]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[19:40:12]   ✔ sinteticos: 0 diários sintéticos
+[19:40:12] espera ociosa de 120 s
+[19:42:12] t_carga_inicio = 2026-11-25T22:42:12Z
+  [acompanhar] [19:42:12] port-forward svc/postgres-rw → localhost:5436
+[19:42:12] perfil burst: 500 diários em 5.0 min, seed 1, 104 PDFs na amostra
+  [acompanhar] [19:42:13] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [19:42:13] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/piloto/E1/B/E1-B-piloto-postgres.csv
+[19:42:27] agendados 25/500, concluídos 24
+[19:42:42] agendados 50/500, concluídos 49
+[19:42:57] agendados 75/500, concluídos 74
+[19:43:12] agendados 100/500, concluídos 99
+[19:43:27] agendados 125/500, concluídos 124
+[19:43:42] agendados 150/500, concluídos 148
+Terminado
+  [acompanhar] [19:43:43] acompanhamento encerrado
+[19:43:43] reativando o agendamento do enqueue-extraction
+[19:43:43] interrompendo o load_simulator.py dentro do pod export-metrics
+[19:43:44] INVÁLIDA: erro do run_experiment.sh (código 130)
+entrada E1-B-piloto acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[19:43:44] execução E1-B-piloto INVÁLIDA: erro do run_experiment.sh (código 130)

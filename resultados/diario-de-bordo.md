@@ -843,3 +843,130 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Memória da máquina:** mínimo de 770 MiB disponíveis nos blocos robustez + E2 (26/11 03:43, entre o R1a-C-2 e o R1a-A-2), amostrada a cada 10 s; sem travamento
 - **Repetição 3 do E1:** 15–20% mais lenta nos três modos (A 234 s, B 249 s, C 166 s, contra ~200/~205/140 s em k=1 e k=2); efeito da máquina, não do modo
 - **Modo A:** o reinício do Job por 429 do OpenSearch (temas) aparece em parte das execuções; muda `t_job_fim − t_vazio` (23 s com reinício contra 216 s sem), não `t0 → t_vazio`
+
+### E1-A-pilotoh · 2026-11-26 18:00
+
+- **Campanha:** R
+- **Tipo:** piloto
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `a3b25e0` (tcc/revoada-ajustes-piloto-r) · estados `41df022` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T21:03:26+00:00; t_carga_fim = 2026-11-26T21:08:29+00:00; t0 = 2026-11-26T21:08:31+00:00; t_vazio = 2026-11-26T21:20:58+00:00; t_job_fim = 2026-11-26T21:25:58+00:00; t_fim = 2026-11-26T21:27:14+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 12.5 min até t_vazio
+- **Arquivos:** `resultados/R/piloto/E1/A/E1-A-pilotoh.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados; pods de infraestrutura reiniciados ou recriados desde a execução anterior: opensearch-0,postgres-1
+- **Validade:** piloto, fora dos resultados (critérios: pod(s) de infraestrutura reiniciado(s) ou recriado(s): apache-tika-867c5b9685-ld5mh (OOMKilled))
+
+### E1-B-pilotob · 2026-11-26 18:27
+
+- **Campanha:** R
+- **Tipo:** piloto
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `a3b25e0` (tcc/revoada-ajustes-piloto-r) · estados `41df022` (tcc/e2-execucao)
+- **Imagem:** —
+- **Parâmetros:** N = 500, *seed* = 1, teto = 1, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T21:30:09+00:00; t_carga_fim = 2026-11-26T21:35:10+00:00; t0 = 2026-11-26T21:35:10+00:00
+- **Resultado rápido:** pendentes no fim = — (— fora da DLQ); na DLQ = —; duração = —
+- **Arquivos:** `resultados/R/piloto/E1/B/E1-B-pilotob.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** piloto, fora dos resultados (critérios: erro do run_experiment.sh (código 130))
+
+### E1-A-pilotoi · 2026-11-26 18:36
+
+- **Campanha:** R
+- **Tipo:** piloto
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `41df022` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T21:38:52+00:00; t_carga_fim = 2026-11-26T21:43:52+00:00; t0 = 2026-11-26T21:43:53+00:00; t_vazio = 2026-11-26T21:55:35+00:00; t_job_fim = 2026-11-26T21:56:03+00:00; t_fim = 2026-11-26T21:57:18+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 11.7 min até t_vazio
+- **Arquivos:** `resultados/R/piloto/E1/A/E1-A-pilotoi.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados; o contêiner do Job reiniciou: exp-e1-a-pilotoi-1795729433-brnf6: 1 reinício(s), última falha com código ? (?) (ver E1-A-pilotoi-job.log)
+- **Validade:** piloto, fora dos resultados
+
+### E1-B-pilotoc · 2026-11-26 18:57
+
+- **Campanha:** R
+- **Tipo:** piloto
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `41df022` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 1, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T22:00:05+00:00; t_carga_fim = 2026-11-26T22:05:05+00:00; t0 = 2026-11-26T22:05:06+00:00; t_vazio = 2026-11-26T22:17:13+00:00; t_fim = 2026-11-26T22:18:29+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 12.1 min até t_vazio
+- **Arquivos:** `resultados/R/piloto/E1/B/E1-B-pilotoc.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** piloto, fora dos resultados
+
+### E1-C-piloto · 2026-11-26 19:18
+
+- **Campanha:** R
+- **Tipo:** piloto
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `41df022` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 6, timeout = 7200 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T22:20:56+00:00; t_carga_fim = 2026-11-26T22:25:56+00:00; t0 = 2026-11-26T22:25:57+00:00; t_vazio = 2026-11-26T22:28:50+00:00; t_zero = 2026-11-26T22:30:39+00:00; t_fim = 2026-11-26T22:30:39+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.9 min até t_vazio
+- **Arquivos:** `resultados/R/piloto/E1/C/E1-C-piloto.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** piloto, fora dos resultados
+
+### Fim do piloto R · 2026-11-26 19:30
+
+- **Execuções válidas:** E1-A-pilotoi, E1-B-pilotoc, E1-C-piloto. t0 → t_vazio: A 702 s, B 728 s, C 173 s (6 réplicas, t_zero 109 s depois do t_vazio). Duração total: ~21, ~21 e ~12 min
+- **Armazenamento:** desde 26/11 ~17:55, Postgres, OpenSearch e Garage em `local-path` (deployment `a3b25e0`). No `ceph-block-hdd`, sob carga do QD de produção, o fsync de 4 KB levava 2–6 s (contra ~1,5 ms agora). Volumes recriados (tabelas via `qd-sync-spiders`, índices via Job `indices`), todos na **hipo3**; o `redis-queue` também está na hipo3 desde o E1-B-pilotoc. OpenSearch de volta a 1500 MiB, como na K
+- **Tika:** OOMKilled no E1-A-pilotoh (limite de 1500 MiB com `-Xmx1400m`); limite de 2 GiB a partir do E1-A-pilotoi (deployment `cb7b241`), heap igual. O E1-B-pilotob foi interrompido de propósito para aplicar a correção
+- **Modo A:** o Job reiniciou uma vez no E1-A-pilotoi por 429 do OpenSearch nos temas (como na K); métricas mantidas pelo pushadd
+- **Linha do `.tsv`:** o E1-A-pilotoh aparece com código 0 porque, no piloto, o `run_experiment.sh` sai com 0 mesmo quando a execução é inválida
+- **Fixado:** `TIMEOUT_S` = 3 × 702 s = 2106 s; orçamento da R revisto para ~6,5 h obrigatórias. Ver [Desvios do protocolo](../docs/avaliacao/protocolo.md#desvios-do-protocolo)
+
+
+### E1-C-D5t2-1 · 2026-11-26 19:40
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 2, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T22:42:23+00:00; t_carga_fim = 2026-11-26T22:47:23+00:00; t0 = 2026-11-26T22:47:24+00:00; t_vazio = 2026-11-26T22:53:57+00:00; t_zero = 2026-11-26T22:55:52+00:00; t_fim = 2026-11-26T22:55:52+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 6.6 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t2-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-D5t4-1 · 2026-11-26 19:55
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 4, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T22:58:16+00:00; t_carga_fim = 2026-11-26T23:03:16+00:00; t0 = 2026-11-26T23:03:17+00:00; t_vazio = 2026-11-26T23:07:06+00:00; t_zero = 2026-11-26T23:08:55+00:00; t_fim = 2026-11-26T23:08:55+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 3.8 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t4-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-D5t6-1 · 2026-11-26 20:08
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T23:11:18+00:00; t_carga_fim = 2026-11-26T23:16:18+00:00; t0 = 2026-11-26T23:16:19+00:00; t_vazio = 2026-11-26T23:19:07+00:00; t_zero = 2026-11-26T23:20:56+00:00; t_fim = 2026-11-26T23:20:56+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.8 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t6-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-D5t8-1 · 2026-11-26 20:21
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `cb7b241` (tcc/revoada-ajustes-piloto-r) · estados `d5156bc` (tcc/e2-execucao)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 8, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T23:23:19+00:00; t_carga_fim = 2026-11-26T23:28:20+00:00; t0 = 2026-11-26T23:28:20+00:00; t_vazio = 2026-11-26T23:30:43+00:00; t_zero = 2026-11-26T23:32:38+00:00; t_fim = 2026-11-26T23:32:38+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.4 min até t_vazio
+- **Arquivos:** `resultados/R/D5/E1/C/E1-C-D5t8-1.{csv,json,log}`
+- **Anomalias:** querido-diario-deployment na branch 'tcc/revoada-ajustes-piloto-r', não em main-estados
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa

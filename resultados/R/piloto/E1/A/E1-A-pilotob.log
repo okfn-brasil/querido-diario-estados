@@ -1,0 +1,45 @@
+[17:54:24] execução E1-A-pilotob: cenário E1, modo A, campanha R (revoada-testes/querido-diario-tcc), PILOTO
+[17:54:24] N = 500, seed = 1, teto = 6, corrompidos = 0
+[17:54:24] máquina local: disco 84% usado, 1461 MiB de memória disponível, carga 0.42
+[17:54:26] aplicando o modo A
+deployment "apache-tika" successfully rolled out
+[17:54:27] checklist
+[17:54:27]   ✔ repositorios: sem mudanças locais
+[17:54:27] anomalia: querido-diario-deployment na branch 'tcc/revoada-opensearch-memoria', não em main-estados
+[17:54:28]   ✔ modo: overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila@sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[17:54:28]   ✔ imagem: sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[17:54:29]   ✔ monitoramento: up == 1 para pushgateway
+[17:54:29]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[17:54:29] load_simulator.py --cleanup
+[17:54:30] port-forward svc/postgres-rw → localhost:5434
+[17:54:31] port-forward svc/garage → localhost:3910
+[17:54:31] port-forward svc/opensearch → localhost:9210
+[17:54:33] 500 diário(s) sintético(s) no Postgres
+[17:54:35] OpenSearch: 595 documento(s) removido(s)
+[17:54:49] storage: 1000 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[17:54:49] Postgres: 500 linha(s) apagada(s)
+[17:54:50]   ✔ cronjobs: suspensos: data-processing=true
+[17:54:50]   ✔ sinteticos: 0 diários sintéticos
+[17:54:50] espera ociosa de 120 s
+[17:56:50] t_carga_inicio = 2026-11-25T20:56:50Z
+[17:56:50] perfil burst: 500 diários em 5.0 min, seed 1, 104 PDFs na amostra
+[17:56:51] port-forward svc/postgres-rw → localhost:5434
+  [acompanhar] [17:56:51] port-forward svc/postgres-rw → localhost:5436
+  [acompanhar] [17:56:51] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/piloto/E1/A/E1-A-pilotob-postgres.csv
+[17:56:51] port-forward svc/garage → localhost:3910
+[17:56:52] port-forward svc/opensearch → localhost:9210
+[17:57:07] agendados 25/500, concluídos 3
+[17:57:22] agendados 50/500, concluídos 8
+[17:57:37] agendados 75/500, concluídos 9
+[17:57:52] agendados 100/500, concluídos 11
+[17:58:07] agendados 125/500, concluídos 12
+[17:58:22] agendados 150/500, concluídos 15
+[17:58:37] agendados 175/500, concluídos 18
+[17:58:52] agendados 200/500, concluídos 21
+[17:59:07] agendados 225/500, concluídos 26
+[17:59:22] agendados 250/500, concluídos 27
+[17:59:37] agendados 275/500, concluídos 29
+  [acompanhar] [17:59:46] acompanhamento encerrado
+[17:59:46] INVÁLIDA: erro do run_experiment.sh (código 130)
+entrada E1-A-pilotob acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[17:59:46] execução E1-A-pilotob INVÁLIDA: erro do run_experiment.sh (código 130)

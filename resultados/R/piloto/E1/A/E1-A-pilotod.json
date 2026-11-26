@@ -1,0 +1,194 @@
+{
+  "run": "E1-A-pilotod",
+  "cenario": "E1",
+  "modo": "A",
+  "campanha": "R",
+  "piloto": true,
+  "repeticao": 1,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795642758.440,
+  "parametros": {
+    "n": 500,
+    "seed": 1,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 6,
+    "corrompidos": 0,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 7200,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": null,
+    "fracao_falha": null
+  },
+  "instantes": {
+    "t_carga_inicio": 1795642902.889,
+    "t_carga_fim": 1795643203.333,
+    "t0": 1795643209.154,
+    "t_rep1_obs": 1795643216.292,
+    "t_doc1_obs": 1795643216.300,
+    "t_vazio": 1795644066.096,
+    "t_job_fim": 1795644436.449,
+    "t_fim": 1795644512.910
+  },
+  "instantes_iso": {
+    "t_carga_inicio": "2026-11-25T21:41:42Z",
+    "t_carga_fim": "2026-11-25T21:46:43Z",
+    "t0": "2026-11-25T21:46:49Z",
+    "t_rep1_obs": "2026-11-25T21:46:56Z",
+    "t_doc1_obs": "2026-11-25T21:46:56Z",
+    "t_vazio": "2026-11-25T22:01:06Z",
+    "t_job_fim": "2026-11-25T22:07:16Z",
+    "t_fim": "2026-11-25T22:08:32Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila@sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [
+    {
+      "nome": "exp-e1-a-pilotod-1795643209",
+      "cronjob": "data-processing",
+      "criado": 1795643209.154
+    }
+  ],
+  "validade": {
+    "valida": false,
+    "motivos": [
+      "erro do run_experiment.sh (linha 1210: [[ -n $PF_PID ]])"
+    ],
+    "anomalias": [
+      "querido-diario-deployment na branch 'tcc/revoada-opensearch-memoria', não em main-estados"
+    ]
+  },
+  "maquina_local": {
+    "disco_uso_pct": 84,
+    "memoria_disponivel_mib": 1473,
+    "carga_1min": "0.54"
+  },
+  "commits": {
+    "estados": {
+      "sha": "04ed0eb37f357489bab6545b1c928fec26b1f23a",
+      "branch": "tcc/e2-execucao",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "faff6fd42b9702e41e7e7e9080e08f486b79d0ec",
+      "branch": "tcc/revoada-opensearch-memoria",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila@sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010",
+    "digest_no_cluster": "sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010",
+    "esperada": "sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010",
+    "usadas": []
+  },
+  "infra_inicio": {
+    "apache-tika-867c5b9685-d8t9h": {
+      "uid": "ce5f866e-9275-4ea9-972e-61a2c188f238",
+      "restarts": 1,
+      "oom": true,
+      "ready": true
+    },
+    "garage-9846f75c7-zx5z4": {
+      "uid": "533c79e8-18b5-4495-88a7-7c4a95ff2678",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "860a1b23-f468-4ce3-8071-6dadd6917533",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "cde28771-9e0f-48bf-b8cc-8cea8de2774a",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "carga": {
+    "perfil": "burst",
+    "total_pedido": 500,
+    "inseridos": 500,
+    "erros": 0,
+    "duracao_planejada_s": 300.0,
+    "seed": 1,
+    "territory": "3299999",
+    "inicio": "2026-11-25T21:41:43.689316+00:00",
+    "fim": "2026-11-25T21:46:43.130130+00:00",
+    "duracao_real_s": 299.4,
+    "atraso_max_s": 0.125,
+    "atraso_p95_s": 0.085,
+    "bytes_enviados": 2477903642,
+    "corrompidos_ids": [],
+    "ids_min_max": [
+      1264,
+      1763
+    ],
+    "erros_detalhe": [],
+    "amostra": "work/amostras/manifest.csv"
+  },
+  "job_tentativas": [
+    {
+      "pod": "exp-e1-a-pilotod-1795643209-5mc5c",
+      "job": "exp-e1-a-pilotod-1795643209",
+      "fase": "Succeeded",
+      "reinicios": 0,
+      "ultima_falha": null
+    }
+  ],
+  "fim_script": 1795644513.128,
+  "pasta_resultados": "resultados/R/piloto/E1/A"
+}

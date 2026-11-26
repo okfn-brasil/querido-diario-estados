@@ -1,0 +1,89 @@
+[16:39:52] execução E1-A-piloto: cenário E1, modo A, campanha R (revoada-testes/querido-diario-tcc), PILOTO
+[16:39:52] N = 500, seed = 1, teto = 6, corrompidos = 0
+[16:39:52] máquina local: disco 83% usado, 1585 MiB de memória disponível, carga 0.88
+[16:39:53] aplicando o modo A
+[16:39:53] removendo a fila de extração (ScaledObject primeiro)
+scaledobject.keda.sh "extraction-worker" deleted from querido-diario-tcc namespace
+deployment.apps "extraction-worker" deleted from querido-diario-tcc namespace
+deployment.apps "redis-queue" deleted from querido-diario-tcc namespace
+service "redis-queue" deleted from querido-diario-tcc namespace
+cronjob.batch "enqueue-extraction" deleted from querido-diario-tcc namespace
+cronjob.batch "themes-from-queue" deleted from querido-diario-tcc namespace
+persistentvolumeclaim "redis-queue-data" deleted from querido-diario-tcc namespace
+Waiting for deployment "apache-tika" rollout to finish: 0 of 1 updated replicas are available...
+deployment "apache-tika" successfully rolled out
+[16:40:19] checklist
+[16:40:19]   ✔ repositorios: sem mudanças locais
+[16:40:20]   ✔ modo: overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila@sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[16:40:20]   ✔ imagem: sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[16:40:21]   ✔ monitoramento: up == 1 para pushgateway
+[16:40:21]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[16:40:21] load_simulator.py --cleanup
+[16:40:22] port-forward svc/postgres-rw → localhost:5434
+[16:40:22] port-forward svc/garage → localhost:3910
+[16:40:23] port-forward svc/opensearch → localhost:9210
+[16:40:24] 0 diário(s) sintético(s) no Postgres
+[16:40:24]   ✔ cronjobs: suspensos: data-processing=true
+[16:40:25]   ✔ sinteticos: 0 diários sintéticos
+[16:40:25] espera ociosa de 120 s
+[16:42:25] t_carga_inicio = 2026-11-25T19:42:25Z
+[16:42:25] perfil burst: 500 diários em 5.0 min, seed 1, 104 PDFs na amostra
+  [acompanhar] [16:42:25] port-forward svc/postgres-rw → localhost:5436
+[16:42:25] port-forward svc/postgres-rw → localhost:5434
+  [acompanhar] [16:42:26] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/piloto/E1/A/E1-A-piloto-postgres.csv
+[16:42:26] port-forward svc/garage → localhost:3910
+[16:42:27] port-forward svc/opensearch → localhost:9210
+[16:42:42] agendados 25/500, concluídos 12
+[16:42:57] agendados 50/500, concluídos 18
+[16:43:12] agendados 75/500, concluídos 28
+[16:43:27] agendados 100/500, concluídos 30
+[16:43:42] agendados 125/500, concluídos 36
+[16:43:57] agendados 150/500, concluídos 39
+[16:44:12] agendados 175/500, concluídos 48
+[16:44:27] agendados 200/500, concluídos 57
+[16:44:42] agendados 225/500, concluídos 65
+[16:44:57] agendados 250/500, concluídos 74
+[16:45:12] agendados 275/500, concluídos 79
+[16:45:27] agendados 300/500, concluídos 81
+[16:45:42] agendados 325/500, concluídos 85
+[16:45:57] agendados 350/500, concluídos 97
+[16:46:12] agendados 375/500, concluídos 105
+[16:46:27] agendados 400/500, concluídos 111
+[16:46:42] agendados 425/500, concluídos 117
+[16:46:57] agendados 450/500, concluídos 124
+[16:47:12] agendados 475/500, concluídos 132
+[16:47:27] agendados 500/500, concluídos 136
+[17:04:37] fim: 500 inseridos, 0 erro(s), 1329.0 s, atraso máx. 1008.821 s
+[17:04:37] registro: /home/muriel/.cache/qd-worktrees/e2-execucao/simulador/execucoes/20261125T194228Z_burst.json
+[17:04:37] aviso: a inserção ficou mais de 30 s atrás da agenda; aumente --workers ou reduza o volume
+[17:04:37] t_carga_fim = 2026-11-25T20:04:37Z
+[17:04:39] Job exp-e1-a-piloto-1795637077 criado a partir de cronjob/data-processing
+[17:04:39] t0 = 2026-11-25T20:04:37Z
+[17:04:39] esperando os pendentes chegarem a 0 (timeout 7200 s)
+[17:04:40] processados 0/500, pendentes 500
+[17:04:46] t_rep1_obs = 2026-11-25T20:04:46Z
+[17:04:51] t_doc1_obs = 2026-11-25T20:04:51Z
+[17:05:42] processados 31/500, pendentes 469
+[17:06:43] processados 64/500, pendentes 436
+[17:07:45] processados 88/500, pendentes 412
+[17:08:47] processados 109/500, pendentes 391
+[17:09:49] processados 140/500, pendentes 360
+[17:10:51] processados 178/500, pendentes 322
+[17:11:53] processados 207/500, pendentes 293
+[17:12:55] processados 255/500, pendentes 245
+[17:13:57] processados 288/500, pendentes 212
+[17:14:59] processados 322/500, pendentes 178
+[17:16:01] processados 365/500, pendentes 135
+[17:17:03] processados 398/500, pendentes 102
+[17:18:05] processados 420/500, pendentes 80
+[17:19:07] processados 437/500, pendentes 63
+[17:20:09] processados 456/500, pendentes 44
+[17:21:10] processados 472/500, pendentes 28
+[17:22:12] processados 491/500, pendentes 9
+[17:22:36] t_vazio = 2026-11-25T20:22:36Z
+[17:22:37] esperando o fim do Job exp-e1-a-piloto-1795637077 (temas e push das métricas)
+Terminado
+  [acompanhar] [17:51:57] acompanhamento encerrado
+[17:51:57] INVÁLIDA: erro do run_experiment.sh (código 130)
+entrada E1-A-piloto acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[17:51:57] execução E1-A-piloto INVÁLIDA: erro do run_experiment.sh (código 130)

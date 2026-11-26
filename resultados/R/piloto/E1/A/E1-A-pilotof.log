@@ -1,0 +1,84 @@
+[19:14:42] execução E1-A-pilotof: cenário E1, modo A, campanha R (revoada-testes/querido-diario-tcc), PILOTO
+[19:14:42] N = 500, seed = 1, teto = 6, corrompidos = 0
+[19:14:42] máquina local: disco 84% usado, 1461 MiB de memória disponível, carga 0.25
+[19:14:44] aplicando o modo A
+deployment "apache-tika" successfully rolled out
+[19:14:46] checklist
+[19:14:46]   ✔ repositorios: sem mudanças locais
+[19:14:46] anomalia: querido-diario-deployment na branch 'tcc/revoada-opensearch-memoria', não em main-estados
+[19:14:47]   ✔ modo: overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila@sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[19:14:47]   ✔ imagem: sha256:addd0fcb4255e8a0a9fb03f1fe47c61e5e78de8200677ea5769e4af136c3a010
+[19:14:47]   ✔ monitoramento: up == 1 para pushgateway
+[19:14:48]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[19:14:48] load_simulator.py --cleanup
+[19:14:49] 288 diário(s) sintético(s) no Postgres
+[19:14:50] OpenSearch: 0 documento(s) removido(s)
+[19:14:54] storage: 576 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[19:14:54] Postgres: 288 linha(s) apagada(s)
+[19:14:55]   ✔ cronjobs: suspensos: data-processing=true
+[19:14:55]   ✔ sinteticos: 0 diários sintéticos
+[19:14:55] espera ociosa de 120 s
+[19:16:55] t_carga_inicio = 2026-11-25T22:16:55Z
+  [acompanhar] [19:16:56] port-forward svc/postgres-rw → localhost:5436
+[19:16:56] perfil burst: 500 diários em 5.0 min, seed 1, 104 PDFs na amostra
+  [acompanhar] [19:16:56] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/piloto/E1/A/E1-A-pilotof-postgres.csv
+[19:17:10] agendados 25/500, concluídos 24
+[19:17:25] agendados 50/500, concluídos 49
+[19:17:40] agendados 75/500, concluídos 74
+[19:17:55] agendados 100/500, concluídos 99
+[19:18:10] agendados 125/500, concluídos 124
+[19:18:25] agendados 150/500, concluídos 149
+[19:18:40] agendados 175/500, concluídos 174
+[19:18:55] agendados 200/500, concluídos 199
+[19:19:10] agendados 225/500, concluídos 224
+[19:19:25] agendados 250/500, concluídos 249
+[19:19:40] agendados 275/500, concluídos 274
+[19:19:55] agendados 300/500, concluídos 299
+[19:20:10] agendados 325/500, concluídos 324
+[19:20:25] agendados 350/500, concluídos 349
+[19:20:40] agendados 375/500, concluídos 374
+[19:20:55] agendados 400/500, concluídos 399
+[19:21:10] agendados 425/500, concluídos 424
+[19:21:25] agendados 450/500, concluídos 449
+[19:21:40] agendados 475/500, concluídos 474
+[19:21:55] agendados 500/500, concluídos 499
+[19:21:56] fim: 500 inseridos, 0 erro(s), 299.6 s, atraso máx. 0.121 s
+[19:21:56] registro: /work/execucoes/20261125T221656Z_burst.json
+[19:21:56] t_carga_fim = 2026-11-25T22:21:56Z
+[19:21:57] Job exp-e1-a-pilotof-1795645317 criado a partir de cronjob/data-processing
+[19:21:57] t0 = 2026-11-25T22:21:57Z
+[19:21:57] esperando os pendentes chegarem a 0 (timeout 7200 s)
+[19:21:58] processados 0/500, pendentes 500
+[19:22:04] t_rep1_obs = 2026-11-25T22:22:04Z
+[19:22:04] t_doc1_obs = 2026-11-25T22:22:04Z
+[19:23:00] processados 30/500, pendentes 470
+[19:24:03] processados 64/500, pendentes 436
+[19:25:06] processados 100/500, pendentes 400
+[19:26:09] processados 133/500, pendentes 367
+[19:27:12] processados 171/500, pendentes 329
+[19:28:16] processados 201/500, pendentes 299
+[19:29:19] processados 242/500, pendentes 258
+[19:30:23] processados 281/500, pendentes 219
+[19:31:27] processados 316/500, pendentes 184
+[19:32:30] processados 356/500, pendentes 144
+[19:33:33] processados 387/500, pendentes 113
+[19:34:36] processados 425/500, pendentes 75
+[19:35:40] processados 465/500, pendentes 35
+[19:36:39] t_vazio = 2026-11-25T22:36:39Z
+[19:36:39] esperando o fim do Job exp-e1-a-pilotof-1795645317 (temas e push das métricas)
+[19:37:09] t_job_fim = 2026-11-25T22:37:09Z
+[19:37:10] anomalia: o contêiner do Job reiniciou: exp-e1-a-pilotof-1795645317-whlxg: 1 reinício(s), última falha com código ? (?) (ver E1-A-pilotof-job.log)
+[19:37:10] margem de 75 s para o Prometheus raspar o push
+[19:38:25] t_fim = 2026-11-25T22:38:25Z
+  [acompanhar] [19:38:26] acompanhamento encerrado
+[19:38:26] exportando as séries (22:21:57 → 22:38:25 UTC)
+[22:38:29] E1-A-pilotof: 2026-11-25T22:21:57+00:00 → 2026-11-25T22:38:25+00:00 (989 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[22:38:30] 1698 linha(s) em /work/resultados/E1/A/E1-A-pilotof.csv
+[22:38:30] resumo em E1-A-pilotof.json; séries vazias: dlq, fila, replicas, replicas_desejadas, replicas_disponiveis
+[22:38:30] Postgres: {'sinteticos': 500, 'processados': 500, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+[19:38:31] no fim: pendentes fora da DLQ = 0, DLQ = —
+[19:38:31] INVÁLIDA: sem séries qd_* do Pushgateway: o push do Job não chegou ou veio vazio (ver E1-A-pilotof-job.log)
+entrada E1-A-pilotof acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[19:38:31] execução E1-A-pilotof INVÁLIDA: sem séries qd_* do Pushgateway: o push do Job não chegou ou veio vazio (ver E1-A-pilotof-job.log)

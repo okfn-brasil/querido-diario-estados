@@ -1,0 +1,129 @@
+{
+  "run": "E1-B-pilotob",
+  "cenario": "E1",
+  "modo": "B",
+  "campanha": "R",
+  "piloto": true,
+  "repeticao": 1,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795648644.639,
+  "parametros": {
+    "n": 500,
+    "seed": 1,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 1,
+    "corrompidos": 0,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 7200,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": null,
+    "fracao_falha": null
+  },
+  "instantes": {},
+  "instantes_iso": {},
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "ScaledObject min=1 max=1 Ready"
+    },
+    {
+      "item": "visibility_timeout",
+      "ok": true,
+      "detalhe": "padrão (2 h)"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway redis-queue extraction-worker"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    }
+  ],
+  "jobs": [],
+  "validade": {
+    "valida": null,
+    "motivos": [],
+    "anomalias": [
+      "querido-diario-deployment na branch 'tcc/revoada-opensearch-memoria', não em main-estados"
+    ]
+  },
+  "maquina_local": {
+    "disco_uso_pct": 84,
+    "memoria_disponivel_mib": 5490,
+    "carga_1min": "0.13"
+  },
+  "commits": {
+    "estados": {
+      "sha": "c4c0493a0e2e718e800aa101376de7417548716e",
+      "branch": "tcc/e2-execucao",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "275a8479c839d77630970c7c63c09011556e5330",
+      "branch": "tcc/revoada-opensearch-memoria",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "digest_no_cluster": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "esperada": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+  },
+  "infra_inicio": {
+    "garage-9846f75c7-zx5z4": {
+      "uid": "533c79e8-18b5-4495-88a7-7c4a95ff2678",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "860a1b23-f468-4ce3-8071-6dadd6917533",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-brvtx": {
+      "uid": "292a348d-3034-4ee6-842d-4617c6d5104b",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "cde28771-9e0f-48bf-b8cc-8cea8de2774a",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  }
+}
