@@ -1,0 +1,452 @@
+{
+  "run": "R2-C-1",
+  "cenario": "R2",
+  "modo": "C",
+  "campanha": "R",
+  "piloto": false,
+  "repeticao": 1,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795760829.013,
+  "parametros": {
+    "n": 100,
+    "seed": 1,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 6,
+    "corrompidos": 10,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 2106,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": null,
+    "fracao_falha": null
+  },
+  "instantes": {
+    "t_carga_inicio": 1795760971.547,
+    "t_carga_fim": 1795761269.557,
+    "t0": 1795761270.345,
+    "t_rep1_obs": 1795761291.162,
+    "t_doc1_obs": 1795761297.207,
+    "t_vazio": 1795761327.592,
+    "t_zero": 1795761437.504,
+    "t_fim": 1795761437.512
+  },
+  "instantes_iso": {
+    "t_carga_inicio": "2026-11-27T06:29:31Z",
+    "t_carga_fim": "2026-11-27T06:34:29Z",
+    "t0": "2026-11-27T06:34:30Z",
+    "t_rep1_obs": "2026-11-27T06:34:51Z",
+    "t_doc1_obs": "2026-11-27T06:34:57Z",
+    "t_vazio": "2026-11-27T06:35:27Z",
+    "t_zero": "2026-11-27T06:37:17Z",
+    "t_fim": "2026-11-27T06:37:17Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "ScaledObject min=0 max=6 Ready"
+    },
+    {
+      "item": "visibility_timeout",
+      "ok": true,
+      "detalhe": "padrão (2 h)"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway redis-queue"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    },
+    {
+      "item": "redis_fila",
+      "ok": true,
+      "detalhe": "FLUSHDB; fila, DLQ e unacked vazias"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [
+    {
+      "nome": "exp-r2-c-1-1795761270",
+      "cronjob": "enqueue-extraction",
+      "criado": 1795761270.345
+    }
+  ],
+  "validade": {
+    "valida": true,
+    "motivos": [],
+    "anomalias": []
+  },
+  "maquina_local": {
+    "disco_uso_pct": 85,
+    "memoria_disponivel_mib": 5527,
+    "carga_1min": "0.10"
+  },
+  "commits": {
+    "estados": {
+      "sha": "f8e9ee213848bb3af423a4db3dc878768eaca6c0",
+      "branch": "tcc/e2-campanha-r",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "1168905c5e6274cdd1a83410a2c1664540caf327",
+      "branch": "main-estados",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "digest_no_cluster": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "esperada": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "usadas": [
+      {
+        "pod": "enqueue-extraction-29929345-nwtmm",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "enqueue-extraction-29929355-gx547",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "exp-r2-c-1-1795761270-58n9r",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-dkxs8",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-gdswd",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-hfwjg",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-nbfbx",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-vhbkn",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-wr7fg",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      }
+    ]
+  },
+  "infra_inicio": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-fpx7h": {
+      "uid": "ecf787a5-eb66-4eb4-8d8c-f7fd8bf530d1",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "carga": {
+    "perfil": "burst",
+    "total_pedido": 100,
+    "inseridos": 100,
+    "erros": 0,
+    "duracao_planejada_s": 300.0,
+    "seed": 1,
+    "territory": "3299999",
+    "inicio": "2026-11-27T06:29:32.269644+00:00",
+    "fim": "2026-11-27T06:34:29.302408+00:00",
+    "duracao_real_s": 297.0,
+    "atraso_max_s": 0.106,
+    "atraso_p95_s": 0.077,
+    "bytes_enviados": 410635387,
+    "corrompidos_ids": [
+      10131,
+      10132,
+      10136,
+      10149,
+      10151,
+      10154,
+      10158,
+      10159,
+      10168,
+      10175
+    ],
+    "ids_min_max": [
+      10101,
+      10200
+    ],
+    "erros_detalhe": [],
+    "amostra": "work/amostras/manifest.csv"
+  },
+  "infra_fim": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-fpx7h": {
+      "uid": "ecf787a5-eb66-4eb4-8d8c-f7fd8bf530d1",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "export_janela": {
+    "inicio": 1795761270.345,
+    "fim": 1795761437.512
+  },
+  "export": {
+    "gerado_em": "2026-11-27T06:37:21+00:00",
+    "run": "R2-C-1",
+    "cenario": "R2",
+    "modo": "C",
+    "namespace": "querido-diario-tcc",
+    "contexto": null,
+    "inicio": "2026-11-27T06:34:30+00:00",
+    "fim": "2026-11-27T06:37:17+00:00",
+    "inicio_ts": 1795761270.345,
+    "fim_ts": 1795761437.512,
+    "passo_s": 30,
+    "janela_rate": "120s",
+    "prometheus": "http://prometheus-k8s.monitoring.svc:9090",
+    "linhas_por_serie": {
+      "processados": 9,
+      "vazao_por_min": 8,
+      "tempo_diario_p50_s": 4,
+      "tempo_diario_p95_s": 4,
+      "coleta_indexado_p50_s": 4,
+      "coleta_indexado_p95_s": 4,
+      "push_time_s": 6,
+      "fila": 6,
+      "dlq": 6,
+      "replicas_desejadas": 6,
+      "replicas": 6,
+      "replicas_disponiveis": 6,
+      "cpu_cores": 56,
+      "memoria_bytes": 62,
+      "request_cpu_cores": 36,
+      "request_memoria_bytes": 87,
+      "pod_fase": 87,
+      "reinicios": 93,
+      "oomkilled": 0,
+      "alvo_up": 17
+    },
+    "series_vazias": [
+      "oomkilled"
+    ],
+    "prometheus_resumo": {
+      "observacao": null,
+      "processados_por_status": {
+        "ok": 90.0,
+        "error": 10.0
+      },
+      "tempo_diario_s": {
+        "buckets": {
+          "1.0": 52.0,
+          "2.0": 80.0,
+          "5.0": 96.0,
+          "10.0": 100.0,
+          "20.0": 100.0,
+          "40.0": 100.0,
+          "80.0": 100.0,
+          "160.0": 100.0,
+          "320.0": 100.0,
+          "+Inf": 100.0
+        },
+        "soma": 141.42133234906942,
+        "contagem": 100.0,
+        "p50": 0.9615384615384616,
+        "p95": 4.8125,
+        "p99": 8.75,
+        "media": 1.4142133234906942
+      },
+      "coleta_indexado_s": {
+        "buckets": {
+          "60.0": 11.0,
+          "300.0": 74.0,
+          "900.0": 90.0,
+          "1800.0": 90.0,
+          "3600.0": 90.0,
+          "7200.0": 90.0,
+          "14400.0": 90.0,
+          "43200.0": 90.0,
+          "86400.0": 90.0,
+          "+Inf": 90.0
+        },
+        "soma": 17129.485005,
+        "contagem": 90.0,
+        "p50": 189.52380952380952,
+        "p95": 731.25,
+        "p99": 866.2499999999998,
+        "media": 190.32761116666666
+      }
+    },
+    "postgres_fim": {
+      "sinteticos": 100,
+      "processados": 90,
+      "pendentes": 10,
+      "pendentes_sem_dlq": 0
+    },
+    "dlq": {
+      "tamanho": 10,
+      "ids": [
+        10131,
+        10132,
+        10136,
+        10149,
+        10151,
+        10154,
+        10158,
+        10159,
+        10168,
+        10175
+      ],
+      "entradas": [
+        {
+          "id": 10131,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpbifzqt5q. Response: ')",
+          "ts": 1795761315.198346
+        },
+        {
+          "id": 10132,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmp0mueu37f. Response: ')",
+          "ts": 1795761314.8323894
+        },
+        {
+          "id": 10136,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmp5k81wam5. Response: ')",
+          "ts": 1795761313.8739972
+        },
+        {
+          "id": 10149,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpikdms2e4. Response: ')",
+          "ts": 1795761310.5330787
+        },
+        {
+          "id": 10151,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpmx10rp6k. Response: ')",
+          "ts": 1795761310.201674
+        },
+        {
+          "id": 10154,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmp00mt2wew. Response: ')",
+          "ts": 1795761309.8554406
+        },
+        {
+          "id": 10158,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpdot68alb. Response: ')",
+          "ts": 1795761309.3809485
+        },
+        {
+          "id": 10159,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpki3pzdc3. Response: ')",
+          "ts": 1795761308.9663572
+        },
+        {
+          "id": 10168,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpqcoo_dvt. Response: ')",
+          "ts": 1795761306.967735
+        },
+        {
+          "id": 10175,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmp6wpxpssg. Response: ')",
+          "ts": 1795761304.2525232
+        }
+      ]
+    }
+  },
+  "lacunas": {
+    "tolerancia_s": 90.0,
+    "alvos": [
+      "pushgateway",
+      "redis-queue"
+    ],
+    "problemas": []
+  },
+  "fim_script": 1795761442.124,
+  "pasta_resultados": "resultados/R/R2/C"
+}

@@ -1,0 +1,73 @@
+[22:02:24] execução E1-C-2: cenário E1, modo C, campanha R (revoada-testes/querido-diario-tcc)
+[22:02:24] N = 500, seed = 2, teto = 6, corrompidos = 0
+[22:02:24] máquina local: disco 85% usado, 5652 MiB de memória disponível, carga 0.10
+[22:02:26] aplicando o modo C
+deployment "redis-queue" successfully rolled out
+[22:02:34] checklist
+[22:02:34]   ✔ repositorios: sem mudanças locais
+[22:02:34]   ✔ modo: ScaledObject min=0 max=6 Ready
+[22:02:34]   ✔ visibility_timeout: padrão (2 h)
+[22:02:34]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[22:02:36]   ✔ monitoramento: up == 1 para pushgateway redis-queue
+[22:02:37]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[22:02:37] load_simulator.py --cleanup
+[22:02:38] 500 diário(s) sintético(s) no Postgres
+[22:02:40] OpenSearch: 500 documento(s) removido(s)
+[22:02:43] storage: 1000 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[22:02:43] Postgres: 500 linha(s) apagada(s)
+[22:02:45]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[22:02:46]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[22:02:47]   ✔ sinteticos: 0 diários sintéticos
+[22:02:48] espera ociosa de 120 s
+[22:04:48] t_carga_inicio = 2026-11-27T01:04:48Z
+  [acompanhar] [22:04:48] port-forward svc/postgres-rw → localhost:5436
+[22:04:48] perfil burst: 500 diários em 5.0 min, seed 2, 104 PDFs na amostra
+  [acompanhar] [22:04:49] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [22:04:49] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/E1/C/E1-C-2-postgres.csv
+[22:05:03] agendados 25/500, concluídos 24
+[22:05:18] agendados 50/500, concluídos 49
+[22:05:33] agendados 75/500, concluídos 74
+[22:05:48] agendados 100/500, concluídos 99
+[22:06:03] agendados 125/500, concluídos 124
+[22:06:18] agendados 150/500, concluídos 149
+[22:06:33] agendados 175/500, concluídos 174
+[22:06:48] agendados 200/500, concluídos 199
+[22:07:03] agendados 225/500, concluídos 224
+[22:07:18] agendados 250/500, concluídos 249
+[22:07:33] agendados 275/500, concluídos 274
+[22:07:48] agendados 300/500, concluídos 299
+[22:08:03] agendados 325/500, concluídos 324
+[22:08:18] agendados 350/500, concluídos 349
+[22:08:33] agendados 375/500, concluídos 374
+[22:08:48] agendados 400/500, concluídos 399
+[22:09:03] agendados 425/500, concluídos 424
+[22:09:18] agendados 450/500, concluídos 449
+[22:09:33] agendados 475/500, concluídos 474
+[22:09:48] agendados 500/500, concluídos 499
+[22:09:48] fim: 500 inseridos, 0 erro(s), 299.5 s, atraso máx. 0.1 s
+[22:09:48] registro: /work/execucoes/20261127T010449Z_burst.json
+[22:09:49] t_carga_fim = 2026-11-27T01:09:49Z
+[22:09:49] Job exp-e1-c-2-1795741789 criado a partir de cronjob/enqueue-extraction
+[22:09:49] t0 = 2026-11-27T01:09:49Z
+[22:09:50] esperando os pendentes chegarem a 0 (timeout 2106 s)
+[22:09:51] processados 0/500, pendentes 500, fila 0, réplicas 0
+[22:10:10] t_rep1_obs = 2026-11-27T01:10:10Z
+[22:10:10] t_doc1_obs = 2026-11-27T01:10:10Z
+[22:10:53] processados 149/500, pendentes 351, fila 343, réplicas 6
+[22:11:55] processados 361/500, pendentes 139, fila 133, réplicas 6
+[22:12:38] t_vazio = 2026-11-27T01:12:38Z
+[22:12:38] esperando as réplicas voltarem a 0
+[22:14:32] t_zero = 2026-11-27T01:14:32Z
+[22:14:32] t_fim = 2026-11-27T01:14:32Z
+  [acompanhar] [22:14:33] acompanhamento encerrado
+[22:14:33] exportando as séries (01:09:49 → 01:14:32 UTC)
+[22:14:36] E1-C-2: 2026-11-27T01:09:49+00:00 → 2026-11-27T01:14:32+00:00 (283 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[22:14:36] 947 linha(s) em /work/resultados/E1/C/E1-C-2.csv
+[22:14:36] resumo em E1-C-2.json; séries vazias: oomkilled
+[22:14:36] Postgres: {'sinteticos': 500, 'processados': 500, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+[22:14:36] DLQ: 0 item(ns)
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+[22:14:37] no fim: pendentes fora da DLQ = 0, DLQ = 0
+entrada E1-C-2 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[22:14:37] execução E1-C-2 concluída: resultados/R/E1/C/E1-C-2.*

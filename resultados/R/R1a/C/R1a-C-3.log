@@ -1,0 +1,76 @@
+[02:28:34] execução R1a-C-3: cenário R1a, modo C, campanha R (revoada-testes/querido-diario-tcc)
+[02:28:34] N = 100, seed = 3, teto = 6, corrompidos = 0
+[02:28:34] máquina local: disco 85% usado, 5531 MiB de memória disponível, carga 0.13
+[02:28:36] aplicando o modo C
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+[02:28:56] checklist
+[02:28:56]   ✔ repositorios: sem mudanças locais
+[02:28:56]   ✔ modo: ScaledObject min=0 max=6 Ready
+[02:28:56]   ✔ visibility_timeout: padrão (2 h)
+[02:28:57]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[02:28:59]   ✔ monitoramento: up == 1 para pushgateway redis-queue
+[02:28:59]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[02:28:59] load_simulator.py --cleanup
+[02:29:00] 100 diário(s) sintético(s) no Postgres
+[02:29:00] OpenSearch: 158 documento(s) removido(s)
+[02:29:01] storage: 200 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[02:29:01] Postgres: 100 linha(s) apagada(s)
+[02:29:03]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[02:29:04]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[02:29:05]   ✔ sinteticos: 0 diários sintéticos
+[02:29:05] espera ociosa de 120 s
+[02:31:06] t_carga_inicio = 2026-11-27T05:31:06Z
+[02:31:06] perfil burst: 100 diários em 5.0 min, seed 3, 104 PDFs na amostra
+  [acompanhar] [02:31:06] port-forward svc/postgres-rw → localhost:5436
+  [acompanhar] [02:31:07] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [02:31:07] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/R1a/C/R1a-C-3-postgres.csv
+[02:31:18] agendados 5/100, concluídos 4
+[02:31:33] agendados 10/100, concluídos 9
+[02:31:48] agendados 15/100, concluídos 14
+[02:32:03] agendados 20/100, concluídos 19
+[02:32:18] agendados 25/100, concluídos 24
+[02:32:33] agendados 30/100, concluídos 29
+[02:32:48] agendados 35/100, concluídos 34
+[02:33:03] agendados 40/100, concluídos 39
+[02:33:18] agendados 45/100, concluídos 44
+[02:33:33] agendados 50/100, concluídos 49
+[02:33:48] agendados 55/100, concluídos 54
+[02:34:03] agendados 60/100, concluídos 59
+[02:34:18] agendados 65/100, concluídos 64
+[02:34:33] agendados 70/100, concluídos 69
+[02:34:48] agendados 75/100, concluídos 74
+[02:35:03] agendados 80/100, concluídos 79
+[02:35:18] agendados 85/100, concluídos 84
+[02:35:33] agendados 90/100, concluídos 89
+[02:35:48] agendados 95/100, concluídos 94
+[02:36:03] agendados 100/100, concluídos 99
+[02:36:04] fim: 100 inseridos, 0 erro(s), 297.1 s, atraso máx. 0.096 s
+[02:36:04] registro: /work/execucoes/20261127T053106Z_burst.json
+[02:36:04] t_carga_fim = 2026-11-27T05:36:04Z
+[02:36:05] Job exp-r1a-c-3-1795757764 criado a partir de cronjob/enqueue-extraction
+[02:36:05] t0 = 2026-11-27T05:36:04Z
+[02:36:05] esperando os pendentes chegarem a 0 (timeout 2106 s)
+[02:36:07] processados 0/100, pendentes 100, fila 0, réplicas 0
+[02:36:26] t_rep1_obs = 2026-11-27T05:36:26Z
+[02:36:32] t_doc1_obs = 2026-11-27T05:36:32Z
+[02:36:45] t_kill = 2026-11-27T05:36:44Z
+[02:36:48] mensagens reservadas na falha: f99d38a6-44f7-4a46-9118-49fc31198349 6dc66d08-4579-4219-8d22-684137636470 ecc70270-a70e-4d7b-984d-4eae993d1275 dcf7b5af-7417-41d4-b4a3-fdcc32722c4e (gazettes 9669 9664 9668 9665)
+[02:36:56] t_pod_removido = 2026-11-27T05:36:49Z
+[02:37:10] processados 97/100, pendentes 3, fila 0, réplicas 6
+[02:37:16] t_vazio = 2026-11-27T05:37:16Z
+[02:37:16] esperando as réplicas voltarem a 0
+[02:39:11] t_zero = 2026-11-27T05:39:11Z
+[02:39:11] t_fim = 2026-11-27T05:39:11Z
+  [acompanhar] [02:39:11] acompanhamento encerrado
+[02:39:12] exportando as séries (05:36:04 → 05:39:11 UTC)
+[02:39:15] R1a-C-3: 2026-11-27T05:36:04+00:00 → 2026-11-27T05:39:11+00:00 (186 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[02:39:15] 596 linha(s) em /work/resultados/R1a/C/R1a-C-3.csv
+[02:39:15] resumo em R1a-C-3.json; séries vazias: oomkilled
+[02:39:15] Postgres: {'sinteticos': 100, 'processados': 100, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+[02:39:15] DLQ: 0 item(ns)
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+[02:39:16] no fim: pendentes fora da DLQ = 0, DLQ = 0
+entrada R1a-C-3 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[02:39:16] execução R1a-C-3 concluída: resultados/R/R1a/C/R1a-C-3.*

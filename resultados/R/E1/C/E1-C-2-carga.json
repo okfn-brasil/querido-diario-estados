@@ -1,0 +1,22 @@
+{
+  "perfil": "burst",
+  "total_pedido": 500,
+  "inseridos": 500,
+  "erros": 0,
+  "duracao_planejada_s": 300.0,
+  "seed": 2,
+  "territory": "3299999",
+  "inicio": "2026-11-27T01:04:49.246495+00:00",
+  "fim": "2026-11-27T01:09:48.779353+00:00",
+  "duracao_real_s": 299.5,
+  "atraso_max_s": 0.1,
+  "atraso_p95_s": 0.066,
+  "bytes_enviados": 2168475633,
+  "corrompidos_ids": [],
+  "ids_min_max": [
+    6501,
+    7000
+  ],
+  "erros_detalhe": [],
+  "amostra": "work/amostras/manifest.csv"
+}

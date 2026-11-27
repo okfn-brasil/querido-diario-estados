@@ -1,0 +1,85 @@
+[21:07:33] execução E1-B-1: cenário E1, modo B, campanha R (revoada-testes/querido-diario-tcc)
+[21:07:33] N = 500, seed = 1, teto = 1, corrompidos = 0
+[21:07:33] máquina local: disco 85% usado, 5674 MiB de memória disponível, carga 0.08
+[21:07:35] aplicando o modo B
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+Warning: PollingInterval is configured but is not relevant for scaling. It only affects scaling when minReplicaCount = 0, idleReplicaCount is set, or useCachedMetrics is enabled, but it still controls how often KEDA refreshes the ScaledObject status conditions and events
+Warning: CooldownPeriod is configured but is not relevant. CooldownPeriod is only relevant when minReplicaCount = 0 or idleReplicaCount is set
+deployment "extraction-worker" successfully rolled out
+[21:08:07] checklist
+[21:08:07]   ✔ repositorios: sem mudanças locais
+[21:08:07]   ✔ modo: ScaledObject min=1 max=1 Ready
+[21:08:08]   ✔ visibility_timeout: padrão (2 h)
+[21:08:10]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[21:08:12]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[21:08:13]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[21:08:13] load_simulator.py --cleanup
+[21:08:13] 500 diário(s) sintético(s) no Postgres
+[21:08:14] OpenSearch: 852 documento(s) removido(s)
+[21:08:17] storage: 1000 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[21:08:17] Postgres: 500 linha(s) apagada(s)
+[21:08:19]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[21:08:21]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[21:08:21]   ✔ sinteticos: 0 diários sintéticos
+[21:08:21] espera ociosa de 120 s
+[21:10:21] t_carga_inicio = 2026-11-27T00:10:21Z
+  [acompanhar] [21:10:22] port-forward svc/postgres-rw → localhost:5436
+[21:10:22] perfil burst: 500 diários em 5.0 min, seed 1, 104 PDFs na amostra
+  [acompanhar] [21:10:23] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [21:10:23] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/E1/B/E1-B-1-postgres.csv
+[21:10:37] agendados 25/500, concluídos 24
+[21:10:52] agendados 50/500, concluídos 49
+[21:11:07] agendados 75/500, concluídos 74
+[21:11:22] agendados 100/500, concluídos 99
+[21:11:37] agendados 125/500, concluídos 124
+[21:11:52] agendados 150/500, concluídos 149
+[21:12:07] agendados 175/500, concluídos 174
+[21:12:22] agendados 200/500, concluídos 199
+[21:12:37] agendados 225/500, concluídos 224
+[21:12:52] agendados 250/500, concluídos 249
+[21:13:07] agendados 275/500, concluídos 274
+[21:13:22] agendados 300/500, concluídos 299
+[21:13:37] agendados 325/500, concluídos 324
+[21:13:52] agendados 350/500, concluídos 349
+[21:14:07] agendados 375/500, concluídos 374
+[21:14:22] agendados 400/500, concluídos 399
+[21:14:37] agendados 425/500, concluídos 424
+[21:14:52] agendados 450/500, concluídos 449
+[21:15:07] agendados 475/500, concluídos 474
+[21:15:22] agendados 500/500, concluídos 499
+[21:15:22] fim: 500 inseridos, 0 erro(s), 299.4 s, atraso máx. 0.1 s
+[21:15:22] registro: /work/execucoes/20261127T001022Z_burst.json
+[21:15:22] t_carga_fim = 2026-11-27T00:15:22Z
+[21:15:23] Job exp-e1-b-1-1795738522 criado a partir de cronjob/enqueue-extraction
+[21:15:23] t0 = 2026-11-27T00:15:22Z
+[21:15:23] esperando os pendentes chegarem a 0 (timeout 2106 s)
+[21:15:24] t_rep1_obs = 2026-11-27T00:15:24Z
+[21:15:24] processados 0/500, pendentes 500, fila 0, réplicas 1
+[21:15:30] t_doc1_obs = 2026-11-27T00:15:30Z
+[21:16:26] processados 38/500, pendentes 462, fila 461, réplicas 1
+[21:17:28] processados 78/500, pendentes 422, fila 421, réplicas 1
+[21:18:30] processados 113/500, pendentes 387, fila 386, réplicas 1
+[21:19:31] processados 156/500, pendentes 344, fila 342, réplicas 1
+[21:20:33] processados 188/500, pendentes 312, fila 311, réplicas 1
+[21:21:34] processados 237/500, pendentes 263, fila 262, réplicas 1
+[21:22:36] processados 283/500, pendentes 217, fila 216, réplicas 1
+[21:23:37] processados 325/500, pendentes 175, fila 174, réplicas 1
+[21:24:39] processados 376/500, pendentes 124, fila 122, réplicas 1
+[21:25:41] processados 419/500, pendentes 81, fila 80, réplicas 1
+[21:26:43] processados 459/500, pendentes 41, fila 40, réplicas 1
+[21:27:38] t_vazio = 2026-11-27T00:27:38Z
+[21:27:38] margem de 75 s para o Prometheus raspar o worker
+[21:28:53] t_fim = 2026-11-27T00:28:53Z
+  [acompanhar] [21:28:53] acompanhamento encerrado
+[21:28:54] exportando as séries (00:15:22 → 00:28:53 UTC)
+[21:28:56] E1-B-1: 2026-11-27T00:15:22+00:00 → 2026-11-27T00:28:53+00:00 (811 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[21:28:57] 1963 linha(s) em /work/resultados/E1/B/E1-B-1.csv
+[21:28:57] resumo em E1-B-1.json; séries vazias: oomkilled
+[21:28:57] Postgres: {'sinteticos': 500, 'processados': 500, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+[21:28:57] DLQ: 0 item(ns)
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+[21:28:57] no fim: pendentes fora da DLQ = 0, DLQ = 0
+entrada E1-B-1 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[21:28:58] execução E1-B-1 concluída: resultados/R/E1/B/E1-B-1.*

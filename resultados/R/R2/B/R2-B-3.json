@@ -1,0 +1,415 @@
+{
+  "run": "R2-B-3",
+  "cenario": "R2",
+  "modo": "B",
+  "campanha": "R",
+  "piloto": false,
+  "repeticao": 3,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795764819.141,
+  "parametros": {
+    "n": 100,
+    "seed": 3,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 1,
+    "corrompidos": 10,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 2106,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": null,
+    "fracao_falha": null
+  },
+  "instantes": {
+    "t_carga_inicio": 1795764980.895,
+    "t_carga_fim": 1795765278.96,
+    "t0": 1795765279.546,
+    "t_rep1_obs": 1795765281.221,
+    "t_doc1_obs": 1795765287.544,
+    "t_vazio": 1795765445.735,
+    "t_fim": 1795765520.967
+  },
+  "instantes_iso": {
+    "t_carga_inicio": "2026-11-27T07:36:20Z",
+    "t_carga_fim": "2026-11-27T07:41:18Z",
+    "t0": "2026-11-27T07:41:19Z",
+    "t_rep1_obs": "2026-11-27T07:41:21Z",
+    "t_doc1_obs": "2026-11-27T07:41:27Z",
+    "t_vazio": "2026-11-27T07:44:05Z",
+    "t_fim": "2026-11-27T07:45:20Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "ScaledObject min=1 max=1 Ready"
+    },
+    {
+      "item": "visibility_timeout",
+      "ok": true,
+      "detalhe": "padrão (2 h)"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway redis-queue extraction-worker"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    },
+    {
+      "item": "redis_fila",
+      "ok": true,
+      "detalhe": "FLUSHDB; fila, DLQ e unacked vazias"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [
+    {
+      "nome": "exp-r2-b-3-1795765279",
+      "cronjob": "enqueue-extraction",
+      "criado": 1795765279.546
+    }
+  ],
+  "validade": {
+    "valida": true,
+    "motivos": [],
+    "anomalias": []
+  },
+  "maquina_local": {
+    "disco_uso_pct": 85,
+    "memoria_disponivel_mib": 5519,
+    "carga_1min": "0.08"
+  },
+  "commits": {
+    "estados": {
+      "sha": "f8e9ee213848bb3af423a4db3dc878768eaca6c0",
+      "branch": "tcc/e2-campanha-r",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "1168905c5e6274cdd1a83410a2c1664540caf327",
+      "branch": "main-estados",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "digest_no_cluster": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "esperada": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "usadas": [
+      {
+        "pod": "exp-r2-b-3-1795765279-r59b7",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-4mzbf",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      }
+    ]
+  },
+  "infra_inicio": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-bcdg7": {
+      "uid": "d8733aad-a4b4-48b7-b4db-5b2d25e53e6d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "carga": {
+    "perfil": "burst",
+    "total_pedido": 100,
+    "inseridos": 100,
+    "erros": 0,
+    "duracao_planejada_s": 300.0,
+    "seed": 3,
+    "territory": "3299999",
+    "inicio": "2026-11-27T07:36:21.669200+00:00",
+    "fim": "2026-11-27T07:41:18.752436+00:00",
+    "duracao_real_s": 297.1,
+    "atraso_max_s": 0.101,
+    "atraso_p95_s": 0.083,
+    "bytes_enviados": 500912248,
+    "corrompidos_ids": [
+      10727,
+      10730,
+      10731,
+      10735,
+      10748,
+      10752,
+      10756,
+      10766,
+      10774,
+      10775
+    ],
+    "ids_min_max": [
+      10701,
+      10800
+    ],
+    "erros_detalhe": [],
+    "amostra": "work/amostras/manifest.csv"
+  },
+  "infra_fim": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-bcdg7": {
+      "uid": "d8733aad-a4b4-48b7-b4db-5b2d25e53e6d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "export_janela": {
+    "inicio": 1795765279.546,
+    "fim": 1795765520.967
+  },
+  "export": {
+    "gerado_em": "2026-11-27T07:45:24+00:00",
+    "run": "R2-B-3",
+    "cenario": "R2",
+    "modo": "B",
+    "namespace": "querido-diario-tcc",
+    "contexto": null,
+    "inicio": "2026-11-27T07:41:19+00:00",
+    "fim": "2026-11-27T07:45:20+00:00",
+    "inicio_ts": 1795765279.546,
+    "fim_ts": 1795765520.967,
+    "passo_s": 30,
+    "janela_rate": "120s",
+    "prometheus": "http://prometheus-k8s.monitoring.svc:9090",
+    "linhas_por_serie": {
+      "processados": 14,
+      "vazao_por_min": 13,
+      "tempo_diario_p50_s": 7,
+      "tempo_diario_p95_s": 7,
+      "coleta_indexado_p50_s": 7,
+      "coleta_indexado_p95_s": 7,
+      "push_time_s": 9,
+      "fila": 9,
+      "dlq": 9,
+      "replicas_desejadas": 9,
+      "replicas": 9,
+      "replicas_disponiveis": 9,
+      "cpu_cores": 63,
+      "memoria_bytes": 63,
+      "request_cpu_cores": 27,
+      "request_memoria_bytes": 90,
+      "pod_fase": 90,
+      "reinicios": 99,
+      "oomkilled": 0,
+      "alvo_up": 27
+    },
+    "series_vazias": [
+      "oomkilled"
+    ],
+    "prometheus_resumo": {
+      "observacao": null,
+      "processados_por_status": {
+        "ok": 90.0,
+        "error": 10.0
+      },
+      "tempo_diario_s": {
+        "buckets": {
+          "1.0": 48.0,
+          "2.0": 73.0,
+          "5.0": 96.0,
+          "10.0": 99.0,
+          "20.0": 100.0,
+          "40.0": 100.0,
+          "80.0": 100.0,
+          "160.0": 100.0,
+          "320.0": 100.0,
+          "+Inf": 100.0
+        },
+        "soma": 158.95647986850236,
+        "contagem": 100.0,
+        "p50": 1.08,
+        "p95": 4.869565217391305,
+        "p99": 10.0,
+        "media": 1.5895647986850236
+      },
+      "coleta_indexado_s": {
+        "buckets": {
+          "60.0": 12.0,
+          "300.0": 58.0,
+          "900.0": 90.0,
+          "1800.0": 90.0,
+          "3600.0": 90.0,
+          "7200.0": 90.0,
+          "14400.0": 90.0,
+          "43200.0": 90.0,
+          "86400.0": 90.0,
+          "+Inf": 90.0
+        },
+        "soma": 20879.809062,
+        "contagem": 90.0,
+        "p50": 232.17391304347825,
+        "p95": 815.625,
+        "p99": 883.1249999999999,
+        "media": 231.99787846666666
+      }
+    },
+    "postgres_fim": {
+      "sinteticos": 100,
+      "processados": 90,
+      "pendentes": 10,
+      "pendentes_sem_dlq": 0
+    },
+    "dlq": {
+      "tamanho": 10,
+      "ids": [
+        10727,
+        10730,
+        10731,
+        10735,
+        10748,
+        10752,
+        10756,
+        10766,
+        10774,
+        10775
+      ],
+      "entradas": [
+        {
+          "id": 10727,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpo_6pl7gv. Response: ')",
+          "ts": 1795765395.8930917
+        },
+        {
+          "id": 10730,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpxv8xlaxr. Response: ')",
+          "ts": 1795765393.517872
+        },
+        {
+          "id": 10731,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpwvzchmav. Response: ')",
+          "ts": 1795765392.9372542
+        },
+        {
+          "id": 10735,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmphpuvutg_. Response: ')",
+          "ts": 1795765388.3016803
+        },
+        {
+          "id": 10748,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmptt8vt4hp. Response: ')",
+          "ts": 1795765359.0765138
+        },
+        {
+          "id": 10752,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmparm3loh5. Response: ')",
+          "ts": 1795765356.2897534
+        },
+        {
+          "id": 10756,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpuxk_gs1x. Response: ')",
+          "ts": 1795765354.4903677
+        },
+        {
+          "id": 10766,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmp6qo813jh. Response: ')",
+          "ts": 1795765340.8189492
+        },
+        {
+          "id": 10774,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmpnz5_am9d. Response: ')",
+          "ts": 1795765330.6861598
+        },
+        {
+          "id": 10775,
+          "error": "HTTPError('Tika returned HTTP 422 for /tmp/tmp93kj1h_r. Response: ')",
+          "ts": 1795765330.2466443
+        }
+      ]
+    }
+  },
+  "lacunas": {
+    "tolerancia_s": 90.0,
+    "alvos": [
+      "pushgateway",
+      "redis-queue"
+    ],
+    "problemas": []
+  },
+  "fim_script": 1795765525.428,
+  "pasta_resultados": "resultados/R/R2/B"
+}

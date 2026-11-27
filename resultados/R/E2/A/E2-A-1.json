@@ -1,0 +1,287 @@
+{
+  "run": "E2-A-1",
+  "cenario": "E2",
+  "modo": "A",
+  "campanha": "R",
+  "piloto": false,
+  "repeticao": 1,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795747285.255,
+  "parametros": {
+    "n": 0,
+    "seed": 1,
+    "perfil": null,
+    "territorio": "3299999",
+    "teto": 6,
+    "corrompidos": 0,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 2106,
+    "ocioso_s": 120,
+    "janela_s": 1800,
+    "indisponibilidade_s": null,
+    "fracao_falha": null
+  },
+  "instantes": {
+    "t0": 1795747447.663,
+    "t_fim": 1795749247.884
+  },
+  "instantes_iso": {
+    "t0": "2026-11-27T02:44:07Z",
+    "t_fim": "2026-11-27T03:14:07Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [],
+  "validade": {
+    "valida": true,
+    "motivos": [],
+    "anomalias": []
+  },
+  "maquina_local": {
+    "disco_uso_pct": 85,
+    "memoria_disponivel_mib": 5658,
+    "carga_1min": "0.04"
+  },
+  "commits": {
+    "estados": {
+      "sha": "f8e9ee213848bb3af423a4db3dc878768eaca6c0",
+      "branch": "tcc/e2-campanha-r",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "1168905c5e6274cdd1a83410a2c1664540caf327",
+      "branch": "main-estados",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "digest_no_cluster": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "esperada": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+  },
+  "infra_inicio": {
+    "apache-tika-57db6fb9df-mvmxs": {
+      "uid": "365c8050-3a6d-4860-9d13-b2dbd417529c",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "e2": {
+    "jobs_de_hora_cheia": [
+      "data-processing-29929140"
+    ]
+  },
+  "infra_fim": {
+    "apache-tika-57db6fb9df-mvmxs": {
+      "uid": "365c8050-3a6d-4860-9d13-b2dbd417529c",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "export_janela": {
+    "inicio": 1795747447.663,
+    "fim": 1795749247.884
+  },
+  "export": {
+    "gerado_em": "2026-11-27T03:14:12+00:00",
+    "run": "E2-A-1",
+    "cenario": "E2",
+    "modo": "A",
+    "namespace": "querido-diario-tcc",
+    "contexto": null,
+    "inicio": "2026-11-27T02:44:07+00:00",
+    "fim": "2026-11-27T03:14:07+00:00",
+    "inicio_ts": 1795747447.663,
+    "fim_ts": 1795749247.884,
+    "passo_s": 30,
+    "janela_rate": "120s",
+    "prometheus": "http://prometheus-k8s.monitoring.svc:9090",
+    "linhas_por_serie": {
+      "processados": 61,
+      "vazao_por_min": 61,
+      "tempo_diario_p50_s": 61,
+      "tempo_diario_p95_s": 61,
+      "coleta_indexado_p50_s": 61,
+      "coleta_indexado_p95_s": 61,
+      "push_time_s": 61,
+      "fila": 0,
+      "dlq": 0,
+      "replicas_desejadas": 0,
+      "replicas": 0,
+      "replicas_disponiveis": 0,
+      "cpu_cores": 366,
+      "memoria_bytes": 366,
+      "request_cpu_cores": 122,
+      "request_memoria_bytes": 455,
+      "pod_fase": 455,
+      "reinicios": 455,
+      "oomkilled": 0,
+      "alvo_up": 61
+    },
+    "series_vazias": [
+      "dlq",
+      "fila",
+      "oomkilled",
+      "replicas",
+      "replicas_desejadas",
+      "replicas_disponiveis"
+    ],
+    "prometheus_resumo": {
+      "observacao": null,
+      "push_time": "2026-11-27T03:00:10+00:00",
+      "processados_por_status": {
+        "ok": 500.0
+      },
+      "tempo_diario_s": {
+        "buckets": {
+          "1.0": 258.0,
+          "2.0": 398.0,
+          "5.0": 477.0,
+          "10.0": 500.0,
+          "20.0": 500.0,
+          "40.0": 500.0,
+          "80.0": 500.0,
+          "160.0": 500.0,
+          "320.0": 500.0,
+          "+Inf": 500.0
+        },
+        "soma": 755.0036493662046,
+        "contagem": 500.0,
+        "p50": 0.9689922480620154,
+        "p95": 4.924050632911392,
+        "p99": 8.91304347826087,
+        "media": 1.5100072987324094
+      },
+      "coleta_indexado_s": {
+        "buckets": {
+          "60.0": 30.0,
+          "300.0": 153.0,
+          "900.0": 424.0,
+          "1800.0": 500.0,
+          "3600.0": 500.0,
+          "7200.0": 500.0,
+          "14400.0": 500.0,
+          "43200.0": 500.0,
+          "86400.0": 500.0,
+          "+Inf": 500.0
+        },
+        "soma": 256684.721447,
+        "contagem": 500.0,
+        "p50": 514.760147601476,
+        "p95": 1503.9473684210525,
+        "p99": 1740.7894736842104,
+        "media": 513.369442894
+      }
+    },
+    "postgres_fim": {
+      "sinteticos": 0,
+      "processados": 0,
+      "pendentes": 0,
+      "pendentes_sem_dlq": 0
+    },
+    "dlq": null
+  },
+  "lacunas": {
+    "tolerancia_s": 90.0,
+    "alvos": [
+      "pushgateway"
+    ],
+    "problemas": []
+  },
+  "fim_script": 1795749252.984,
+  "pasta_resultados": "resultados/R/E2/A"
+}
