@@ -1,0 +1,42 @@
+[23:41:25] execução E2-A-1: cenário E2, modo A, campanha R (revoada-testes/querido-diario-tcc)
+[23:41:25] N = 0, seed = 1, teto = 6, corrompidos = 0
+[23:41:25] máquina local: disco 85% usado, 5658 MiB de memória disponível, carga 0.04
+[23:41:27] aplicando o modo A
+[23:41:27] removendo a fila de extração (ScaledObject primeiro)
+scaledobject.keda.sh "extraction-worker" deleted from querido-diario-tcc namespace
+deployment.apps "extraction-worker" deleted from querido-diario-tcc namespace
+deployment.apps "redis-queue" deleted from querido-diario-tcc namespace
+service "redis-queue" deleted from querido-diario-tcc namespace
+cronjob.batch "enqueue-extraction" deleted from querido-diario-tcc namespace
+cronjob.batch "themes-from-queue" deleted from querido-diario-tcc namespace
+persistentvolumeclaim "redis-queue-data" deleted from querido-diario-tcc namespace
+Waiting for deployment "apache-tika" rollout to finish: 0 of 1 updated replicas are available...
+deployment "apache-tika" successfully rolled out
+[23:41:54] checklist
+[23:41:54]   ✔ repositorios: sem mudanças locais
+[23:41:54]   ✔ modo: overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[23:41:55]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[23:41:55]   ✔ monitoramento: up == 1 para pushgateway
+[23:41:56]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[23:41:56] load_simulator.py --cleanup
+[23:41:56] 500 diário(s) sintético(s) no Postgres
+[23:42:03] OpenSearch: 500 documento(s) removido(s)
+[23:42:06] storage: 1000 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[23:42:06] Postgres: 500 linha(s) apagada(s)
+[23:42:06]   ✔ cronjobs: suspensos: data-processing=true
+[23:42:07]   ✔ sinteticos: 0 diários sintéticos
+[23:42:07] espera ociosa de 120 s
+[23:44:07] t0 = 2026-11-27T02:44:07Z
+[23:44:07] janela de repouso de 1800 s
+[00:14:07] t_fim = 2026-11-27T03:14:07Z
+[00:14:08] Job(s) de hora cheia na janela: data-processing-29929140
+[00:14:09] exportando as séries (02:44:07 → 03:14:07 UTC)
+[00:14:11] E2-A-1: 2026-11-27T02:44:07+00:00 → 2026-11-27T03:14:07+00:00 (1800 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[00:14:12] 2707 linha(s) em /work/resultados/E2/A/E2-A-1.csv
+[00:14:12] resumo em E2-A-1.json; séries vazias: dlq, fila, oomkilled, replicas, replicas_desejadas, replicas_disponiveis
+[00:14:12] Postgres: {'sinteticos': 0, 'processados': 0, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+[00:14:12] no fim: pendentes fora da DLQ = 0, DLQ = —
+entrada E2-A-1 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[00:14:13] execução E2-A-1 concluída: resultados/R/E2/A/E2-A-1.*

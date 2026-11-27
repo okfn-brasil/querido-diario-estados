@@ -1,0 +1,430 @@
+{
+  "run": "R1a-C-3",
+  "cenario": "R1a",
+  "modo": "C",
+  "campanha": "R",
+  "piloto": false,
+  "repeticao": 3,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795757314.365,
+  "parametros": {
+    "n": 100,
+    "seed": 3,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 6,
+    "corrompidos": 0,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 2106,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": null,
+    "fracao_falha": 0.1
+  },
+  "instantes": {
+    "t_carga_inicio": 1795757466.248,
+    "t_carga_fim": 1795757764.208,
+    "t0": 1795757764.967,
+    "t_rep1_obs": 1795757786.012,
+    "t_doc1_obs": 1795757792.208,
+    "t_kill": 1795757804.92,
+    "t_pod_removido": 1795757809.082,
+    "t_vazio": 1795757836.33,
+    "t_zero": 1795757951.111,
+    "t_fim": 1795757951.12
+  },
+  "instantes_iso": {
+    "t_carga_inicio": "2026-11-27T05:31:06Z",
+    "t_carga_fim": "2026-11-27T05:36:04Z",
+    "t0": "2026-11-27T05:36:04Z",
+    "t_rep1_obs": "2026-11-27T05:36:26Z",
+    "t_doc1_obs": "2026-11-27T05:36:32Z",
+    "t_kill": "2026-11-27T05:36:44Z",
+    "t_pod_removido": "2026-11-27T05:36:49Z",
+    "t_vazio": "2026-11-27T05:37:16Z",
+    "t_zero": "2026-11-27T05:39:11Z",
+    "t_fim": "2026-11-27T05:39:11Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "ScaledObject min=0 max=6 Ready"
+    },
+    {
+      "item": "visibility_timeout",
+      "ok": true,
+      "detalhe": "padrão (2 h)"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway redis-queue"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    },
+    {
+      "item": "redis_fila",
+      "ok": true,
+      "detalhe": "FLUSHDB; fila, DLQ e unacked vazias"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [
+    {
+      "nome": "exp-r1a-c-3-1795757764",
+      "cronjob": "enqueue-extraction",
+      "criado": 1795757764.967
+    }
+  ],
+  "validade": {
+    "valida": true,
+    "motivos": [],
+    "anomalias": []
+  },
+  "maquina_local": {
+    "disco_uso_pct": 85,
+    "memoria_disponivel_mib": 5531,
+    "carga_1min": "0.13"
+  },
+  "commits": {
+    "estados": {
+      "sha": "f8e9ee213848bb3af423a4db3dc878768eaca6c0",
+      "branch": "tcc/e2-campanha-r",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "1168905c5e6274cdd1a83410a2c1664540caf327",
+      "branch": "main-estados",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "digest_no_cluster": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "esperada": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "usadas": [
+      {
+        "pod": "exp-r1a-c-3-1795757764-lzls7",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-987v8",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-d762l",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-mm7qz",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-r7r29",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-v6llv",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-xdz5f",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      }
+    ]
+  },
+  "infra_inicio": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-szsj2": {
+      "uid": "01c2f9ec-78b7-41aa-85bc-24639dc691b8",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "carga": {
+    "perfil": "burst",
+    "total_pedido": 100,
+    "inseridos": 100,
+    "erros": 0,
+    "duracao_planejada_s": 300.0,
+    "seed": 3,
+    "territory": "3299999",
+    "inicio": "2026-11-27T05:31:06.933524+00:00",
+    "fim": "2026-11-27T05:36:04.006974+00:00",
+    "duracao_real_s": 297.1,
+    "atraso_max_s": 0.096,
+    "atraso_p95_s": 0.075,
+    "bytes_enviados": 500912708,
+    "corrompidos_ids": [],
+    "ids_min_max": [
+      9601,
+      9700
+    ],
+    "erros_detalhe": [],
+    "amostra": "work/amostras/manifest.csv"
+  },
+  "falha": {
+    "tipo": "delete (SIGTERM)",
+    "pod": "extraction-worker-67c5b44f5f-q7lxw",
+    "processados_na_falha": 24,
+    "pendentes_na_falha": 76,
+    "fila_na_falha": 71,
+    "unacked_na_falha": [
+      {
+        "tag": "f99d38a6-44f7-4a46-9118-49fc31198349",
+        "gazette_id": 9669
+      },
+      {
+        "tag": "6dc66d08-4579-4219-8d22-684137636470",
+        "gazette_id": 9664
+      },
+      {
+        "tag": "ecc70270-a70e-4d7b-984d-4eae993d1275",
+        "gazette_id": 9668
+      },
+      {
+        "tag": "dcf7b5af-7417-41d4-b4a3-fdcc32722c4e",
+        "gazette_id": 9665
+      }
+    ],
+    "mensagens": [
+      {
+        "tag": "f99d38a6-44f7-4a46-9118-49fc31198349",
+        "gazette_id": 9669,
+        "saiu_de_unacked": 1795757816.993,
+        "ja_processado_na_saida": true
+      },
+      {
+        "tag": "6dc66d08-4579-4219-8d22-684137636470",
+        "gazette_id": 9664,
+        "saiu_de_unacked": 1795757817.62,
+        "ja_processado_na_saida": true
+      },
+      {
+        "tag": "ecc70270-a70e-4d7b-984d-4eae993d1275",
+        "gazette_id": 9668,
+        "saiu_de_unacked": 1795757809.504,
+        "ja_processado_na_saida": true
+      },
+      {
+        "tag": "dcf7b5af-7417-41d4-b4a3-fdcc32722c4e",
+        "gazette_id": 9665,
+        "saiu_de_unacked": 1795757810.202,
+        "ja_processado_na_saida": true
+      }
+    ],
+    "gazettes_processadas_no_fim": [
+      9665,
+      9668,
+      9669,
+      9664
+    ],
+    "desligamento_s": 4.161999940872192
+  },
+  "infra_fim": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-szsj2": {
+      "uid": "01c2f9ec-78b7-41aa-85bc-24639dc691b8",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "export_janela": {
+    "inicio": 1795757764.967,
+    "fim": 1795757951.12
+  },
+  "export": {
+    "gerado_em": "2026-11-27T05:39:15+00:00",
+    "run": "R1a-C-3",
+    "cenario": "R1a",
+    "modo": "C",
+    "namespace": "querido-diario-tcc",
+    "contexto": null,
+    "inicio": "2026-11-27T05:36:04+00:00",
+    "fim": "2026-11-27T05:39:11+00:00",
+    "inicio_ts": 1795757764.967,
+    "fim_ts": 1795757951.12,
+    "passo_s": 30,
+    "janela_rate": "120s",
+    "prometheus": "http://prometheus-k8s.monitoring.svc:9090",
+    "linhas_por_serie": {
+      "processados": 6,
+      "vazao_por_min": 5,
+      "tempo_diario_p50_s": 5,
+      "tempo_diario_p95_s": 5,
+      "coleta_indexado_p50_s": 5,
+      "coleta_indexado_p95_s": 5,
+      "push_time_s": 7,
+      "fila": 7,
+      "dlq": 7,
+      "replicas_desejadas": 7,
+      "replicas": 7,
+      "replicas_disponiveis": 7,
+      "cpu_cores": 68,
+      "memoria_bytes": 73,
+      "request_cpu_cores": 43,
+      "request_memoria_bytes": 91,
+      "pod_fase": 91,
+      "reinicios": 98,
+      "oomkilled": 0,
+      "alvo_up": 20
+    },
+    "series_vazias": [
+      "oomkilled"
+    ],
+    "prometheus_resumo": {
+      "observacao": null,
+      "processados_por_status": {
+        "ok": 100.0
+      },
+      "tempo_diario_s": {
+        "buckets": {
+          "1.0": 37.0,
+          "2.0": 62.0,
+          "5.0": 94.0,
+          "10.0": 100.0,
+          "20.0": 100.0,
+          "40.0": 100.0,
+          "80.0": 100.0,
+          "160.0": 100.0,
+          "320.0": 100.0,
+          "+Inf": 100.0
+        },
+        "soma": 193.9808446590323,
+        "contagem": 100.0,
+        "p50": 1.52,
+        "p95": 5.833333333333333,
+        "p99": 9.166666666666668,
+        "media": 1.939808446590323
+      },
+      "coleta_indexado_s": {
+        "buckets": {
+          "60.0": 9.0,
+          "300.0": 81.0,
+          "900.0": 100.0,
+          "1800.0": 100.0,
+          "3600.0": 100.0,
+          "7200.0": 100.0,
+          "14400.0": 100.0,
+          "43200.0": 100.0,
+          "86400.0": 100.0,
+          "+Inf": 100.0
+        },
+        "soma": 19748.845202,
+        "contagem": 100.0,
+        "p50": 196.66666666666666,
+        "p95": 742.1052631578948,
+        "p99": 868.421052631579,
+        "media": 197.48845202
+      }
+    },
+    "postgres_fim": {
+      "sinteticos": 100,
+      "processados": 100,
+      "pendentes": 0,
+      "pendentes_sem_dlq": 0
+    },
+    "dlq": {
+      "tamanho": 0,
+      "ids": [],
+      "entradas": []
+    }
+  },
+  "lacunas": {
+    "tolerancia_s": 90.0,
+    "alvos": [
+      "pushgateway",
+      "redis-queue"
+    ],
+    "problemas": []
+  },
+  "fim_script": 1795757956.242,
+  "pasta_resultados": "resultados/R/R1a/C"
+}

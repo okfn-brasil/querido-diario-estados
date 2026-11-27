@@ -1,0 +1,370 @@
+{
+  "run": "R3-A-3",
+  "cenario": "R3",
+  "modo": "A",
+  "campanha": "R",
+  "piloto": false,
+  "repeticao": 3,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795770916.752,
+  "parametros": {
+    "n": 100,
+    "seed": 3,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 6,
+    "corrompidos": 0,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 2106,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": 60,
+    "fracao_falha": 0.25
+  },
+  "instantes": {
+    "t_carga_inicio": 1795771069.871,
+    "t_carga_fim": 1795771367.843,
+    "t0": 1795771368.466,
+    "t_rep1_obs": 1795771375.063,
+    "t_doc1_obs": 1795771375.071,
+    "t_down": 1795771414.386,
+    "t_up_cmd": 1795771474.576,
+    "t_ready": 1795771509.521,
+    "t_job2": 1795771679.202,
+    "t_vazio": 1795771696.613,
+    "t_job_fim": 1795771713.419,
+    "t_fim": 1795771789.403
+  },
+  "instantes_iso": {
+    "t_carga_inicio": "2026-11-27T09:17:49Z",
+    "t_carga_fim": "2026-11-27T09:22:47Z",
+    "t0": "2026-11-27T09:22:48Z",
+    "t_rep1_obs": "2026-11-27T09:22:55Z",
+    "t_doc1_obs": "2026-11-27T09:22:55Z",
+    "t_down": "2026-11-27T09:23:34Z",
+    "t_up_cmd": "2026-11-27T09:24:34Z",
+    "t_ready": "2026-11-27T09:25:09Z",
+    "t_job2": "2026-11-27T09:27:59Z",
+    "t_vazio": "2026-11-27T09:28:16Z",
+    "t_job_fim": "2026-11-27T09:28:33Z",
+    "t_fim": "2026-11-27T09:29:49Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "overlay k8s/overlays/revoada-tcc: sem fila, Tika compartilhado pronto, CronJob com ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [
+    {
+      "nome": "exp-r3-a-3-1795771368",
+      "cronjob": "data-processing",
+      "criado": 1795771368.466
+    },
+    {
+      "nome": "exp-r3-a-3-1795771679",
+      "cronjob": "data-processing",
+      "criado": 1795771679.202
+    }
+  ],
+  "validade": {
+    "valida": true,
+    "motivos": [],
+    "anomalias": []
+  },
+  "maquina_local": {
+    "disco_uso_pct": 85,
+    "memoria_disponivel_mib": 5464,
+    "carga_1min": "0.18"
+  },
+  "commits": {
+    "estados": {
+      "sha": "f8e9ee213848bb3af423a4db3dc878768eaca6c0",
+      "branch": "tcc/e2-campanha-r",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "1168905c5e6274cdd1a83410a2c1664540caf327",
+      "branch": "main-estados",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "digest_no_cluster": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "esperada": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "usadas": [
+      {
+        "pod": "exp-r3-a-3-1795771368-w77v2",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "exp-r3-a-3-1795771679-ddj6h",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      }
+    ]
+  },
+  "infra_inicio": {
+    "apache-tika-57db6fb9df-hpjhc": {
+      "uid": "75862795-3b2f-4088-8e8a-dabaea79c979",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "52a13257-8df2-4a7b-ba5f-beac60b0f7ec",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "carga": {
+    "perfil": "burst",
+    "total_pedido": 100,
+    "inseridos": 100,
+    "erros": 0,
+    "duracao_planejada_s": 300.0,
+    "seed": 3,
+    "territory": "3299999",
+    "inicio": "2026-11-27T09:17:50.605084+00:00",
+    "fim": "2026-11-27T09:22:47.686575+00:00",
+    "duracao_real_s": 297.1,
+    "atraso_max_s": 0.097,
+    "atraso_p95_s": 0.073,
+    "bytes_enviados": 500912708,
+    "corrompidos_ids": [],
+    "ids_min_max": [
+      11501,
+      11600
+    ],
+    "erros_detalhe": [],
+    "amostra": "work/amostras/manifest.csv"
+  },
+  "falha": {
+    "tipo": "scale sts opensearch 0 → 1",
+    "processados_na_falha": 25,
+    "pendentes_na_falha": 75,
+    "pendentes_depois_do_1o_job": 11,
+    "indisponibilidade_real_s": 95.13499999046326
+  },
+  "job_tentativas": [
+    {
+      "pod": "exp-r3-a-3-1795771368-w77v2",
+      "job": "exp-r3-a-3-1795771368",
+      "fase": "Succeeded",
+      "reinicios": 0,
+      "ultima_falha": null
+    },
+    {
+      "pod": "exp-r3-a-3-1795771679-ddj6h",
+      "job": "exp-r3-a-3-1795771679",
+      "fase": "Succeeded",
+      "reinicios": 0,
+      "ultima_falha": null
+    }
+  ],
+  "infra_fim": {
+    "apache-tika-57db6fb9df-hpjhc": {
+      "uid": "75862795-3b2f-4088-8e8a-dabaea79c979",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "ed5fd1df-cc14-464b-b99a-9c59f82df613",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "export_janela": {
+    "inicio": 1795771368.466,
+    "fim": 1795771789.403
+  },
+  "export": {
+    "gerado_em": "2026-11-27T09:29:53+00:00",
+    "run": "R3-A-3",
+    "cenario": "R3",
+    "modo": "A",
+    "namespace": "querido-diario-tcc",
+    "contexto": null,
+    "inicio": "2026-11-27T09:22:48+00:00",
+    "fim": "2026-11-27T09:29:49+00:00",
+    "inicio_ts": 1795771368.466,
+    "fim_ts": 1795771789.403,
+    "passo_s": 30,
+    "janela_rate": "120s",
+    "prometheus": "http://prometheus-k8s.monitoring.svc:9090",
+    "linhas_por_serie": {
+      "processados": 16,
+      "vazao_por_min": 18,
+      "tempo_diario_p50_s": 15,
+      "tempo_diario_p95_s": 15,
+      "coleta_indexado_p50_s": 15,
+      "coleta_indexado_p95_s": 15,
+      "push_time_s": 15,
+      "fila": 0,
+      "dlq": 0,
+      "replicas_desejadas": 0,
+      "replicas": 0,
+      "replicas_disponiveis": 0,
+      "cpu_cores": 101,
+      "memoria_bytes": 100,
+      "request_cpu_cores": 30,
+      "request_memoria_bytes": 121,
+      "pod_fase": 121,
+      "reinicios": 121,
+      "oomkilled": 0,
+      "alvo_up": 15
+    },
+    "series_vazias": [
+      "dlq",
+      "fila",
+      "oomkilled",
+      "replicas",
+      "replicas_desejadas",
+      "replicas_disponiveis"
+    ],
+    "prometheus_resumo": {
+      "observacao": null,
+      "push_time": "2026-11-27T09:28:29+00:00",
+      "processados_por_status": {
+        "ok": 11.0
+      },
+      "tempo_diario_s": {
+        "buckets": {
+          "1.0": 6.0,
+          "2.0": 8.0,
+          "5.0": 11.0,
+          "10.0": 11.0,
+          "20.0": 11.0,
+          "40.0": 11.0,
+          "80.0": 11.0,
+          "160.0": 11.0,
+          "320.0": 11.0,
+          "+Inf": 11.0
+        },
+        "soma": 13.440055816085078,
+        "contagem": 11.0,
+        "p50": 0.9166666666666666,
+        "p95": 4.449999999999999,
+        "p99": 4.890000000000001,
+        "media": 1.2218232560077344
+      },
+      "coleta_indexado_s": {
+        "buckets": {
+          "60.0": 0.0,
+          "300.0": 0.0,
+          "900.0": 11.0,
+          "1800.0": 11.0,
+          "3600.0": 11.0,
+          "7200.0": 11.0,
+          "14400.0": 11.0,
+          "43200.0": 11.0,
+          "86400.0": 11.0,
+          "+Inf": 11.0
+        },
+        "soma": 4544.241958,
+        "contagem": 11.0,
+        "p50": 600.0,
+        "p95": 870.0,
+        "p99": 894.0000000000001,
+        "media": 413.11290527272723
+      }
+    },
+    "postgres_fim": {
+      "sinteticos": 100,
+      "processados": 100,
+      "pendentes": 0,
+      "pendentes_sem_dlq": 0
+    },
+    "dlq": null
+  },
+  "lacunas": {
+    "tolerancia_s": 90.0,
+    "alvos": [
+      "pushgateway"
+    ],
+    "problemas": []
+  },
+  "fim_script": 1795771793.680,
+  "pasta_resultados": "resultados/R/R3/A"
+}

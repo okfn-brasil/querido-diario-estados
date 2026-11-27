@@ -979,3 +979,510 @@ Copie o bloco abaixo para o fim do arquivo e preencha.
 - **Decisão:** teto 6, o último ponto antes de o ganho por réplica cair abaixo de ~50% e de o OpenSearch começar a pesar. Igual ao provisório, então o E1-C-piloto continua representativo (173 s contra 168 s no D5)
 - **Ressalva:** 1 execução por teto; a diferença entre 6 e 8 (15%) é da ordem da variação entre repetições vista na K (15–20%)
 
+
+### E1-A-1 · 2026-11-26 20:43
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-26T23:46:32+00:00; t_carga_fim = 2026-11-26T23:51:32+00:00; t0 = 2026-11-26T23:51:33+00:00; t_vazio = 2026-11-27T00:03:41+00:00; t_job_fim = 2026-11-27T00:06:13+00:00; t_fim = 2026-11-27T00:07:29+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 12.1 min até t_vazio
+- **Arquivos:** `resultados/R/E1/A/E1-A-1.{csv,json,log}`
+- **Anomalias:** o contêiner do Job reiniciou: exp-e1-a-1-1795737093-gbjd7: 1 reinício(s), última falha com código ? (?) (ver E1-A-1-job.log)
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-B-1 · 2026-11-26 21:07
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T00:10:21+00:00; t_carga_fim = 2026-11-27T00:15:22+00:00; t0 = 2026-11-27T00:15:22+00:00; t_vazio = 2026-11-27T00:27:38+00:00; t_fim = 2026-11-27T00:28:53+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 12.3 min até t_vazio
+- **Arquivos:** `resultados/R/E1/B/E1-B-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-1 · 2026-11-26 21:28
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 1, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T00:31:21+00:00; t_carga_fim = 2026-11-27T00:36:21+00:00; t0 = 2026-11-27T00:36:22+00:00; t_vazio = 2026-11-27T00:39:16+00:00; t_zero = 2026-11-27T00:41:16+00:00; t_fim = 2026-11-27T00:41:16+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.9 min até t_vazio
+- **Arquivos:** `resultados/R/E1/C/E1-C-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-B-2 · 2026-11-26 21:41
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 2, teto = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T00:44:00+00:00; t_carga_fim = 2026-11-27T00:49:00+00:00; t0 = 2026-11-27T00:49:01+00:00; t_vazio = 2026-11-27T01:01:04+00:00; t_fim = 2026-11-27T01:02:19+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 12.1 min até t_vazio
+- **Arquivos:** `resultados/R/E1/B/E1-B-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-2 · 2026-11-26 22:02
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 2, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T01:04:48+00:00; t_carga_fim = 2026-11-27T01:09:49+00:00; t0 = 2026-11-27T01:09:49+00:00; t_vazio = 2026-11-27T01:12:38+00:00; t_zero = 2026-11-27T01:14:32+00:00; t_fim = 2026-11-27T01:14:32+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.8 min até t_vazio
+- **Arquivos:** `resultados/R/E1/C/E1-C-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-A-2 · 2026-11-26 22:14
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 2, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T01:17:13+00:00; t_carga_fim = 2026-11-27T01:22:14+00:00; t0 = 2026-11-27T01:22:14+00:00; t_vazio = 2026-11-27T01:33:36+00:00; t_job_fim = 2026-11-27T01:38:11+00:00; t_fim = 2026-11-27T01:39:26+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 11.4 min até t_vazio
+- **Arquivos:** `resultados/R/E1/A/E1-A-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-C-3 · 2026-11-26 22:39
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 3, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T01:42:04+00:00; t_carga_fim = 2026-11-27T01:47:05+00:00; t0 = 2026-11-27T01:47:06+00:00; t_vazio = 2026-11-27T01:50:09+00:00; t_zero = 2026-11-27T01:51:53+00:00; t_fim = 2026-11-27T01:51:53+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 3.0 min até t_vazio
+- **Arquivos:** `resultados/R/E1/C/E1-C-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-A-3 · 2026-11-26 22:51
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 3, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T01:54:35+00:00; t_carga_fim = 2026-11-27T01:59:35+00:00; t0 = 2026-11-27T01:59:36+00:00; t_vazio = 2026-11-27T02:12:16+00:00; t_job_fim = 2026-11-27T02:17:24+00:00; t_fim = 2026-11-27T02:18:40+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 12.7 min até t_vazio
+- **Arquivos:** `resultados/R/E1/A/E1-A-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E1-B-3 · 2026-11-26 23:18
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 500, *seed* = 3, teto = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T02:21:36+00:00; t_carga_fim = 2026-11-27T02:26:36+00:00; t0 = 2026-11-27T02:26:37+00:00; t_vazio = 2026-11-27T02:40:05+00:00; t_fim = 2026-11-27T02:41:21+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 13.5 min até t_vazio
+- **Arquivos:** `resultados/R/E1/B/E1-B-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E2-A-1 · 2026-11-26 23:41
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** —
+- **Parâmetros:** N = 0, *seed* = 1, janela = 1800 s, timeout = 2106 s
+- **Instantes (UTC):** t0 = 2026-11-27T02:44:07+00:00; t_fim = 2026-11-27T03:14:07+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 30.0 min de janela
+- **Arquivos:** `resultados/R/E2/A/E2-A-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E2-B-1 · 2026-11-27 00:14
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** —
+- **Parâmetros:** N = 0, *seed* = 1, teto = 1, janela = 1800 s, timeout = 2106 s
+- **Instantes (UTC):** t0 = 2026-11-27T03:17:08+00:00; t_fim = 2026-11-27T03:47:09+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 30.0 min de janela
+- **Arquivos:** `resultados/R/E2/B/E2-B-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### E2-C-1 · 2026-11-27 00:47
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** —
+- **Parâmetros:** N = 0, *seed* = 1, teto = 6, janela = 1800 s, timeout = 2106 s
+- **Instantes (UTC):** t0 = 2026-11-27T03:49:30+00:00; t_fim = 2026-11-27T04:19:43+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 30.2 min de janela
+- **Arquivos:** `resultados/R/E2/C/E2-C-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-A-1 · 2026-11-27 01:19
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T04:22:18+00:00; t_carga_fim = 2026-11-27T04:27:16+00:00; t0 = 2026-11-27T04:27:17+00:00; t_kill = 2026-11-27T04:27:36+00:00; t_pod_removido = 2026-11-27T04:28:07+00:00; t_vazio = 2026-11-27T04:29:35+00:00; t_job_fim = 2026-11-27T04:30:34+00:00; t_fim = 2026-11-27T04:31:50+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 2.3 min até t_vazio; desligamento = 32 s
+- **Arquivos:** `resultados/R/R1a/A/R1a-A-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-B-1 · 2026-11-27 01:31
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, teto = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T04:34:53+00:00; t_carga_fim = 2026-11-27T04:39:51+00:00; t0 = 2026-11-27T04:39:51+00:00; t_kill = 2026-11-27T04:40:12+00:00; t_pod_removido = 2026-11-27T04:40:18+00:00; t_vazio = 2026-11-27T04:42:26+00:00; t_fim = 2026-11-27T04:43:41+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.6 min até t_vazio; desligamento = 6 s
+- **Arquivos:** `resultados/R/R1a/B/R1a-B-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-C-1 · 2026-11-27 01:43
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T04:46:09+00:00; t_carga_fim = 2026-11-27T04:51:07+00:00; t0 = 2026-11-27T04:51:08+00:00; t_kill = 2026-11-27T04:51:41+00:00; t_pod_removido = 2026-11-27T04:51:45+00:00; t_vazio = 2026-11-27T04:52:20+00:00; t_zero = 2026-11-27T04:54:15+00:00; t_fim = 2026-11-27T04:54:15+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 1.2 min até t_vazio; desligamento = 4 s
+- **Arquivos:** `resultados/R/R1a/C/R1a-C-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-B-2 · 2026-11-27 01:54
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, teto = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T04:57:01+00:00; t_carga_fim = 2026-11-27T05:01:59+00:00; t0 = 2026-11-27T05:01:59+00:00; t_kill = 2026-11-27T05:02:26+00:00; t_pod_removido = 2026-11-27T05:02:31+00:00; t_vazio = 2026-11-27T05:04:20+00:00; t_fim = 2026-11-27T05:05:35+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.3 min até t_vazio; desligamento = 5 s
+- **Arquivos:** `resultados/R/R1a/B/R1a-B-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-C-2 · 2026-11-27 02:05
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T05:08:33+00:00; t_carga_fim = 2026-11-27T05:13:31+00:00; t0 = 2026-11-27T05:13:32+00:00; t_kill = 2026-11-27T05:14:05+00:00; t_pod_removido = 2026-11-27T05:14:09+00:00; t_vazio = 2026-11-27T05:14:31+00:00; t_zero = 2026-11-27T05:16:26+00:00; t_fim = 2026-11-27T05:16:26+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 1.0 min até t_vazio; desligamento = 4 s
+- **Arquivos:** `resultados/R/R1a/C/R1a-C-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-A-2 · 2026-11-27 02:16
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T05:19:05+00:00; t_carga_fim = 2026-11-27T05:24:03+00:00; t0 = 2026-11-27T05:24:04+00:00; t_kill = 2026-11-27T05:24:27+00:00; t_pod_removido = 2026-11-27T05:24:59+00:00; t_vazio = 2026-11-27T05:26:14+00:00; t_job_fim = 2026-11-27T05:27:14+00:00; t_fim = 2026-11-27T05:28:30+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 2.2 min até t_vazio; desligamento = 32 s
+- **Arquivos:** `resultados/R/R1a/A/R1a-A-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-C-3 · 2026-11-27 02:28
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, teto = 6, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T05:31:06+00:00; t_carga_fim = 2026-11-27T05:36:04+00:00; t0 = 2026-11-27T05:36:04+00:00; t_kill = 2026-11-27T05:36:44+00:00; t_pod_removido = 2026-11-27T05:36:49+00:00; t_vazio = 2026-11-27T05:37:16+00:00; t_zero = 2026-11-27T05:39:11+00:00; t_fim = 2026-11-27T05:39:11+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 1.2 min até t_vazio; desligamento = 4 s
+- **Arquivos:** `resultados/R/R1a/C/R1a-C-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-A-3 · 2026-11-27 02:39
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T05:41:51+00:00; t_carga_fim = 2026-11-27T05:46:49+00:00; t0 = 2026-11-27T05:46:50+00:00; t_kill = 2026-11-27T05:47:13+00:00; t_pod_removido = 2026-11-27T05:47:45+00:00; t_vazio = 2026-11-27T05:49:35+00:00; t_job_fim = 2026-11-27T05:50:30+00:00; t_fim = 2026-11-27T05:51:46+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 2.8 min até t_vazio; desligamento = 31 s
+- **Arquivos:** `resultados/R/R1a/A/R1a-A-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R1a-B-3 · 2026-11-27 02:51
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, teto = 1, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T05:54:49+00:00; t_carga_fim = 2026-11-27T05:59:47+00:00; t0 = 2026-11-27T05:59:48+00:00; t_kill = 2026-11-27T06:00:15+00:00; t_pod_removido = 2026-11-27T06:00:19+00:00; t_vazio = 2026-11-27T06:02:40+00:00; t_fim = 2026-11-27T06:03:56+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.9 min até t_vazio; desligamento = 4 s
+- **Arquivos:** `resultados/R/R1a/B/R1a-B-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-A-1 · 2026-11-27 03:04
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T06:06:35+00:00; t_carga_fim = 2026-11-27T06:11:32+00:00; t0 = 2026-11-27T06:11:33+00:00; t_vazio = 2026-11-27T06:13:35+00:00; t_job_fim = 2026-11-27T06:14:35+00:00; t_fim = 2026-11-27T06:15:50+00:00
+- **Resultado rápido:** pendentes no fim = 10 (10 fora da DLQ); na DLQ = —; duração = 2.0 min até t_vazio
+- **Arquivos:** `resultados/R/R2/A/R2-A-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-B-1 · 2026-11-27 03:15
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, teto = 1, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T06:18:45+00:00; t_carga_fim = 2026-11-27T06:23:44+00:00; t0 = 2026-11-27T06:23:44+00:00; t_vazio = 2026-11-27T06:25:49+00:00; t_fim = 2026-11-27T06:27:04+00:00
+- **Resultado rápido:** pendentes no fim = 10 (0 fora da DLQ); na DLQ = 10; duração = 2.1 min até t_vazio
+- **Arquivos:** `resultados/R/R2/B/R2-B-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-C-1 · 2026-11-27 03:27
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, teto = 6, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T06:29:31+00:00; t_carga_fim = 2026-11-27T06:34:29+00:00; t0 = 2026-11-27T06:34:30+00:00; t_vazio = 2026-11-27T06:35:27+00:00; t_zero = 2026-11-27T06:37:17+00:00; t_fim = 2026-11-27T06:37:17+00:00
+- **Resultado rápido:** pendentes no fim = 10 (0 fora da DLQ); na DLQ = 10; duração = 1.0 min até t_vazio
+- **Arquivos:** `resultados/R/R2/C/R2-C-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-B-2 · 2026-11-27 03:37
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, teto = 1, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T06:39:58+00:00; t_carga_fim = 2026-11-27T06:44:56+00:00; t0 = 2026-11-27T06:44:57+00:00; t_vazio = 2026-11-27T06:47:07+00:00; t_fim = 2026-11-27T06:48:22+00:00
+- **Resultado rápido:** pendentes no fim = 10 (0 fora da DLQ); na DLQ = 10; duração = 2.2 min até t_vazio
+- **Arquivos:** `resultados/R/R2/B/R2-B-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-C-2 · 2026-11-27 03:48
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, teto = 6, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T06:50:48+00:00; t_carga_fim = 2026-11-27T06:55:46+00:00; t0 = 2026-11-27T06:55:47+00:00; t_vazio = 2026-11-27T06:56:48+00:00; t_zero = 2026-11-27T06:58:33+00:00; t_fim = 2026-11-27T06:58:33+00:00
+- **Resultado rápido:** pendentes no fim = 10 (0 fora da DLQ); na DLQ = 10; duração = 1.0 min até t_vazio
+- **Arquivos:** `resultados/R/R2/C/R2-C-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-A-2 · 2026-11-27 03:58
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T07:01:11+00:00; t_carga_fim = 2026-11-27T07:06:09+00:00; t0 = 2026-11-27T07:06:10+00:00; t_vazio = 2026-11-27T07:08:09+00:00; t_job_fim = 2026-11-27T07:09:20+00:00; t_fim = 2026-11-27T07:10:36+00:00
+- **Resultado rápido:** pendentes no fim = 10 (10 fora da DLQ); na DLQ = —; duração = 2.0 min até t_vazio
+- **Arquivos:** `resultados/R/R2/A/R2-A-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-C-3 · 2026-11-27 04:10
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, teto = 6, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T07:13:13+00:00; t_carga_fim = 2026-11-27T07:18:11+00:00; t0 = 2026-11-27T07:18:12+00:00; t_vazio = 2026-11-27T07:19:22+00:00; t_zero = 2026-11-27T07:21:07+00:00; t_fim = 2026-11-27T07:21:07+00:00
+- **Resultado rápido:** pendentes no fim = 10 (0 fora da DLQ); na DLQ = 10; duração = 1.2 min até t_vazio
+- **Arquivos:** `resultados/R/R2/C/R2-C-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-A-3 · 2026-11-27 04:21
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T07:23:47+00:00; t_carga_fim = 2026-11-27T07:28:45+00:00; t0 = 2026-11-27T07:28:45+00:00; t_vazio = 2026-11-27T07:31:18+00:00; t_job_fim = 2026-11-27T07:32:19+00:00; t_fim = 2026-11-27T07:33:34+00:00
+- **Resultado rápido:** pendentes no fim = 10 (10 fora da DLQ); na DLQ = —; duração = 2.5 min até t_vazio
+- **Arquivos:** `resultados/R/R2/A/R2-A-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R2-B-3 · 2026-11-27 04:33
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, teto = 1, corrompidos = 10, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T07:36:20+00:00; t_carga_fim = 2026-11-27T07:41:18+00:00; t0 = 2026-11-27T07:41:19+00:00; t_vazio = 2026-11-27T07:44:05+00:00; t_fim = 2026-11-27T07:45:20+00:00
+- **Resultado rápido:** pendentes no fim = 10 (0 fora da DLQ); na DLQ = 10; duração = 2.8 min até t_vazio
+- **Arquivos:** `resultados/R/R2/B/R2-B-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-A-1 · 2026-11-27 04:45
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T07:48:00+00:00; t_carga_fim = 2026-11-27T07:52:58+00:00; t0 = 2026-11-27T07:52:59+00:00; t_down = 2026-11-27T07:53:39+00:00; t_up_cmd = 2026-11-27T07:54:40+00:00; t_ready = 2026-11-27T07:55:14+00:00; t_job2 = 2026-11-27T07:57:19+00:00; t_vazio = 2026-11-27T07:57:42+00:00; t_job_fim = 2026-11-27T07:58:05+00:00; t_fim = 2026-11-27T07:59:21+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 4.7 min até t_vazio; indisponibilidade real = 95 s
+- **Arquivos:** `resultados/R/R3/A/R3-A-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-B-1 · 2026-11-27 04:59
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, teto = 1, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T08:02:17+00:00; t_carga_fim = 2026-11-27T08:07:15+00:00; t0 = 2026-11-27T08:07:15+00:00; t_down = 2026-11-27T08:08:00+00:00; t_up_cmd = 2026-11-27T08:09:00+00:00; t_ready = 2026-11-27T08:09:35+00:00; t_vazio = 2026-11-27T08:11:09+00:00; t_fim = 2026-11-27T08:12:24+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 3.9 min até t_vazio; indisponibilidade real = 95 s
+- **Arquivos:** `resultados/R/R3/B/R3-B-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-C-1 · 2026-11-27 05:12
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 1, teto = 6, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T08:14:51+00:00; t_carga_fim = 2026-11-27T08:19:49+00:00; t0 = 2026-11-27T08:19:50+00:00; t_down = 2026-11-27T08:20:23+00:00; t_up_cmd = 2026-11-27T08:21:24+00:00; t_ready = 2026-11-27T08:21:59+00:00; t_vazio = 2026-11-27T08:22:20+00:00; t_zero = 2026-11-27T08:24:16+00:00; t_fim = 2026-11-27T08:24:16+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.5 min até t_vazio; indisponibilidade real = 96 s
+- **Arquivos:** `resultados/R/R3/C/R3-C-1.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-B-2 · 2026-11-27 05:24
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, teto = 1, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T08:26:58+00:00; t_carga_fim = 2026-11-27T08:31:56+00:00; t0 = 2026-11-27T08:31:56+00:00; t_down = 2026-11-27T08:32:41+00:00; t_up_cmd = 2026-11-27T08:33:41+00:00; t_ready = 2026-11-27T08:34:17+00:00; t_vazio = 2026-11-27T08:35:47+00:00; t_fim = 2026-11-27T08:37:02+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 3.8 min até t_vazio; indisponibilidade real = 95 s
+- **Arquivos:** `resultados/R/R3/B/R3-B-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-C-2 · 2026-11-27 05:37
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, teto = 6, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T08:39:30+00:00; t_carga_fim = 2026-11-27T08:44:28+00:00; t0 = 2026-11-27T08:44:29+00:00; t_down = 2026-11-27T08:45:08+00:00; t_up_cmd = 2026-11-27T08:46:08+00:00; t_ready = 2026-11-27T08:46:43+00:00; t_vazio = 2026-11-27T08:47:04+00:00; t_zero = 2026-11-27T08:48:53+00:00; t_fim = 2026-11-27T08:48:53+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.6 min até t_vazio; indisponibilidade real = 96 s
+- **Arquivos:** `resultados/R/R3/C/R3-C-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-A-2 · 2026-11-27 05:48
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 2, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T08:51:31+00:00; t_carga_fim = 2026-11-27T08:56:29+00:00; t0 = 2026-11-27T08:56:30+00:00; t_down = 2026-11-27T08:57:10+00:00; t_up_cmd = 2026-11-27T08:58:10+00:00; t_ready = 2026-11-27T08:58:46+00:00; t_job2 = 2026-11-27T09:01:00+00:00; t_vazio = 2026-11-27T09:01:23+00:00; t_job_fim = 2026-11-27T09:01:46+00:00; t_fim = 2026-11-27T09:03:02+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 4.9 min até t_vazio; indisponibilidade real = 96 s
+- **Arquivos:** `resultados/R/R3/A/R3-A-2.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-C-3 · 2026-11-27 06:03
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, teto = 6, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T09:05:38+00:00; t_carga_fim = 2026-11-27T09:10:36+00:00; t0 = 2026-11-27T09:10:37+00:00; t_down = 2026-11-27T09:11:21+00:00; t_up_cmd = 2026-11-27T09:12:21+00:00; t_ready = 2026-11-27T09:12:56+00:00; t_vazio = 2026-11-27T09:13:23+00:00; t_zero = 2026-11-27T09:15:12+00:00; t_fim = 2026-11-27T09:15:12+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 2.8 min até t_vazio; indisponibilidade real = 95 s
+- **Arquivos:** `resultados/R/R3/C/R3-C-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-A-3 · 2026-11-27 06:15
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T09:17:49+00:00; t_carga_fim = 2026-11-27T09:22:47+00:00; t0 = 2026-11-27T09:22:48+00:00; t_down = 2026-11-27T09:23:34+00:00; t_up_cmd = 2026-11-27T09:24:34+00:00; t_ready = 2026-11-27T09:25:09+00:00; t_job2 = 2026-11-27T09:27:59+00:00; t_vazio = 2026-11-27T09:28:16+00:00; t_job_fim = 2026-11-27T09:28:33+00:00; t_fim = 2026-11-27T09:29:49+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = —; duração = 5.5 min até t_vazio; indisponibilidade real = 95 s
+- **Arquivos:** `resultados/R/R3/A/R3-A-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa
+
+### R3-B-3 · 2026-11-27 06:29
+
+- **Campanha:** R
+- **Tipo:** válida
+- **Commits:** data-processing `144d805` (tcc/pushadd-metricas) · deployment `1168905` (main-estados) · estados `f8e9ee2` (tcc/e2-campanha-r)
+- **Imagem:** `sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28`
+- **Parâmetros:** N = 100, *seed* = 3, teto = 1, indisponibilidade nominal = 60 s, timeout = 2106 s
+- **Instantes (UTC):** t_carga_inicio = 2026-11-27T09:32:36+00:00; t_carga_fim = 2026-11-27T09:37:34+00:00; t0 = 2026-11-27T09:37:35+00:00; t_down = 2026-11-27T09:38:25+00:00; t_up_cmd = 2026-11-27T09:39:25+00:00; t_ready = 2026-11-27T09:40:00+00:00; t_vazio = 2026-11-27T09:41:52+00:00; t_fim = 2026-11-27T09:43:07+00:00
+- **Resultado rápido:** pendentes no fim = 0 (0 fora da DLQ); na DLQ = 0; duração = 4.3 min até t_vazio; indisponibilidade real = 95 s
+- **Arquivos:** `resultados/R/R3/B/R3-B-3.{csv,json,log}`
+- **Anomalias:** nenhuma detectada pelo script
+- **Validade:** válida pelos critérios automáticos do `run_experiment.sh`; conferir as anomalias e a interferência externa

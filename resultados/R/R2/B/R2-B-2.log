@@ -1,0 +1,76 @@
+[03:37:22] execução R2-B-2: cenário R2, modo B, campanha R (revoada-testes/querido-diario-tcc)
+[03:37:22] N = 100, seed = 2, teto = 1, corrompidos = 10
+[03:37:22] máquina local: disco 85% usado, 5531 MiB de memória disponível, carga 0.07
+[03:37:24] aplicando o modo B
+deployment "redis-queue" successfully rolled out
+Warning: PollingInterval is configured but is not relevant for scaling. It only affects scaling when minReplicaCount = 0, idleReplicaCount is set, or useCachedMetrics is enabled, but it still controls how often KEDA refreshes the ScaledObject status conditions and events
+Warning: CooldownPeriod is configured but is not relevant. CooldownPeriod is only relevant when minReplicaCount = 0 or idleReplicaCount is set
+deployment "extraction-worker" successfully rolled out
+[03:37:38] checklist
+[03:37:38]   ✔ repositorios: sem mudanças locais
+[03:37:38]   ✔ modo: ScaledObject min=1 max=1 Ready
+[03:37:38]   ✔ visibility_timeout: padrão (2 h)
+[03:37:38]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[03:37:48]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[03:37:49]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[03:37:49] load_simulator.py --cleanup
+[03:37:49] 100 diário(s) sintético(s) no Postgres
+[03:37:52] OpenSearch: 90 documento(s) removido(s)
+[03:37:53] storage: 200 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[03:37:53] Postgres: 100 linha(s) apagada(s)
+[03:37:56]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[03:37:57]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[03:37:58]   ✔ sinteticos: 0 diários sintéticos
+[03:37:58] espera ociosa de 120 s
+[03:39:58] t_carga_inicio = 2026-11-27T06:39:58Z
+  [acompanhar] [03:39:59] port-forward svc/postgres-rw → localhost:5436
+[03:39:59] perfil burst: 100 diários em 5.0 min, seed 2, 104 PDFs na amostra
+  [acompanhar] [03:39:59] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [03:39:59] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/R2/B/R2-B-2-postgres.csv
+[03:40:11] agendados 5/100, concluídos 4
+[03:40:26] agendados 10/100, concluídos 9
+[03:40:41] agendados 15/100, concluídos 14
+[03:40:56] agendados 20/100, concluídos 19
+[03:41:11] agendados 25/100, concluídos 24
+[03:41:26] agendados 30/100, concluídos 29
+[03:41:41] agendados 35/100, concluídos 34
+[03:41:56] agendados 40/100, concluídos 39
+[03:42:11] agendados 45/100, concluídos 44
+[03:42:26] agendados 50/100, concluídos 49
+[03:42:41] agendados 55/100, concluídos 54
+[03:42:56] agendados 60/100, concluídos 59
+[03:43:11] agendados 65/100, concluídos 64
+[03:43:26] agendados 70/100, concluídos 69
+[03:43:41] agendados 75/100, concluídos 74
+[03:43:56] agendados 80/100, concluídos 79
+[03:44:11] agendados 85/100, concluídos 84
+[03:44:26] agendados 90/100, concluídos 89
+[03:44:41] agendados 95/100, concluídos 94
+[03:44:56] agendados 100/100, concluídos 99
+[03:44:56] fim: 100 inseridos, 0 erro(s), 297.1 s, atraso máx. 0.115 s
+[03:44:56] corrompidos: [10245, 10258, 10259, 10261, 10263, 10265, 10267, 10271, 10272, 10275]
+[03:44:56] registro: /work/execucoes/20261127T063959Z_burst.json
+[03:44:56] t_carga_fim = 2026-11-27T06:44:56Z
+[03:44:57] Job exp-r2-b-2-1795761897 criado a partir de cronjob/enqueue-extraction
+[03:44:57] t0 = 2026-11-27T06:44:57Z
+[03:44:57] esperando os pendentes chegarem a 0 (timeout 2106 s)
+[03:44:59] t_rep1_obs = 2026-11-27T06:44:59Z
+[03:44:59] processados 0/100, pendentes 100, fila 0, réplicas 1
+[03:45:05] t_doc1_obs = 2026-11-27T06:45:05Z
+[03:46:00] processados 36/100, pendentes 55, fila 53, réplicas 1
+[03:47:01] processados 87/100, pendentes 3, fila 1, réplicas 1
+[03:47:07] t_vazio = 2026-11-27T06:47:07Z
+[03:47:07] margem de 75 s para o Prometheus raspar o worker
+[03:48:22] t_fim = 2026-11-27T06:48:22Z
+  [acompanhar] [03:48:23] acompanhamento encerrado
+[03:48:23] exportando as séries (06:44:57 → 06:48:22 UTC)
+[03:48:26] R2-B-2: 2026-11-27T06:44:57+00:00 → 2026-11-27T06:48:22+00:00 (206 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[03:48:26] 520 linha(s) em /work/resultados/R2/B/R2-B-2.csv
+[03:48:26] resumo em R2-B-2.json; séries vazias: oomkilled
+[03:48:26] Postgres: {'sinteticos': 100, 'processados': 90, 'pendentes': 10, 'pendentes_sem_dlq': 0}
+[03:48:26] DLQ: 10 item(ns)
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+[03:48:27] no fim: pendentes fora da DLQ = 0, DLQ = 10
+entrada R2-B-2 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[03:48:27] execução R2-B-2 concluída: resultados/R/R2/B/R2-B-2.*

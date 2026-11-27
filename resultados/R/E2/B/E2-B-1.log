@@ -1,0 +1,35 @@
+[00:14:13] execução E2-B-1: cenário E2, modo B, campanha R (revoada-testes/querido-diario-tcc)
+[00:14:13] N = 0, seed = 1, teto = 1, corrompidos = 0
+[00:14:13] máquina local: disco 85% usado, 5662 MiB de memória disponível, carga 0.00
+[00:14:15] aplicando o modo B
+Waiting for deployment "redis-queue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "redis-queue" successfully rolled out
+Warning: PollingInterval is configured but is not relevant for scaling. It only affects scaling when minReplicaCount = 0, idleReplicaCount is set, or useCachedMetrics is enabled, but it still controls how often KEDA refreshes the ScaledObject status conditions and events
+Warning: CooldownPeriod is configured but is not relevant. CooldownPeriod is only relevant when minReplicaCount = 0 or idleReplicaCount is set
+deployment "extraction-worker" successfully rolled out
+[00:14:45] checklist
+[00:14:45]   ✔ repositorios: sem mudanças locais
+[00:14:46]   ✔ modo: ScaledObject min=1 max=1 Ready
+[00:14:46]   ✔ visibility_timeout: padrão (2 h)
+[00:14:46]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[00:15:03]   ✔ monitoramento: up == 1 para pushgateway redis-queue extraction-worker
+[00:15:04]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[00:15:04] load_simulator.py --cleanup
+[00:15:04] 0 diário(s) sintético(s) no Postgres
+[00:15:06]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[00:15:07]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true
+[00:15:08]   ✔ sinteticos: 0 diários sintéticos
+[00:15:08] espera ociosa de 120 s
+[00:17:08] t0 = 2026-11-27T03:17:08Z
+[00:17:08] janela de repouso de 1800 s
+[00:47:09] t_fim = 2026-11-27T03:47:09Z
+[00:47:09] exportando as séries (03:17:08 → 03:47:09 UTC)
+[00:47:11] E2-B-1: 2026-11-27T03:17:08+00:00 → 2026-11-27T03:47:09+00:00 (1800 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[00:47:11] 3771 linha(s) em /work/resultados/E2/B/E2-B-1.csv
+[00:47:11] resumo em E2-B-1.json; séries vazias: coleta_indexado_p50_s, coleta_indexado_p95_s, oomkilled, processados, tempo_diario_p50_s, tempo_diario_p95_s, vazao_por_min
+[00:47:11] Postgres: {'sinteticos': 0, 'processados': 0, 'pendentes': 0, 'pendentes_sem_dlq': 0}
+[00:47:11] DLQ: 0 item(ns)
+tar: Removing leading `/' from member names
+[00:47:12] no fim: pendentes fora da DLQ = 0, DLQ = 0
+entrada E2-B-1 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[00:47:12] execução E2-B-1 concluída: resultados/R/E2/B/E2-B-1.*

@@ -1,0 +1,435 @@
+{
+  "run": "R1a-C-1",
+  "cenario": "R1a",
+  "modo": "C",
+  "campanha": "R",
+  "piloto": false,
+  "repeticao": 1,
+  "ambiente": "revoada",
+  "contexto": "revoada-testes",
+  "namespace": "querido-diario-tcc",
+  "maquina": "muriel-ThinkPad-E14-Gen-4",
+  "inicio_script": 1795754626.599,
+  "parametros": {
+    "n": 100,
+    "seed": 1,
+    "perfil": "burst",
+    "territorio": "3299999",
+    "teto": 6,
+    "corrompidos": 0,
+    "visibility_timeout": null,
+    "passo_s": 30,
+    "timeout_s": 2106,
+    "ocioso_s": 120,
+    "janela_s": null,
+    "indisponibilidade_s": null,
+    "fracao_falha": 0.1
+  },
+  "instantes": {
+    "t_carga_inicio": 1795754769.747,
+    "t_carga_fim": 1795755067.624,
+    "t0": 1795755068.243,
+    "t_rep1_obs": 1795755088.783,
+    "t_doc1_obs": 1795755094.877,
+    "t_kill": 1795755101.514,
+    "t_pod_removido": 1795755105.756,
+    "t_vazio": 1795755140.944,
+    "t_zero": 1795755255.272,
+    "t_fim": 1795755255.281
+  },
+  "instantes_iso": {
+    "t_carga_inicio": "2026-11-27T04:46:09Z",
+    "t_carga_fim": "2026-11-27T04:51:07Z",
+    "t0": "2026-11-27T04:51:08Z",
+    "t_rep1_obs": "2026-11-27T04:51:28Z",
+    "t_doc1_obs": "2026-11-27T04:51:34Z",
+    "t_kill": "2026-11-27T04:51:41Z",
+    "t_pod_removido": "2026-11-27T04:51:45Z",
+    "t_vazio": "2026-11-27T04:52:20Z",
+    "t_zero": "2026-11-27T04:54:15Z",
+    "t_fim": "2026-11-27T04:54:15Z"
+  },
+  "checklist": [
+    {
+      "item": "repositorios",
+      "ok": true,
+      "detalhe": "sem mudanças locais"
+    },
+    {
+      "item": "modo",
+      "ok": true,
+      "detalhe": "ScaledObject min=0 max=6 Ready"
+    },
+    {
+      "item": "visibility_timeout",
+      "ok": true,
+      "detalhe": "padrão (2 h)"
+    },
+    {
+      "item": "imagem",
+      "ok": true,
+      "detalhe": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+    },
+    {
+      "item": "monitoramento",
+      "ok": true,
+      "detalhe": "up == 1 para pushgateway redis-queue"
+    },
+    {
+      "item": "infraestrutura",
+      "ok": true,
+      "detalhe": "OpenSearch yellow; 5 pods de infraestrutura prontos"
+    },
+    {
+      "item": "redis_fila",
+      "ok": true,
+      "detalhe": "FLUSHDB; fila, DLQ e unacked vazias"
+    },
+    {
+      "item": "cronjobs",
+      "ok": true,
+      "detalhe": "suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true"
+    },
+    {
+      "item": "sinteticos",
+      "ok": true,
+      "detalhe": "0 diários sintéticos"
+    }
+  ],
+  "jobs": [
+    {
+      "nome": "exp-r1a-c-1-1795755068",
+      "cronjob": "enqueue-extraction",
+      "criado": 1795755068.243
+    }
+  ],
+  "validade": {
+    "valida": true,
+    "motivos": [],
+    "anomalias": []
+  },
+  "maquina_local": {
+    "disco_uso_pct": 85,
+    "memoria_disponivel_mib": 5645,
+    "carga_1min": "0.37"
+  },
+  "commits": {
+    "estados": {
+      "sha": "f8e9ee213848bb3af423a4db3dc878768eaca6c0",
+      "branch": "tcc/e2-campanha-r",
+      "sujo": false
+    },
+    "deployment": {
+      "sha": "1168905c5e6274cdd1a83410a2c1664540caf327",
+      "branch": "main-estados",
+      "sujo": false
+    },
+    "data_processing": {
+      "sha": "144d805c4af01db0d718fd66090cdfc62548fe24",
+      "branch": "tcc/pushadd-metricas",
+      "sujo": false
+    }
+  },
+  "imagem": {
+    "referencia": "ghcr.io/okfn-brasil/querido-diario-data-processing:tcc-fila-pushadd-144d805@sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "digest_no_cluster": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "esperada": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28",
+    "usadas": [
+      {
+        "pod": "enqueue-extraction-29929240-285mw",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "exp-r1a-c-1-1795755068-8vj2g",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-2kclq",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-c4d24",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-dd2bc",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-q7pbh",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-smvj5",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      },
+      {
+        "pod": "extraction-worker-67c5b44f5f-zznrt",
+        "imagem": "sha256:bd8fc42510129c71a71fe90e196c952f0473693eace78d5d49edfe71ff6fe7bd",
+        "digest": "sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28"
+      }
+    ]
+  },
+  "infra_inicio": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-wx7cz": {
+      "uid": "858a7025-642a-4a70-a777-a62e7f99bdec",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "carga": {
+    "perfil": "burst",
+    "total_pedido": 100,
+    "inseridos": 100,
+    "erros": 0,
+    "duracao_planejada_s": 300.0,
+    "seed": 1,
+    "territory": "3299999",
+    "inicio": "2026-11-27T04:46:10.497873+00:00",
+    "fim": "2026-11-27T04:51:07.525079+00:00",
+    "duracao_real_s": 297.0,
+    "atraso_max_s": 0.102,
+    "atraso_p95_s": 0.064,
+    "bytes_enviados": 410635847,
+    "corrompidos_ids": [],
+    "ids_min_max": [
+      9201,
+      9300
+    ],
+    "erros_detalhe": [],
+    "amostra": "work/amostras/manifest.csv"
+  },
+  "falha": {
+    "tipo": "delete (SIGTERM)",
+    "pod": "extraction-worker-67c5b44f5f-72t9c",
+    "processados_na_falha": 10,
+    "pendentes_na_falha": 90,
+    "fila_na_falha": 88,
+    "unacked_na_falha": [
+      {
+        "tag": "f9c34ef6-965b-4fac-824d-e9411e986bc4",
+        "gazette_id": 9282
+      },
+      {
+        "tag": "87b19c3d-ff47-4edf-a391-49df151dc7ea",
+        "gazette_id": 9284
+      },
+      {
+        "tag": "fdb66f79-c51a-442e-ad6b-a59846dcc954",
+        "gazette_id": 9283
+      },
+      {
+        "tag": "00620a17-d8d3-4c68-9e9e-2bea7c6a000f",
+        "gazette_id": 9285
+      }
+    ],
+    "mensagens": [
+      {
+        "tag": "f9c34ef6-965b-4fac-824d-e9411e986bc4",
+        "gazette_id": 9282,
+        "saiu_de_unacked": 1795755113.197,
+        "ja_processado_na_saida": true
+      },
+      {
+        "tag": "87b19c3d-ff47-4edf-a391-49df151dc7ea",
+        "gazette_id": 9284,
+        "saiu_de_unacked": 1795755114.014,
+        "ja_processado_na_saida": true
+      },
+      {
+        "tag": "fdb66f79-c51a-442e-ad6b-a59846dcc954",
+        "gazette_id": 9283,
+        "saiu_de_unacked": 1795755105.912,
+        "ja_processado_na_saida": true
+      },
+      {
+        "tag": "00620a17-d8d3-4c68-9e9e-2bea7c6a000f",
+        "gazette_id": 9285,
+        "saiu_de_unacked": 1795755114.827,
+        "ja_processado_na_saida": true
+      }
+    ],
+    "gazettes_processadas_no_fim": [
+      9283,
+      9284,
+      9282,
+      9285
+    ],
+    "desligamento_s": 4.242000102996826
+  },
+  "infra_fim": {
+    "garage-9846f75c7-7qmbt": {
+      "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "opensearch-0": {
+      "uid": "77b807fa-8db0-45f1-b580-8cad4793382d",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "pushgateway-86698c4b74-tsnwg": {
+      "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "redis-queue-57b78c6865-wx7cz": {
+      "uid": "858a7025-642a-4a70-a777-a62e7f99bdec",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    },
+    "postgres-1": {
+      "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+      "restarts": 0,
+      "oom": false,
+      "ready": true
+    }
+  },
+  "export_janela": {
+    "inicio": 1795755068.243,
+    "fim": 1795755255.281
+  },
+  "export": {
+    "gerado_em": "2026-11-27T04:54:19+00:00",
+    "run": "R1a-C-1",
+    "cenario": "R1a",
+    "modo": "C",
+    "namespace": "querido-diario-tcc",
+    "contexto": null,
+    "inicio": "2026-11-27T04:51:08+00:00",
+    "fim": "2026-11-27T04:54:15+00:00",
+    "inicio_ts": 1795755068.243,
+    "fim_ts": 1795755255.281,
+    "passo_s": 30,
+    "janela_rate": "120s",
+    "prometheus": "http://prometheus-k8s.monitoring.svc:9090",
+    "linhas_por_serie": {
+      "processados": 5,
+      "vazao_por_min": 5,
+      "tempo_diario_p50_s": 5,
+      "tempo_diario_p95_s": 5,
+      "coleta_indexado_p50_s": 5,
+      "coleta_indexado_p95_s": 5,
+      "push_time_s": 7,
+      "fila": 7,
+      "dlq": 7,
+      "replicas_desejadas": 7,
+      "replicas": 7,
+      "replicas_disponiveis": 7,
+      "cpu_cores": 66,
+      "memoria_bytes": 73,
+      "request_cpu_cores": 43,
+      "request_memoria_bytes": 98,
+      "pod_fase": 98,
+      "reinicios": 105,
+      "oomkilled": 0,
+      "alvo_up": 20
+    },
+    "series_vazias": [
+      "oomkilled"
+    ],
+    "prometheus_resumo": {
+      "observacao": null,
+      "processados_por_status": {
+        "ok": 87.0
+      },
+      "tempo_diario_s": {
+        "buckets": {
+          "1.0": 34.0,
+          "2.0": 58.0,
+          "5.0": 83.0,
+          "10.0": 87.0,
+          "20.0": 87.0,
+          "40.0": 87.0,
+          "80.0": 87.0,
+          "160.0": 87.0,
+          "320.0": 87.0,
+          "+Inf": 87.0
+        },
+        "soma": 157.64972579292953,
+        "contagem": 87.0,
+        "p50": 1.3958333333333333,
+        "p95": 4.957999999999998,
+        "p99": 8.912499999999994,
+        "media": 1.8120658137118337
+      },
+      "coleta_indexado_s": {
+        "buckets": {
+          "60.0": 0.0,
+          "300.0": 67.0,
+          "900.0": 87.0,
+          "1800.0": 87.0,
+          "3600.0": 87.0,
+          "7200.0": 87.0,
+          "14400.0": 87.0,
+          "43200.0": 87.0,
+          "86400.0": 87.0,
+          "+Inf": 87.0
+        },
+        "soma": 19392.581907,
+        "contagem": 87.0,
+        "p50": 215.82089552238807,
+        "p95": 769.4999999999998,
+        "p99": 873.8999999999999,
+        "media": 222.9032403103448
+      }
+    },
+    "postgres_fim": {
+      "sinteticos": 100,
+      "processados": 100,
+      "pendentes": 0,
+      "pendentes_sem_dlq": 0
+    },
+    "dlq": {
+      "tamanho": 0,
+      "ids": [],
+      "entradas": []
+    }
+  },
+  "lacunas": {
+    "tolerancia_s": 90.0,
+    "alvos": [
+      "pushgateway",
+      "redis-queue"
+    ],
+    "problemas": []
+  },
+  "fim_script": 1795755260.027,
+  "pasta_resultados": "resultados/R/R1a/C"
+}

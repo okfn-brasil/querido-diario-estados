@@ -1,0 +1,72 @@
+[03:27:09] execução R2-C-1: cenário R2, modo C, campanha R (revoada-testes/querido-diario-tcc)
+[03:27:09] N = 100, seed = 1, teto = 6, corrompidos = 10
+[03:27:09] máquina local: disco 85% usado, 5527 MiB de memória disponível, carga 0.10
+[03:27:11] aplicando o modo C
+deployment "redis-queue" successfully rolled out
+[03:27:19] checklist
+[03:27:19]   ✔ repositorios: sem mudanças locais
+[03:27:20]   ✔ modo: ScaledObject min=0 max=6 Ready
+[03:27:20]   ✔ visibility_timeout: padrão (2 h)
+[03:27:20]   ✔ imagem: sha256:1d71dc6bf836e54fec2cd5d59b68c662dc8a7c5e5453642909c67595d67dbf28
+[03:27:22]   ✔ monitoramento: up == 1 para pushgateway redis-queue
+[03:27:23]   ✔ infraestrutura: OpenSearch yellow; 5 pods de infraestrutura prontos
+[03:27:23] load_simulator.py --cleanup
+[03:27:23] 100 diário(s) sintético(s) no Postgres
+[03:27:25] OpenSearch: 90 documento(s) removido(s)
+[03:27:26] storage: 200 chave(s) removida(s) (PDF e .txt; .txt ausente é ignorado)
+[03:27:26] Postgres: 100 linha(s) apagada(s)
+[03:27:28]   ✔ redis_fila: FLUSHDB; fila, DLQ e unacked vazias
+[03:27:29]   ✔ cronjobs: suspensos: data-processing=true themes-from-queue=true enqueue-extraction=true
+[03:27:30]   ✔ sinteticos: 0 diários sintéticos
+[03:27:31] espera ociosa de 120 s
+[03:29:31] t_carga_inicio = 2026-11-27T06:29:31Z
+  [acompanhar] [03:29:31] port-forward svc/postgres-rw → localhost:5436
+[03:29:31] perfil burst: 100 diários em 5.0 min, seed 1, 104 PDFs na amostra
+  [acompanhar] [03:29:32] port-forward svc/redis-queue → localhost:6381
+  [acompanhar] [03:29:32] acompanhando o Postgres a cada 15 s em /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/R/R2/C/R2-C-1-postgres.csv
+[03:29:44] agendados 5/100, concluídos 4
+[03:29:59] agendados 10/100, concluídos 9
+[03:30:14] agendados 15/100, concluídos 14
+[03:30:29] agendados 20/100, concluídos 19
+[03:30:44] agendados 25/100, concluídos 24
+[03:30:59] agendados 30/100, concluídos 29
+[03:31:14] agendados 35/100, concluídos 34
+[03:31:29] agendados 40/100, concluídos 39
+[03:31:44] agendados 45/100, concluídos 44
+[03:31:59] agendados 50/100, concluídos 49
+[03:32:14] agendados 55/100, concluídos 54
+[03:32:29] agendados 60/100, concluídos 59
+[03:32:44] agendados 65/100, concluídos 64
+[03:32:59] agendados 70/100, concluídos 69
+[03:33:14] agendados 75/100, concluídos 74
+[03:33:29] agendados 80/100, concluídos 79
+[03:33:44] agendados 85/100, concluídos 84
+[03:33:59] agendados 90/100, concluídos 89
+[03:34:14] agendados 95/100, concluídos 94
+[03:34:29] agendados 100/100, concluídos 99
+[03:34:29] fim: 100 inseridos, 0 erro(s), 297.0 s, atraso máx. 0.106 s
+[03:34:29] corrompidos: [10131, 10132, 10136, 10149, 10151, 10154, 10158, 10159, 10168, 10175]
+[03:34:29] registro: /work/execucoes/20261127T062932Z_burst.json
+[03:34:29] t_carga_fim = 2026-11-27T06:34:29Z
+[03:34:30] Job exp-r2-c-1-1795761270 criado a partir de cronjob/enqueue-extraction
+[03:34:30] t0 = 2026-11-27T06:34:30Z
+[03:34:30] esperando os pendentes chegarem a 0 (timeout 2106 s)
+[03:34:32] processados 0/100, pendentes 100, fila 0, réplicas 0
+[03:34:51] t_rep1_obs = 2026-11-27T06:34:51Z
+[03:34:57] t_doc1_obs = 2026-11-27T06:34:57Z
+[03:35:27] t_vazio = 2026-11-27T06:35:27Z
+[03:35:27] esperando as réplicas voltarem a 0
+[03:37:17] t_zero = 2026-11-27T06:37:17Z
+[03:37:17] t_fim = 2026-11-27T06:37:17Z
+  [acompanhar] [03:37:17] acompanhamento encerrado
+[03:37:18] exportando as séries (06:34:30 → 06:37:17 UTC)
+[03:37:20] R2-C-1: 2026-11-27T06:34:30+00:00 → 2026-11-27T06:37:17+00:00 (167 s), passo 30 s, rate[120s], namespace querido-diario-tcc
+[03:37:21] 540 linha(s) em /work/resultados/R2/C/R2-C-1.csv
+[03:37:21] resumo em R2-C-1.json; séries vazias: oomkilled
+[03:37:21] Postgres: {'sinteticos': 100, 'processados': 90, 'pendentes': 10, 'pendentes_sem_dlq': 0}
+[03:37:21] DLQ: 10 item(ns)
+tar: Removing leading `/' from member names
+tar: Removing leading `/' from member names
+[03:37:22] no fim: pendentes fora da DLQ = 0, DLQ = 10
+entrada R2-C-1 acrescentada a /home/muriel/.cache/qd-worktrees/e2-execucao/resultados/diario-de-bordo.md
+[03:37:22] execução R2-C-1 concluída: resultados/R/R2/C/R2-C-1.*

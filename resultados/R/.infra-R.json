@@ -1,0 +1,32 @@
+{
+  "garage-9846f75c7-7qmbt": {
+    "uid": "83367cf7-1f66-4433-ba60-ebefe44875e3",
+    "restarts": 0,
+    "oom": false,
+    "ready": true
+  },
+  "opensearch-0": {
+    "uid": "a36964c9-5224-4bb4-a020-b55d710a3fce",
+    "restarts": 0,
+    "oom": false,
+    "ready": true
+  },
+  "pushgateway-86698c4b74-tsnwg": {
+    "uid": "c9c6f6a4-31d7-4b00-9435-2f351223c29e",
+    "restarts": 0,
+    "oom": false,
+    "ready": true
+  },
+  "redis-queue-57b78c6865-c2fzd": {
+    "uid": "55827053-1fdc-42d4-93ab-90bd65b609e5",
+    "restarts": 0,
+    "oom": false,
+    "ready": true
+  },
+  "postgres-1": {
+    "uid": "2b745954-1b99-42de-977e-6cd7bae77ce5",
+    "restarts": 0,
+    "oom": false,
+    "ready": true
+  }
+}
